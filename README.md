@@ -25,6 +25,18 @@ and often devs, by mistake or otherwise, would change these attributes. So this
 is intended to provide that safety net, that what we end up deploying out
 satisfies a certain criteria.
 
+The main purpose goal of this project is to detect code differences that will
+impact functional operations. An initial list of items we would like to check
+are:
+* Does every http:request have a User-Agent defined?
+* Does every http:request have a (context specific) `X-\*` header defined?
+* Does every logger have a category that is known?
+* (Longer term goal) What logger does not follow our team defined structured
+  logging format?
+* Do we have any logger that references `#[payload]`
+* Do we have any logger that does not reference (context specific)
+  `transactionid`?
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -81,7 +93,8 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Library](http://www.example.com/) - Some framework used
+* [Gradle](https://gradle.org/) - Build system
+* [Groovy](http://groovy-lang.org/) - Written in
 
 ## Contributing
 
@@ -103,8 +116,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+* Hat tip to https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 as this
+  was the starting point of this README and other project related files
 
 [![Analytics](https://beacon-cgorshing.appspot.com/UA-58872618-3/nuisto/mule-static-analysis/README.md?pixel)](https://github.com/nuisto/mule-static-analysis)
