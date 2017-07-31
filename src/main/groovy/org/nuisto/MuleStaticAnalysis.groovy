@@ -56,15 +56,15 @@ class MuleStaticAnalysis {
     File path = new File(optionsModel.directory, optionsModel.sourceDirectory)
 
     if (!path.exists()) {
-      log.error 'Provided directory, %s, does not exist.', path.absolutePath
+      log.error 'Provided directory, {}, does not exist.', path.absolutePath
       System.exit(ErrorCodes.ProvidedDirectoryDoesNotExist)
     }
 
-    log.info 'Using directory: %s', path.absolutePath
+    log.info 'Using directory: {}', path.absolutePath
 
     def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, '**/*.xml' /* includes */, 'pom.xml **/*.pdf' /* excludes */)
 
-    log.info 'Found %s files', txtFiles.size()
+    log.info 'Found {} files', txtFiles.size()
 
     txtFiles.each {
       processFile(it)
@@ -73,7 +73,7 @@ class MuleStaticAnalysis {
 
   def processFile(String file) {
 
-    log.info('Should be processing %s', file)
+    log.info('Should be processing {}', file)
 
     def data = new XmlSlurper().parse(file)
 
