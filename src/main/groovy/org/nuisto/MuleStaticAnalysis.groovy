@@ -73,10 +73,18 @@ class MuleStaticAnalysis {
 
   def processFile(String file) {
 
-    log.info('Should be processing {}', file)
+    log.debug('Checking {}', file)
 
-    def data = new XmlSlurper().parse(file)
+    def root = new XmlParser().parse(file)
+//.declareNamespace(x:'http://www.groovy-lang.org')
 
-    log.info data.toString()
+    if (root.name().localPart == 'mule' &&
+        root.name().namespaceURI == 'http://www.mulesoft.org/schema/mule/core') {
+      log.info 'Processing {}', file
+    }
+    else {
+      log.debug 'Skipping file as not a mule file: {}', file
+
+    }
   }
 }
