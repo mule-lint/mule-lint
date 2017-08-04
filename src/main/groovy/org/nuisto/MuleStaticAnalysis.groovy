@@ -1,6 +1,8 @@
 package org.nuisto
 
 import groovy.util.logging.Slf4j
+import org.nuisto.validators.HttpRequestValidator
+import org.nuisto.validators.LoggerValidator
 
 @Slf4j(category = 'org.nuisto.mat')
 class MuleStaticAnalysis {
@@ -76,15 +78,26 @@ class MuleStaticAnalysis {
     log.debug('Checking {}', file)
 
     def root = new XmlParser().parse(file)
-//.declareNamespace(x:'http://www.groovy-lang.org')
 
-    if (root.name().localPart == 'mule' &&
-        root.name().namespaceURI == 'http://www.mulesoft.org/schema/mule/core') {
+    if (MuleNode.isRoot(root)) {
       log.info 'Processing {}', file
+
+      processEachNode(root)
     }
     else {
       log.debug 'Skipping file as not a mule file: {}', file
 
+    }
+  }
+
+  def processEachNode(Node node) {
+    if (MuleNode.isLogger(node)) {
+      new LoggerValidator().validate(node)
+    } else if (MuleNode.isHttpRequest(node)) {
+      new HttpRequestValidator().validate(node)
+    }
+    else {
+      node.children().each { Node it -> processEachNode(it) }
     }
   }
 }
