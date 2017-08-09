@@ -119,4 +119,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 as this
   was the starting point of this README and other project related files
 
-[![Analytics](https://beacon-cgorshing.appspot.com/UA-58872618-3/nuisto/mule-static-analysis/README.md?pixel)](https://github.com/nuisto/mule-static-analysis)
+[![Analytics](https://beacon-cgorshing.appspot.com/UA-24556575-4/nuisto/mule-static-analysis/README.md?pixel)](https://github.com/nuisto/mule-static-analysis/README.md)
