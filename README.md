@@ -59,16 +59,6 @@ element 'http:request' hasChild 'User-Agent'
 element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingValue 'User-Agent' withAttribute 'value' havingValue 'my-bot-name 1.0'
 ```
 
-
-
-Inline-style: 
-![alt text](https://raw.githubusercontent.com/iconic/open-iconic/master/svg/info.svg "Logo Title Text 1")
-
-Reference-style: 
-![alt text][logo]
-
-[logo]: https://raw.githubusercontent.com/iconic/open-iconic/master/svg/info.svg "Logo Title Text 2"
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
