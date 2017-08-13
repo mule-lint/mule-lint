@@ -16,6 +16,11 @@ What logger’s do not have a category or “transactionId” in the message?
 What flows are sync or async?
 I’m thinking more information about the code base. A static analysis.
 
+For the initial releases of this project, this will be information giving, not enforcing.
+A report will be provided with the findings that can be used for historical keeping, but could
+also be used by other pieces in your pipeline to assert a value/count does not exceed a
+threshold you define.
+
 Such as find regex within loggers message attribute (or category attribute)
 
 Or does does attribute X have values within this acceptable list?
@@ -37,16 +42,45 @@ are:
 * Do we have any logger that does not reference (context specific)
   `transactionid`?
 
+## Initial Rule Format
+There are quite a few things we want to do, but to get out a [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product)
+we are trying to find something that is easier for us to deliver, then to improve upon later.
+
+This is what we are working towards for a `rules.groovy` example:
+```
+version '0.0.1'
+
+element 'logger' hasAttribute 'category'
+
+element 'logger' hasParent 'until-successful'
+
+element 'http:request' hasChild 'User-Agent'
+
+element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingValue 'User-Agent' withAttribute 'value' havingValue 'my-bot-name 1.0'
+```
+
+
+
+Inline-style: 
+![alt text](https://raw.githubusercontent.com/iconic/open-iconic/master/svg/info.svg "Logo Title Text 1")
+
+Reference-style: 
+![alt text][logo]
+
+[logo]: https://raw.githubusercontent.com/iconic/open-iconic/master/svg/info.svg "Logo Title Text 2"
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+This project is build with Gradle 4.1-rc-1, Maven 3.5.0, and Java 1.8.0_121.
 
 ```
-Give examples
+$ git clone git@github.com:Nuisto/mule-static-analysis.git
+$ cd mule-static-analysis
+$ gradle build
 ```
 
 ### Installing
