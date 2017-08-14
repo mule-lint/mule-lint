@@ -43,7 +43,7 @@ class RulesLoader {
       // TODO Of course I don't like having java.lang.Object, but need to come back to this
       // Looks like using the receiversClassesWhiteList can be worked around easily and not bullet proof.
       receiversClassesWhiteList = [
-        Math, Integer, Float, Double, Long, BigDecimal, java.lang.Object
+        Math, Integer, Float, Double, Long, BigDecimal, java.lang.Object, Object
       ].asImmutable()
     }
 
