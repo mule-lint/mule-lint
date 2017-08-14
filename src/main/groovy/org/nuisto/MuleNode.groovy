@@ -3,7 +3,7 @@ package org.nuisto
 import groovy.util.logging.Slf4j
 import groovy.xml.QName
 
-@Slf4j
+@Slf4j(category = 'org.nuisto.mat')
 class MuleNode {
   private static final String CoreNamespace = 'http://www.mulesoft.org/schema/mule/core'
   private static final String HttpNamespace = 'http://www.mulesoft.org/schema/mule/http'
