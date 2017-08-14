@@ -1,17 +1,15 @@
 package org.nuisto
 
 import groovy.util.logging.Slf4j
-
-//http://melix.github.io/blog/2015/03/sandboxing.html
-import org.nuisto.*
-
 import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.customizers.ImportCustomizer
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
-import org.codehaus.groovy.control.customizers.*
-import org.codehaus.groovy.ast.expr.*
+
 import static org.codehaus.groovy.syntax.Types.*
 
 /*
+http://melix.github.io/blog/2015/03/sandboxing.html
+
 ImportCustomizer: add transparent imports
 ASTTransformationCustomizer: injects an AST transform
 SecureASTCustomizer: restrict the groovy language to an allowed subset
@@ -36,7 +34,7 @@ class RulesLoader {
       ].asImmutable()
 
       // types allowed to be used (including primitive types)
-      constantTypesClassWhiteList = [
+      constantTypesClassesWhiteList = [
         Integer, Float, Long, Double, BigDecimal,
         Integer.TYPE, Long.TYPE, Float.TYPE, Double.TYPE
       ].asImmutable()
@@ -58,10 +56,11 @@ class RulesLoader {
     def importCustomizer = new ImportCustomizer()
     //importCustomizer.addStaticStars Direction.class.name
     importCustomizer.addStaticStars 'java.lang.Math'
+    importCustomizer.addStaticStars MuleNode.class.name
 
     def config = new CompilerConfiguration()
-    //config.addCompilationCustomizers importCustomizer
-    config.addCompilationCustomizers(importCustomizer, secure)
+    config.addCompilationCustomizers importCustomizer
+    //config.addCompilationCustomizers(importCustomizer, secure)
     config.scriptBaseClass = LoaderBaseScriptClass.class.name
 
     ElementRule elementRule = new ElementRule()
