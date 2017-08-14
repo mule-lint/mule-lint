@@ -1,6 +1,7 @@
 package org.nuisto
 
 import groovy.util.logging.Slf4j
+import jdk.nashorn.internal.runtime.options.Options
 import org.nuisto.validators.HttpRequestValidator
 import org.nuisto.validators.LoggerValidator
 
@@ -10,7 +11,7 @@ class MuleStaticAnalysis {
     new MuleStaticAnalysis().run(args)
   }
 
-  def run(args) {
+  int run(String [] args) {
     def cli = new CliBuilder(usage: 'mule-static-analysis.groovy -[hdr] -d <directory> -r <rules>')
     // Create the list of options.
     cli.with {
@@ -34,8 +35,8 @@ class MuleStaticAnalysis {
     def optionsModel = new OptionsModel()
 
     if (!options.r) {
-      log.error 'Rules must be provided'
-      System.exit(ErrorCodes.RulesNotProvided)
+      //log.error 'Rules must be provided'
+      //System.exit(ErrorCodes.RulesNotProvided)
     }
     else {
       optionsModel.rules = options.r
@@ -55,6 +56,16 @@ class MuleStaticAnalysis {
       optionsModel.sourceDirectory = 'src'
     }
 
+    runWithModel(optionsModel)
+  }
+
+  int invoke(String rules, String directory, String sourceDirectory) {
+    OptionsModel optionsModel = new OptionsModel(rules: rules, directory: directory, sourceDirectory: sourceDirectory)
+
+    return runWithModel(optionsModel)
+  }
+
+  int runWithModel(OptionsModel optionsModel) {
     File path = new File(optionsModel.directory, optionsModel.sourceDirectory)
 
     if (!path.exists()) {
@@ -71,6 +82,8 @@ class MuleStaticAnalysis {
     txtFiles.each {
       processFile(it)
     }
+
+    return 0
   }
 
   def processFile(String file) {
