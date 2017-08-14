@@ -7,7 +7,7 @@ import org.nuisto.validators.LoggerValidator
 @Slf4j(category = 'org.nuisto.mat')
 class Runner {
   int runWithModel(OptionsModel optionsModel) {
-    File path = new File(optionsModel.directory, optionsModel.sourceDirectory)
+    File path = new File(optionsModel.sourceDirectory)
 
     if (!path.exists()) {
       log.error 'Provided directory, {}, does not exist.', path.absolutePath
