@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+      xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+
+  <sub-flow name="exampleFlow">
+    <logger message="" level="INFO" category=""/>
+
+    <set-session-variable variableName="payloadBeforeUntilSuccess" value="#[payload]"/>
+    <until-successful maxRetries="${dso.http.max.retries}" failureExpression="exception!=null &amp;&amp; (exception.causedBy(java.io.IOException) || exception.causedBy(java.net.ConnectException)  || exception.causedBy(java.net.SocketTimeoutException))" synchronous="true" millisBetweenRetries="${dso.http.milliSecondsBetweenRetries}">
+      <http:request config-ref="httpRequestConfiguration" path="${api.path}" method="POST">
+        <http:request-builder>
+          <http:header headerName="Content-Type" value="application/json"/>
+          <http:header headerName="Authorization" value="Bearer #[flowVars.dsoToken]"/>
+        </http:request-builder>
+      </http:request>
+    </until-successful>
+
+    <logger message="system=Phoenix method=CreateProject action=response projectId=#[flowVars.projectId] invocationId=#[flowVars.invocationId]" level="INFO" category="com.example.area"/>
+    <logger message="system=Phoenix method=CreateProject action=response projectId=#[flowVars.projectId] invocationId=#[flowVars.invocationId] payload=#[payload]" level="DEBUG" category="com.example.area"/>
+
+    <http:request config-ref="httpRequestConfiguration" path="${api.path}" method="POST">
+      <http:request-builder>
+        <http:header headerName="Content-Type" value="application/json"/>
+        <http:header headerName="Authorization" value="Bearer #[flowVars.token]"/>
+      </http:request-builder>
+    </http:request>
+  </sub-flow>
+</mule>

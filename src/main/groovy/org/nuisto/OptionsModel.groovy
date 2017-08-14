@@ -1,7 +1,6 @@
 package org.nuisto
 
 class OptionsModel {
-    String rules
-    String directory
-    String sourceDirectory
+  String rules
+  String sourceDirectory
 }
