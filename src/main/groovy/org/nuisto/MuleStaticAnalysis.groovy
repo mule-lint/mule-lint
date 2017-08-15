@@ -13,8 +13,9 @@ class MuleStaticAnalysis {
     // Create the list of options.
     cli.with {
       h longOpt: 'help', 'Show usage information'
-      r longOpt: 'rules', args: 1, argName: 'path', 'Required. The path to a set of rules.'
-      s longOpt: 'sources', args: 1, argName: 'sources', 'The directory name of where the source files are located, default: src/main'
+      r longOpt: 'rules',     args: 1, argName: 'path', 'Required. The path to a set of rules.'
+      s longOpt: 'sources',   args: 1, argName: 'sources', 'The directory name of where the source files are located, default: src/main'
+      N(longOpt: 'namespace', args: 2, valueSeparator:'=', argName:'prefix=uri', 'Namespace prefix and uri to use')
     }
 
     def options = cli.parse(args)
@@ -48,8 +49,8 @@ class MuleStaticAnalysis {
     runWithModel(optionsModel)
   }
 
-  int invoke(String rules, String sourceDirectory) {
-    OptionsModel optionsModel = new OptionsModel(rules: rules, sourceDirectory: sourceDirectory)
+  int invoke(String rules, String sourceDirectory, Map<String, String> namespaces) {
+    OptionsModel optionsModel = new OptionsModel(rules: rules, sourceDirectory: sourceDirectory, namespaces: namespaces)
 
     return runWithModel(optionsModel)
   }
