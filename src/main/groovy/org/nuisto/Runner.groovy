@@ -14,6 +14,13 @@ class Runner {
       System.exit(ErrorCodes.ProvidedDirectoryDoesNotExist)
     }
 
+    File rulesPath = new File(optionsModel.rules)
+
+    if (!rulesPath.exists()) {
+      log.error 'Provided rules, {}, does not exist.', rulesPath.absolutePath
+      System.exit(ErrorCodes.ProvidedDirectoryDoesNotExist)
+    }
+
     log.info 'Using directory: {}', path.absolutePath
     log.info 'Using rules: {}', new File(optionsModel.rules).absolutePath
 

@@ -4,12 +4,22 @@ import groovy.util.logging.Slf4j
 
 @Slf4j(category = 'org.nuisto.mat')
 class ElementRule {
+  String version
+
   ElementRule() {
     println 'In constructor*****'
   }
 
   ElementRule version(String version) {
     println 'Parsing a file with the version of ' + version
+
+    if (!this.version) {
+      def message = 'Can not set version once it has already been set'
+
+      log.error message
+
+      throw new Exception(message)
+    }
 
     return this
   }
