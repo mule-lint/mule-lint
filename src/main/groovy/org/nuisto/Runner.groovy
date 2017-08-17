@@ -25,20 +25,20 @@ class Runner {
     log.info 'Using rules: {}', new File(optionsModel.rules).absolutePath
 
     RulesLoader loader = new RulesLoader()
-    loader.load(optionsModel)
+    List<Expectation> expectations = loader.load(optionsModel)
 
     def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, '**/*.xml' /* includes */, 'pom.xml **/*.pdf' /* excludes */)
 
     log.info 'Found {} files', txtFiles.size()
 
     txtFiles.each {
-      processFile(it)
+      processFile(it, expectations)
     }
 
     return 0
   }
 
-  def processFile(String file) {
+  def processFile(String file, List<Expectation> expectations) {
 
     log.debug('Checking {}', file)
 

@@ -4,12 +4,12 @@ import groovy.util.logging.Slf4j
 
 @Slf4j
 class ExpectationBuilder {
-  String name
-
   def expectations = new ArrayList<Expectation>()
 
-  ExpectationBuilder(String name) {
-    this.name = name
+  ExpectationBuilder() {
+  }
+
+  void element(String name) {
     Expectation expectation = new Expectation(elementName: name)
 
     expectations << expectation

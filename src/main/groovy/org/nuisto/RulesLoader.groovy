@@ -50,7 +50,7 @@ class RulesLoader {
     return secure
   }
 
-  void load(OptionsModel model) {
+  List<Expectation> load(OptionsModel model) {
     SecureASTCustomizer secure = restrictEnvironment()
 
     def importCustomizer = new ImportCustomizer()
@@ -63,7 +63,8 @@ class RulesLoader {
     //config.addCompilationCustomizers(importCustomizer, secure)
     config.scriptBaseClass = LoaderBaseScriptClass.class.name
 
-    ElementRule elementRule = new ElementRule()
+    ExpectationBuilder builder = new ExpectationBuilder()
+    ElementRule elementRule = new ElementRule(builder)
 
     def binding = new Binding([
       elementRule: elementRule
@@ -72,5 +73,7 @@ class RulesLoader {
     def shell = new GroovyShell(this.class.classLoader, binding, config)
 
     shell.evaluate(new File(model.rules))
+
+    return builder.expectations
   }
 }
