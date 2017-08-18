@@ -5,38 +5,35 @@ import groovy.xml.QName
 
 @Slf4j(category = 'org.nuisto.mat')
 class MuleNode {
-  private static final String CoreNamespace = 'http://www.mulesoft.org/schema/mule/core'
-  private static final String HttpNamespace = 'http://www.mulesoft.org/schema/mule/http'
+  private static Map<String, String> namespaces = [
+          'core': 'http://www.mulesoft.org/schema/mule/core',
+          'http': 'http://www.mulesoft.org/schema/mule/http'
+  ]
 
-  static boolean isRoot(Node node) {
-    return isMule('mule', node)
-  }
-
-  static boolean isLogger(Node node) {
-    return isMule('logger', node)
-  }
-
-  static boolean isUntilSuccessful(Node node) {
-    return isMule('until-successful', node)
-  }
-
-  static boolean isHttpRequest(Node node) {
-    return isMule('request', node, HttpNamespace)
-  }
-
-  static boolean isMule(String name, Node node, String namespace = CoreNamespace) {
+  static boolean isMatch(Node node, String name) {
     log.debug ('Check node {} for {}', node.name(), name)
 
     boolean isClass = node.name() instanceof QName
 
+
     if (isClass) {
-      boolean isNameMatch = node.name().localPart == name
+      //TODO This logic should already be somewhere. Find it and resuse
+      int prefixIndex = name.indexOf(':')
+
+      String prefix = prefixIndex > 0 ? name[0..(prefixIndex-1)] : null
+      String postfix = prefixIndex > 0 ? name[(prefixIndex+1)..-1] : name
+
+      String namespace = prefix != null ? namespaces[prefix] : null
+
+      boolean isNameMatch = node.name().localPart == postfix
       boolean isNamespaceMatch = node.name().namespaceURI == namespace
 
-      return isClass && isNameMatch && isNamespaceMatch
+      log.info 'Matching {}, results isNameMatch={} isNamespaceMatch={}', name, isNamespaceMatch, isNamespaceMatch
+      return isNameMatch && isNamespaceMatch
     }
     else {
-      return false
+      log.info 'Matching {}, results isNameMatch={}', name, node.name() == name
+      return node.name() == name
     }
   }
 }
