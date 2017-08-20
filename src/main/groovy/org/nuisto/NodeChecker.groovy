@@ -3,12 +3,12 @@ package org.nuisto
 import groovy.util.logging.Slf4j
 import groovy.xml.QName
 
-@Slf4j(category = 'org.nuisto.mat')
-class MuleNode {
+@Slf4j(category = 'org.nuisto.msa')
+class NodeChecker {
   static String Core = 'http://www.mulesoft.org/schema/mule/core'
-  Map<String, List<String> > namespaces
+  Map<String, String> namespaces
 
-  MuleNode(Map<String, List<String> > namespaces) {
+  NodeChecker(Map<String, String> namespaces) {
     this.namespaces = namespaces
   }
 
@@ -34,11 +34,11 @@ class MuleNode {
       boolean isNameMatch = node.name().localPart == postfix
       boolean isNamespaceMatch = node.name().namespaceURI == namespace
 
-      log.info 'Matching {}, results isNameMatch={} isNamespaceMatch={}', name, isNamespaceMatch, isNamespaceMatch
+      log.debug 'Matching {}, results isNameMatch={} isNamespaceMatch={}', name, isNamespaceMatch, isNamespaceMatch
       return isNameMatch && isNamespaceMatch
     }
     else {
-      log.info 'Matching {}, results isNameMatch={}', name, node.name() == name
+      log.debug 'Matching {}, results isNameMatch={}', name, node.name() == name
       return node.name() == name
     }
   }

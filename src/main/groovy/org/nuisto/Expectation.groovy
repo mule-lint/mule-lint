@@ -5,7 +5,7 @@ import groovy.util.logging.Slf4j
 /**
  * The "has" operations set things up differently than the "having" operations
  */
-@Slf4j(category = 'org.nuisto.mat')
+@Slf4j(category = 'org.nuisto.msa')
 class Expectation {
   boolean elementFound = false
   boolean passing = true
@@ -22,8 +22,14 @@ class Expectation {
     return passing
   }
 
-  void handleNode(Node node) {
-    if (MuleNode.isMatch(node, elementName)) {
+  void handleNode(NodeList nodeList, NodeChecker nodeChecker) {
+    nodeList.each {
+      this.handleNode(it, nodeChecker)
+    }
+  }
+
+  void handleNode(Node node, NodeChecker nodeChecker) {
+    if (nodeChecker.isMatch(node, elementName)) {
       elementFound = true
       log.error 'We have a match!'
 

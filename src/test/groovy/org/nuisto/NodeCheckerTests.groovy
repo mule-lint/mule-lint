@@ -2,13 +2,14 @@ package org.nuisto
 
 import org.junit.Test
 
-class MuleNodeTests {
+class NodeCheckerTests {
+  NodeChecker nodeChecker = new NodeChecker(['core': 'asdf', 'http': 'http://www.mulesoft.org/schema/mule/http'])
   @Test
   void coreElementIsMatched() {
 
     def root = new XmlParser().parseText('<mule> <logger /> </mule>')
 
-    assert NodeChecker.isMatch(root.children()[0], 'logger')
+    assert nodeChecker.isMatch(root.children()[0], 'logger')
   }
 
   @Test
@@ -20,7 +21,7 @@ class MuleNodeTests {
 
     def root = new XmlParser().parseText(xml)
 
-    assert NodeChecker.isMatch(root.children()[0].children()[0], 'http:request')
+    assert nodeChecker.isMatch(root.children()[0].children()[0], 'http:request')
   }
 
   @Test
@@ -32,6 +33,6 @@ class MuleNodeTests {
 
     def root = new XmlParser().parseText(xml)
 
-    assert false == NodeChecker.isMatch(root.children()[0], 'this means nothing')
+    assert false == nodeChecker.isMatch(root.children()[0], 'this means nothing')
   }
 }
