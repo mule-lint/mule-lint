@@ -1,10 +1,8 @@
 package org.nuisto
 
 import groovy.util.logging.Slf4j
-import org.nuisto.validators.HttpRequestValidator
-import org.nuisto.validators.LoggerValidator
 
-@Slf4j(category = 'org.nuisto.mat')
+@Slf4j(category = 'org.nuisto.msa')
 class Runner {
   int runWithModel(OptionsModel optionsModel) {
     File path = new File(optionsModel.sourceDirectory)
@@ -42,26 +40,28 @@ class Runner {
 
     log.debug('Checking {}', file)
 
-    def root = new XmlParser().parse(file)
+    Map<String, String> foundNamespaces = new Hashtable<String, String>()
+    def slurper = new PeakNamespacesXmlParser(foundNamespaces)
+    def root = slurper.parse(file)
 
-    if (MuleNode.isRoot(root)) {
+    NodeChecker nodeChecker = new NodeChecker(foundNamespaces)
+
+    if (nodeChecker.isRoot(root)) {
       log.info 'Processing {}', file
 
-      processEachNode(root)
+      processEachNode(root, expectations)
     }
     else {
       log.debug 'Skipping file as not a mule file: {}', file
     }
   }
 
-  def processEachNode(Node node) {
-    if (MuleNode.isLogger(node)) {
-      new LoggerValidator().validate(node)
-    } else if (MuleNode.isHttpRequest(node)) {
-      new HttpRequestValidator().validate(node)
+  def processEachNode(Node node, List<Expectation> expectations, NodeChecker nodeChecker) {
+
+    expectations.each {
+      it.handleNode(node, nodeChecker)
     }
-    else {
-      node.children().each { Node it -> processEachNode(it) }
-    }
+
+    node.children().each { Node it -> processEachNode(it, expectations, nodeChecker) }
   }
 }
