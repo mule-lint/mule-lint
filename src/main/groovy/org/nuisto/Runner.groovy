@@ -19,7 +19,7 @@ class Runner {
       System.exit(ErrorCodes.ProvidedDirectoryDoesNotExist)
     }
 
-    log.info 'Using directory: {}', path.absolutePath
+    log.info 'Using source directory: {}', path.absolutePath
     log.info 'Using rules: {}', new File(optionsModel.rules).absolutePath
 
     RulesLoader loader = new RulesLoader()
@@ -41,8 +41,8 @@ class Runner {
     log.debug('Checking {}', file)
 
     Map<String, String> foundNamespaces = new Hashtable<String, String>()
-    def slurper = new PeakNamespacesXmlParser(foundNamespaces)
-    def root = slurper.parse(file)
+    def parser = new PeakNamespacesXmlParser(foundNamespaces)
+    def root = parser.parse(file)
 
     NodeChecker nodeChecker = new NodeChecker(foundNamespaces)
 

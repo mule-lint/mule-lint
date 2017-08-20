@@ -8,11 +8,10 @@ class ElementRule {
   ExpectationBuilder builder
 
   ElementRule(ExpectationBuilder builder) {
-    println 'In constructor*****'
   }
 
   ElementRule version(String version) {
-    log.info 'Parsing a file with the version of ' + version
+    log.info 'Version set to ' + version
 
     if (this.version != null) {
       def message = 'Can not set version once it has already been set'
@@ -26,43 +25,43 @@ class ElementRule {
   }
 
   ElementRule element(String name) {
-    println 'Picked up element of ' + name
+    log.debug 'Picked up element of ' + name
 
     return this
   }
 
   ElementRule hasAttribute(String name) {
-    println 'Something should have attribute of ' + name
+    log.debug 'Something should have attribute of ' + name
 
     return this
   }
 
   ElementRule hasParent(String name) {
-    println 'It should have a parent of ' + name
+    log.debug 'It should have a parent of ' + name
 
     return this
   }
 
   ElementRule hasChild(String name) {
-    println 'It should have child of ' + name
+    log.debug 'It should have child of ' + name
 
     return this
   }
 
   ElementRule withAttribute(String name) {
-    println 'It should have attribute of ' + name
+    log.debug 'It should have attribute of ' + name
 
     return this
   }
 
   ElementRule withValue(String name) {
-    println 'It should have value of ' + name
+    log.debug 'It should have value of ' + name
 
     return this
   }
 
   ElementRule havingValue(String name) {
-    println 'havingValue of ' + name
+    log.debug 'havingValue of ' + name
 
     return this
   }
