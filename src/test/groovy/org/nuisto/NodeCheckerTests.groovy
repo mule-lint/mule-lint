@@ -8,7 +8,7 @@ class MuleNodeTests {
 
     def root = new XmlParser().parseText('<mule> <logger /> </mule>')
 
-    assert MuleNode.isMatch(root.children()[0], 'logger')
+    assert NodeChecker.isMatch(root.children()[0], 'logger')
   }
 
   @Test
@@ -20,7 +20,7 @@ class MuleNodeTests {
 
     def root = new XmlParser().parseText(xml)
 
-    assert MuleNode.isMatch(root.children()[0].children()[0], 'http:request')
+    assert NodeChecker.isMatch(root.children()[0].children()[0], 'http:request')
   }
 
   @Test
@@ -32,6 +32,6 @@ class MuleNodeTests {
 
     def root = new XmlParser().parseText(xml)
 
-    assert false == MuleNode.isMatch(root.children()[0], 'this means nothing')
+    assert false == NodeChecker.isMatch(root.children()[0], 'this means nothing')
   }
 }
