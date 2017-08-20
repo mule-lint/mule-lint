@@ -2,7 +2,7 @@ package org.nuisto
 
 import groovy.util.logging.Slf4j
 
-@Slf4j(category = 'org.nuisto.mat')
+@Slf4j(category = 'org.nuisto.msa')
 class ElementRule {
   String version
   ExpectationBuilder builder

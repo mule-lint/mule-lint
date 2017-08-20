@@ -14,7 +14,7 @@ ImportCustomizer: add transparent imports
 ASTTransformationCustomizer: injects an AST transform
 SecureASTCustomizer: restrict the groovy language to an allowed subset
 */
-@Slf4j(category = 'org.nuisto.mat')
+@Slf4j(category = 'org.nuisto.msa')
 class RulesLoader {
   SecureASTCustomizer restrictEnvironment() {
 
@@ -56,7 +56,7 @@ class RulesLoader {
     def importCustomizer = new ImportCustomizer()
     //importCustomizer.addStaticStars Direction.class.name
     importCustomizer.addStaticStars 'java.lang.Math'
-    importCustomizer.addStaticStars MuleNode.class.name
+    importCustomizer.addStaticStars NodeChecker.class.name
 
     def config = new CompilerConfiguration()
     config.addCompilationCustomizers importCustomizer
