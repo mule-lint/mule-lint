@@ -46,7 +46,7 @@ class ExpectationBuilderTests {
     builder.element('two')
 
     builder.expectations.each {
-      assert it.success
+      assert it.isPassing()
     }
   }
 }
