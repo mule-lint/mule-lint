@@ -1,5 +1,6 @@
 package org.nuisto
 
+import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
 
 @Slf4j(category = 'org.nuisto.msa')
@@ -29,11 +30,30 @@ class Runner {
 
     log.info 'Found {} files', txtFiles.size()
 
+    Map<String, List<String> > expectationFindings = [:]
+
+
     txtFiles.each {
       processFile(it, expectations)
 
-      logFindings(it, expectations, optionsModel)
+      expectationFindings.put(it, expectations.findings.flatten())
+
+      expectations.each { it.reset() }
     }
+
+    def json = new JsonBuilder()
+    def root = json {
+      version '0.0.1'
+
+      findings expectationFindings.collect { k, v ->
+        [
+          "file": k,
+          "messages": v
+        ]
+      }
+    }
+
+    println 'We have -> ' + json.toString()
 
     return 0
   }
@@ -65,13 +85,5 @@ class Runner {
     }
 
     node.children().each { Node it -> processEachNode(it, expectations, nodeChecker) }
-  }
-
-  def logFindings(String file, List<Expectation> expectations, OptionsModel optionsModel) {
-    expectations.each { expectation ->
-      expectation.findings.each { finding ->
-        println 'Yep -- we have a finding ' + finding.toString()
-      }
-    }
   }
 }
