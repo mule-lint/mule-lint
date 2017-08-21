@@ -14,6 +14,8 @@ class Expectation {
   String elementName
   Map<String, List<String> > attributes = [:]
 
+  List<String> findings = []
+
   boolean isElementNameFound() {
     return elementFound
   }
@@ -31,21 +33,35 @@ class Expectation {
   void handleNode(Node node, NodeChecker nodeChecker) {
     if (nodeChecker.isMatch(node, elementName)) {
       elementFound = true
-      log.error 'We have a match!'
+      log.debug 'We matched on element {}', elementName
 
       if (checkForAttribute) {
         passing = false
         def foundEntry = attributes.find { k, v ->
 
-          if (!node.attributes().containsKey(k))
+          if (!node.attributes().containsKey(k)) {
+            //Node does not contain the attribute we are looking to validate
+            println 'QWERQWRQWERQ'
+            findings << "Element $elementName does not contain the attribute $k"
             return false
+          }
 
           String foundValue = node.attribute(k)
 
-          if (v == null)
+          if (v == null) {
+            //No value to check against, so this is purely just checking if it exists.
             return true
-          else
-            return v.contains(foundValue)
+          }
+          else {
+            //Check against the list of allowed values
+            if (v.contains(foundValue)) {
+              return true
+            }
+            else {
+              findings << "Element $elementName has attribute $k but $v is an invalid value"
+              return false
+            }
+          }
         }
 
         passing = foundEntry != null
