@@ -1,4 +1,4 @@
-# Mule Statis Analysis
+# Mule Lint Project
 
 We believe building some types of software are not trivial and when there are
 many applications, it is a good thing to make sure you have some consistency
@@ -68,8 +68,8 @@ These instructions will get you a copy of the project up and running on your loc
 This project is build with Gradle 4.1-rc-1, Maven 3.5.0, and Java 1.8.0_121.
 
 ```
-$ git clone git@github.com:Nuisto/mule-static-analysis.git
-$ cd mule-static-analysis
+$ git clone git@github.com:Nuisto/mule-lint.git
+$ cd mule-lint
 $ gradle build
 ```
 
@@ -122,17 +122,17 @@ Add additional notes about how to deploy this on a live system
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/nuisto/mule-static-analysis) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/nuisto/mule-lint/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/nuisto/mule-static-analysisyour/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/nuisto/mule-lint/tags). 
 
 ## Authors
 
 * **Chad Gorshing** - *Initial work* - [cgorshing](https://gens.io/profile/cgorshing)
 
-See also the list of [contributors](https://github.com/nuisto/mule-static-analysis/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/nuisto/mule-lint/contributors) who participated in this project.
 
 ## License
 
@@ -143,4 +143,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 as this
   was the starting point of this README and other project related files
 
-[![Analytics](https://beacon-cgorshing.appspot.com/UA-24556575-4/nuisto/mule-static-analysis/README.md?pixel)](https://github.com/nuisto/mule-static-analysis/README.md)
+[![Analytics](https://beacon-cgorshing.appspot.com/UA-24556575-4/nuisto/mule-lint/README.md?pixel)](https://github.com/nuisto/mule-lint/README.md)
