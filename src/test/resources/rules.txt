@@ -3,8 +3,8 @@ version '0.0.1'
 
 element 'logger' hasAttribute 'category'
 
-element 'logger' hasParent 'until-successful'
+//element 'logger' hasParent 'until-successful'
 
-element 'http:request' hasChild 'User-Agent'
+//element 'http:request' hasChild 'User-Agent'
 
-element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingValue 'User-Agent' withAttribute 'value' havingValue 'my-bot-name 1.0'
+//element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingValue 'User-Agent' withAttribute 'value' havingValue 'my-bot-name 1.0'
