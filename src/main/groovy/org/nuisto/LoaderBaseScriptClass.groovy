@@ -11,7 +11,7 @@ abstract class LoaderBaseScriptClass extends Script {
   ElementRule version(String version) {
     this.binding.elementRule.version(version)
 
-    this.binding.elementRule = new ElementRule()
+    this.binding.elementRule = new ElementRule(this.binding.elementRule.builder)
 
     return this.binding.elementRule
   }
