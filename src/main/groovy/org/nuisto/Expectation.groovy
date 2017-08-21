@@ -7,14 +7,39 @@ import groovy.util.logging.Slf4j
  */
 @Slf4j(category = 'org.nuisto.msa')
 class Expectation {
-  boolean elementFound = false
-  boolean passing = true
-  boolean checkForAttribute = false
+  boolean elementFound
+  boolean passing
+  boolean checkForAttribute
 
   String elementName
-  Map<String, List<String> > attributes = [:]
+  Map<String, List<String> > attributes
 
-  List<String> findings = []
+  List<String> findings
+
+  Expectation() {
+    init()
+  }
+
+  void init() {
+    elementFound = false
+    passing = true
+    checkForAttribute = false
+    elementName = null
+    attributes = [:]
+    findings = []
+  }
+
+  /**
+   * We have to have some notion of "resetting" based upon a new file.
+   *
+   * An expectation is based on a file, when we have a new file, then the expectation should be reset.
+   *
+   * Might turn this into more like event based "onNewFile", but I'm not sure about that.
+   */
+  void reset() {
+    log.debug 'Resetting expectation per new file.'
+    init()
+  }
 
   boolean isElementNameFound() {
     return elementFound
@@ -41,7 +66,6 @@ class Expectation {
 
           if (!node.attributes().containsKey(k)) {
             //Node does not contain the attribute we are looking to validate
-            println 'QWERQWRQWERQ'
             findings << "Element $elementName does not contain the attribute $k"
             return false
           }
