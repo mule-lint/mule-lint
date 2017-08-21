@@ -15,7 +15,7 @@ class MuleStaticAnalysis {
       h longOpt: 'help', 'Show usage information'
       r longOpt: 'rules',     args: 1, argName: 'path', 'Required. The path to a set of rules.'
       s longOpt: 'sources',   args: 1, argName: 'sources', 'The directory name of where the source files are located, default: src/main'
-      N(longOpt: 'namespace', args: 2, valueSeparator:'=', argName:'prefix=uri', 'Namespace prefix and uri to use')
+      o longOpt: 'output',    args: 1, argName: 'path', 'The file name to write json results to.'
     }
 
     def options = cli.parse(args)
@@ -44,6 +44,10 @@ class MuleStaticAnalysis {
     }
     else {
       optionsModel.sourceDirectory = 'src/main'
+    }
+
+    if (options.o) {
+      optionsModel.resultsFile = options.o
     }
 
     runWithModel(optionsModel)
