@@ -3,13 +3,13 @@ package org.nuisto
 import groovy.util.logging.Slf4j
 
 @Slf4j(category = 'org.nuisto.msa')
-class MuleStaticAnalysis {
+class MuleLint {
   static void main(String [] args) {
     new MuleStaticAnalysis().run(args)
   }
 
   int run(String [] args) {
-    def cli = new CliBuilder(usage: 'mule-static-analysis.groovy -[hdr] -s <sourceDirectory> -r <rules>')
+    def cli = new CliBuilder(usage: 'mule-lint.groovy -[hdr] -s <sourceDirectory> -r <rules>')
     // Create the list of options.
     cli.with {
       h longOpt: 'help', 'Show usage information'
