@@ -31,6 +31,8 @@ class Runner {
 
     txtFiles.each {
       processFile(it, expectations)
+
+      logFindings(it, expectations, optionsModel)
     }
 
     return 0
@@ -49,7 +51,7 @@ class Runner {
     if (nodeChecker.isRoot(root)) {
       log.info 'Processing {}', file
 
-      processEachNode(root, expectations)
+      processEachNode(root, expectations, nodeChecker)
     }
     else {
       log.debug 'Skipping file as not a mule file: {}', file
@@ -63,5 +65,13 @@ class Runner {
     }
 
     node.children().each { Node it -> processEachNode(it, expectations, nodeChecker) }
+  }
+
+  def logFindings(String file, List<Expectation> expectations, OptionsModel optionsModel) {
+    expectations.each { expectation ->
+      expectation.findings.each { finding ->
+        println 'Yep -- we have a finding ' + finding.toString()
+      }
+    }
   }
 }
