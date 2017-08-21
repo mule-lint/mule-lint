@@ -8,6 +8,7 @@ class ElementRule {
   ExpectationBuilder builder
 
   ElementRule(ExpectationBuilder builder) {
+    this.builder = builder
   }
 
   ElementRule version(String version) {
@@ -27,43 +28,33 @@ class ElementRule {
   ElementRule element(String name) {
     log.debug 'Picked up element of ' + name
 
+    builder.element(name)
+
     return this
   }
 
   ElementRule hasAttribute(String name) {
     log.debug 'Something should have attribute of ' + name
 
+    builder.hasAttribute(name)
+
     return this
   }
 
   ElementRule hasParent(String name) {
-    log.debug 'It should have a parent of ' + name
-
-    return this
+    throw new UnsupportedOperationException('Not yet implemented')
   }
 
   ElementRule hasChild(String name) {
-    log.debug 'It should have child of ' + name
-
-    return this
+    throw new UnsupportedOperationException('Not yet implemented')
   }
 
   ElementRule withAttribute(String name) {
-    log.debug 'It should have attribute of ' + name
-
-    return this
+    throw new UnsupportedOperationException('Not yet implemented')
   }
 
   ElementRule withValue(String name) {
-    log.debug 'It should have value of ' + name
-
-    return this
-  }
-
-  ElementRule havingValue(String name) {
-    log.debug 'havingValue of ' + name
-
-    return this
+    throw new UnsupportedOperationException('Not yet implemented')
   }
 }
 
