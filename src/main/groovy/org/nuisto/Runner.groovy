@@ -53,7 +53,18 @@ class Runner {
       }
     }
 
-    println 'We have -> ' + json.toString()
+    if (optionsModel.resultsFile != null) {
+      File file = new File(optionsModel.resultsFile)
+
+      println file.absolutePath
+
+      file.write(json.toPrettyString())
+    }
+    else {
+      def msg = 'Output file was not specified, this is probably use less with it. But looking for suggestions.'
+      log.error(msg)
+      System.err.println msg
+    }
 
     return 0
   }
