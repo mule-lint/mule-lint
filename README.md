@@ -63,6 +63,12 @@ element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingV
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Maven
+If you are just wanting to use this with a Maven build, then please refer to
+(mule-lint-maven-plugin project)[https://github.com/nuisto/mule-lint] which
+provides a much easier way of invocoation rather than calling this project
+directly.
+
 ### Prerequisites
 
 This project is build with Gradle 4.1-rc-1, Maven 3.5.0, and Java 1.8.0_121.
