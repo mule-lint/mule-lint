@@ -1,9 +1,18 @@
 version '0.0.1'
 
 element 'logger' hasAttribute 'category'
+element 'logger' hasAttribute 'category', 'com.example'
+element 'logger' hasAttribute 'category', ['com.example', 'com.example.integration']
 
-//element 'logger' hasParent 'until-successful'
+//v 0.0.2
+element 'logger' hasParent 'until-successful'
 
+element 'logger' hasMatchingAttribute 'category', 'com.example.*'
+element 'logger' hasAttributeStartingWith 'category', 'com.example'
+element 'logger' hasAttribute 'category' startingWith 'com.example'
+
+
+//Version number to be determined
 //element 'http:request' hasChild 'User-Agent'
 
 //element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingValue 'User-Agent' withAttribute 'value' havingValue 'my-bot-name 1.0'
