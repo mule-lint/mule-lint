@@ -30,6 +30,10 @@ class ExpectationBuilder {
     currentExpectation.hasAttribute(attribute, values)
   }
 
+  void hasParent(String parent) {
+    currentExpectation.hasParent(parent)
+  }
+
   List<Expectation> getExpectations() {
     return expectations
   }

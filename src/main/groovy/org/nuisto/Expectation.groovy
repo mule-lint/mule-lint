@@ -11,6 +11,8 @@ class Expectation {
   boolean passing
   boolean checkForAttribute
 
+  String parent
+
   String elementName
   Map<String, List<String> > attributes
 
@@ -60,36 +62,9 @@ class Expectation {
       elementFound = true
       log.debug 'We matched on element {}', elementName
 
-      if (checkForAttribute) {
-        passing = false
-        def foundEntry = attributes.find { k, v ->
+      validateParent(node, nodeChecker)
 
-          if (!node.attributes().containsKey(k)) {
-            //Node does not contain the attribute we are looking to validate
-            findings << "Element $elementName does not contain the attribute $k"
-            return false
-          }
-
-          String foundValue = node.attribute(k)
-
-          if (v == null) {
-            //No value to check against, so this is purely just checking if it exists.
-            return true
-          }
-          else {
-            //Check against the list of allowed values
-            if (v.contains(foundValue)) {
-              return true
-            }
-            else {
-              findings << "Element $elementName has attribute $k but $v is an invalid value"
-              return false
-            }
-          }
-        }
-
-        passing = foundEntry != null
-      }
+      validateAttributes(node, nodeChecker)
     }
   }
 
@@ -113,5 +88,60 @@ class Expectation {
     attributes.put(attribute, values)
 
     return this
+  }
+
+  Expectation hasParent(String parent) {
+    if (this.parent != null) throw new IllegalArgumentException('Parent already specified')
+
+    this.parent = parent
+
+    return this
+
+  }
+
+  void validateAttributes(Node node, NodeChecker nodeChecker) {
+    if (checkForAttribute) {
+      passing = false
+      def foundEntry = attributes.find { k, v ->
+
+        if (!node.attributes().containsKey(k)) {
+          //Node does not contain the attribute we are looking to validate
+          findings << "Element $elementName does not contain the attribute $k"
+          return false
+        }
+
+        String foundValue = node.attribute(k)
+
+        if (v == null) {
+          //No value to check against, so this is purely just checking if it exists.
+          return true
+        }
+        else {
+          //Check against the list of allowed values
+          if (v.contains(foundValue)) {
+            return true
+          }
+          else {
+            findings << "Element $elementName has attribute $k but $v is an invalid value"
+            return false
+          }
+        }
+      }
+
+      passing = foundEntry != null
+    }
+  }
+
+  void validateParent(Node node, NodeChecker nodeChecker) {
+    if (parent != null) {
+      passing = false
+
+      if (!nodeChecker.isMatch(node.parent(), parent)) {
+        findings << "Element $elementName does not have a parent of $parent"
+      }
+      else {
+        passing = true
+      }
+    }
   }
 }
