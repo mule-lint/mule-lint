@@ -1,4 +1,3 @@
-//move left
 version '0.0.1'
 
 element 'logger' hasAttribute 'category'

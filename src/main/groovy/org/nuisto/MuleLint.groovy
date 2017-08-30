@@ -5,7 +5,7 @@ import groovy.util.logging.Slf4j
 @Slf4j(category = 'org.nuisto.msa')
 class MuleLint {
   static void main(String [] args) {
-    new MuleStaticAnalysis().run(args)
+    new MuleLint().run(args)
   }
 
   int run(String [] args) {
