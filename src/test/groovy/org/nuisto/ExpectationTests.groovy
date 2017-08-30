@@ -110,4 +110,24 @@ class ExpectationTests {
 
     assert expectation.isElementFound() && !expectation.isPassing()
   }
+
+  @Test(expected = IllegalArgumentException)
+  void elementHasParentFailsWhenCalledTwice() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('logger').hasParent('first').hasParent('second')
+  }
+
+  @Test
+  void elementHasParentValidates() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('logger').hasParent('mule')
+
+    def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
+
+    expectation.handleNode(root.logger, nodeChecker)
+
+    assert expectation.isElementFound() && expectation.isPassing()
+  }
 }

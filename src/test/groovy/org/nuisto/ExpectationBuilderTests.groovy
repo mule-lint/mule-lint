@@ -49,4 +49,16 @@ class ExpectationBuilderTests {
       assert it.isPassing()
     }
   }
+
+  @Test
+  void worksWithHasParent() {
+    ExpectationBuilder builder = new ExpectationBuilder()
+
+    builder.element('one')
+    builder.hasParent('asdf')
+
+    builder.expectations.each {
+      assert it.isPassing()
+    }
+  }
 }
