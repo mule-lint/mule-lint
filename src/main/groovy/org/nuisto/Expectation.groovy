@@ -16,19 +16,19 @@ class Expectation {
   String elementName
   Map<String, List<String> > attributes
 
-  List<String> findings
+  List<Infraction> findings
 
   Expectation() {
+    elementName = null
+    checkForAttribute = false
+    attributes = [:]
+    findings = []
     init()
   }
 
   void init() {
     elementFound = false
     passing = true
-    checkForAttribute = false
-    elementName = null
-    attributes = [:]
-    findings = []
   }
 
   /**
@@ -64,7 +64,7 @@ class Expectation {
 
       validateParent(node, nodeChecker)
 
-      validateAttributes(node, nodeChecker)
+      validateAttributes(node)
     }
   }
 
@@ -99,14 +99,15 @@ class Expectation {
 
   }
 
-  void validateAttributes(Node node, NodeChecker nodeChecker) {
+  void validateAttributes(Node node) {
     if (checkForAttribute) {
       passing = false
       def foundEntry = attributes.find { k, v ->
 
         if (!node.attributes().containsKey(k)) {
           //Node does not contain the attribute we are looking to validate
-          findings << "Element $elementName does not contain the attribute $k"
+
+          findings << new Infraction(message: "Element $elementName does not contain the attribute $k", lineNumber: node.@_msaLineNumber.toInteger())
           return false
         }
 
@@ -122,7 +123,7 @@ class Expectation {
             return true
           }
           else {
-            findings << "Element $elementName has attribute $k but $v is an invalid value"
+            findings << new Infraction(message: "Element $elementName has attribute $k but $v is an invalid value", lineNumber: node.@_msaLineNumber)
             return false
           }
         }
@@ -137,7 +138,7 @@ class Expectation {
       passing = false
 
       if (!nodeChecker.isMatch(node.parent(), parent)) {
-        findings << "Element $elementName does not have a parent of $parent"
+        findings << new Infraction(message: "Element $elementName does not have a parent of $parent", lineNumber: node.@_msaLineNumber)
       }
       else {
         passing = true
