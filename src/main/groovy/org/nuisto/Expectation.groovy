@@ -107,7 +107,7 @@ class Expectation {
         if (!node.attributes().containsKey(k)) {
           //Node does not contain the attribute we are looking to validate
 
-          findings << new Infraction(message: "Element $elementName does not contain the attribute $k", lineNumber: node.@_msaLineNumber.toInteger())
+          findings << new Infraction(message: "Element $elementName does not contain the attribute $k", lineNumber: findLineNumber(node))
           return false
         }
 
@@ -123,7 +123,7 @@ class Expectation {
             return true
           }
           else {
-            findings << new Infraction(message: "Element $elementName has attribute $k but $v is an invalid value", lineNumber: node.@_msaLineNumber)
+            findings << new Infraction(message: "Element $elementName has attribute $k but $v is an invalid value", lineNumber: findLineNumber(node))
             return false
           }
         }
@@ -131,6 +131,11 @@ class Expectation {
 
       passing = foundEntry != null
     }
+  }
+
+  int findLineNumber(Node node) {
+    String lineNumber = node.@_msaLineNumber
+    lineNumber == null ? -1 : lineNumber.toInteger()
   }
 
   void validateParent(Node node, NodeChecker nodeChecker) {
