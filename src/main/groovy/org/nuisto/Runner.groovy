@@ -30,13 +30,18 @@ class Runner {
 
     log.info 'Found {} files', txtFiles.size()
 
-    Map<String, List<String> > expectationFindings = [:]
+    Map<String, List<Infraction> > expectationFindings = [:]
 
 
     txtFiles.each {
       processFile(it, expectations)
 
-      expectationFindings.put(it, expectations.findings.flatten())
+      //TODO There might be times where the user wants to explicitly see "0" infractions for a file.
+      //A user might like to see this so they know for sure the file was looked at.
+      //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
+      //Could also use this as a trending chart
+      if (expectations.findings.flatten().size() > 0)
+        expectationFindings.put(it, expectations.findings.flatten())
 
       expectations.each { it.reset() }
     }
@@ -45,10 +50,10 @@ class Runner {
     def root = json {
       version '0.0.1'
 
-      findings expectationFindings.collect { k, v ->
+      findings expectationFindings.collect { String fileName, List<Infraction> infractions ->
         [
-          "file": k,
-          "messages": v
+          'file'    : fileName,
+          'messages': infractions
         ]
       }
     }
@@ -95,6 +100,9 @@ class Runner {
       it.handleNode(node, nodeChecker)
     }
 
-    node.children().each { Node it -> processEachNode(it, expectations, nodeChecker) }
+    node.children().each { it ->
+      // There are times when the Node could be a text node and in that case, we get a String
+      if (it instanceof Node) processEachNode((Node)it, expectations, nodeChecker)
+    }
   }
 }
