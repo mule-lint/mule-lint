@@ -1,4 +1,4 @@
-package org.nuisto
+package org.nuisto.model
 
 class OptionsModel {
   String rules

@@ -1,4 +1,6 @@
-package org.nuisto
+package org.nuisto.aggregator
+
+import org.nuisto.NodeChecker
 
 class LoggerOccurrenceAggregator implements Aggregator {
 
