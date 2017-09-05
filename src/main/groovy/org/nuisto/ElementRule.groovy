@@ -42,7 +42,11 @@ class ElementRule {
   }
 
   ElementRule hasParent(String name) {
-    throw new UnsupportedOperationException('Not yet implemented')
+    log.debug 'hasParent specified ' + name
+
+    builder.hasParent(name)
+
+    return this
   }
 
   ElementRule hasChild(String name) {
