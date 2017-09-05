@@ -25,35 +25,51 @@ class Runner {
 
     RulesLoader loader = new RulesLoader()
     List<Expectation> expectations = loader.load(optionsModel)
+    List<Aggregator> aggregators = [
+      new LoggerOccurrenceAggregator()
+    ]
 
     def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, '**/*.xml' /* includes */, 'pom.xml **/*.pdf' /* excludes */)
 
     log.info 'Found {} files', txtFiles.size()
 
     Map<String, List<Infraction> > expectationFindings = [:]
+    Map<String, Map<String, Integer> > aggregationTotals = [:]
 
 
-    txtFiles.each {
-      processFile(it, expectations)
+    txtFiles.each { fileName ->
+      processFile(fileName, expectations, aggregators)
 
       //TODO There might be times where the user wants to explicitly see "0" infractions for a file.
       //A user might like to see this so they know for sure the file was looked at.
       //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
       //Could also use this as a trending chart
       if (expectations.findings.flatten().size() > 0)
-        expectationFindings.put(it, expectations.findings.flatten())
+        expectationFindings.put(fileName, expectations.findings.flatten())
 
       expectations.each { it.reset() }
+
+      aggregators.each {
+        def foo = it.totals
+        aggregationTotals.put(fileName, foo)
+      }
+
+      aggregators.each { it.reset() }
     }
 
     def json = new JsonBuilder()
-    def root = json {
+    json {
       version '0.0.1'
 
       findings expectationFindings.collect { String fileName, List<Infraction> infractions ->
         [
           'file'    : fileName,
-          'messages': infractions
+          'messages': infractions,
+          'aggregations': aggregationTotals[fileName].collect { message, value ->
+            [
+              (message): value
+            ]
+          }
         ]
       }
     }
@@ -66,7 +82,7 @@ class Runner {
       file.write(json.toPrettyString())
     }
     else {
-      def msg = 'Output file was not specified, this is probably use less with it. But looking for suggestions.'
+      def msg = 'Output file was not specified, this is probably useless with it. But looking for suggestions.'
       log.error(msg)
       System.err.println msg
     }
@@ -74,7 +90,7 @@ class Runner {
     return 0
   }
 
-  def processFile(String file, List<Expectation> expectations) {
+  def processFile(String file, List<Expectation> expectations, List<Aggregator> aggregators) {
 
     log.debug('Checking {}', file)
 
@@ -87,22 +103,26 @@ class Runner {
     if (nodeChecker.isRoot(root)) {
       log.info 'Processing {}', file
 
-      processEachNode(root, expectations, nodeChecker)
+      processEachNode(root, expectations, aggregators, nodeChecker)
     }
     else {
       log.debug 'Skipping file as not a mule file: {}', file
     }
   }
 
-  def processEachNode(Node node, List<Expectation> expectations, NodeChecker nodeChecker) {
+  def processEachNode(Node node, List<Expectation> expectations, List<Aggregator> aggregators, NodeChecker nodeChecker) {
 
     expectations.each {
       it.handleNode(node, nodeChecker)
     }
 
+    aggregators.each {
+      it.handleNode(node, nodeChecker)
+    }
+
     node.children().each { it ->
       // There are times when the Node could be a text node and in that case, we get a String
-      if (it instanceof Node) processEachNode((Node)it, expectations, nodeChecker)
+      if (it instanceof Node) processEachNode((Node)it, expectations, aggregators, nodeChecker)
     }
   }
 }
