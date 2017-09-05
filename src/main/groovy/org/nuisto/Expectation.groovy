@@ -97,7 +97,6 @@ class Expectation {
     this.parent = parent
 
     return this
-
   }
 
   void validateAttributes(Node node) {
@@ -108,7 +107,11 @@ class Expectation {
         if (!node.attributes().containsKey(k)) {
           //Node does not contain the attribute we are looking to validate
 
-          findings << new Infraction(message: "Element $elementName does not contain the attribute $k", lineNumber: findLineNumber(node))
+          findings << new Infraction(
+                  element: elementName,
+                  message: "Element $elementName does not contain the attribute $k",
+                  lineNumber: findLineNumber(node),
+                  category: 'InvalidAttribute')
           return false
         }
 
@@ -124,7 +127,11 @@ class Expectation {
             return true
           }
           else {
-            findings << new Infraction(message: "Element $elementName has attribute $k but $v is an invalid value", lineNumber: findLineNumber(node))
+            findings << new Infraction(
+                    element: elementName,
+                    message: "Element $elementName has attribute $k but $v is an invalid value",
+                    lineNumber: findLineNumber(node),
+                    category: 'InvalidAttribute')
             return false
           }
         }
@@ -144,7 +151,11 @@ class Expectation {
       passing = false
 
       if (!nodeChecker.isMatch(node.parent(), parent)) {
-        findings << new Infraction(message: "Element $elementName does not have a parent of $parent", lineNumber: node.@_msaLineNumber)
+        findings << new Infraction(
+                element: elementName,
+                message: "Element $elementName does not have a parent of $parent",
+                lineNumber: findLineNumber(node),
+                category: 'InvalidParent')
       }
       else {
         passing = true
