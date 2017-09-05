@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.ImportCustomizer
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
+import org.nuisto.model.OptionsModel
 
 import static org.codehaus.groovy.syntax.Types.*
 

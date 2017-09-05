@@ -1,6 +1,7 @@
 package org.nuisto
 
 import groovy.util.logging.Slf4j
+import org.nuisto.model.OptionsModel
 
 @Slf4j(category = 'org.nuisto.msa')
 class MuleLint {

@@ -2,6 +2,10 @@ package org.nuisto
 
 import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
+import org.nuisto.aggregator.Aggregator
+import org.nuisto.aggregator.LoggerOccurrenceAggregator
+import org.nuisto.model.Infraction
+import org.nuisto.model.OptionsModel
 
 @Slf4j(category = 'org.nuisto.msa')
 class Runner {
@@ -50,8 +54,7 @@ class Runner {
       expectations.each { it.reset() }
 
       aggregators.each {
-        def foo = it.totals
-        aggregationTotals.put(fileName, foo)
+        aggregationTotals.put(fileName, it.totals)
       }
 
       aggregators.each { it.reset() }

@@ -1,6 +1,7 @@
 package org.nuisto
 
 import groovy.util.logging.Slf4j
+import org.nuisto.model.Infraction
 
 /**
  * The "has" operations set things up differently than the "having" operations
