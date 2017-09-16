@@ -2,7 +2,7 @@ package org.nuisto
 
 import org.junit.Test
 
-class MuleStaticAnalysisTest {
+class MuleLintTest {
   @Test
   void testSomething() {
     new MuleLint()
