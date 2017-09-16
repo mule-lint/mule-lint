@@ -118,7 +118,7 @@ class Expectation {
         String foundValue = node.attribute(k)
 
         if (v == null) {
-          //No value to check against, so this is purely just checking if it exists.
+          //No value to check against, so this is purely just checking if the attribute exists.
           return true
         }
         else {
@@ -142,6 +142,7 @@ class Expectation {
   }
 
   int findLineNumber(Node node) {
+    //The _msaLineNumber is set in the "PeakNamespacesXmlParser" class
     String lineNumber = node.@_msaLineNumber
     lineNumber == null ? -1 : lineNumber.toInteger()
   }
