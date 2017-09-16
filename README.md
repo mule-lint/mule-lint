@@ -40,13 +40,14 @@ are:
   logging format?
 * Do we have any logger that references `#[payload]`
 * Do we have any logger that does not reference (context specific)
-  `transactionid`?
+  `transactionId`?
 
 ## Initial Rule Format
 There are quite a few things we want to do, but to get out a [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product)
 we are trying to find something that is easier for us to deliver, then to improve upon later.
 
 This is what we are working towards for a `rules.groovy` example:
+
 ```
 version '0.0.1'
 
@@ -61,11 +62,11 @@ element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingV
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Maven
 If you are just wanting to use this with a Maven build, then please refer to
-(mule-lint-maven-plugin project)[https://github.com/nuisto/mule-lint] which
+[mule-lint-maven-plugin project](https://github.com/nuisto/mule-lint) which
 provides a much easier way of invocoation rather than calling this project
 directly.
 
@@ -79,47 +80,14 @@ $ cd mule-lint
 $ gradle build
 ```
 
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+All test are ran using Gradle. There are no category of tests (i.e. unit tests or integration tests), everything is packaged together under `src/test/groovy`
 
 ```
-Give an example
+$ gradle build
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
@@ -142,11 +110,10 @@ See also the list of [contributors](https://github.com/nuisto/mule-lint/contribu
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
 
-* Hat tip to https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 as this
-  was the starting point of this README and other project related files
+* Hat tip to [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) as she provided the starting point of this README and other project related files.
 
 [![Analytics](https://beacon-cgorshing.appspot.com/UA-24556575-4/nuisto/mule-lint/README.md?pixel)](https://github.com/nuisto/mule-lint/README.md)
