@@ -23,11 +23,11 @@ class Expectation {
     elementName = null
     checkForAttribute = false
     attributes = [:]
-    findings = []
     init()
   }
 
   void init() {
+    findings = []
     elementFound = false
     passing = true
   }
