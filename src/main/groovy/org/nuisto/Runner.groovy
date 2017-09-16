@@ -24,8 +24,8 @@ class Runner {
       System.exit(ErrorCodes.ProvidedDirectoryDoesNotExist)
     }
 
-    log.info 'Using source directory: {}', path.absolutePath
-    log.info 'Using rules: {}', new File(optionsModel.rules).absolutePath
+    log.debug 'Using source directory: {}', path.absolutePath
+    log.debug 'Using rules: {}', new File(optionsModel.rules).absolutePath
 
     RulesLoader loader = new RulesLoader()
     List<Expectation> expectations = loader.load(optionsModel)
@@ -60,6 +60,8 @@ class Runner {
       aggregators.each { it.reset() }
     }
 
+    log.info 'Found {} infractions.', expectationFindings.size()
+    
     def json = new JsonBuilder()
     json {
       version '0.0.1'
@@ -80,7 +82,7 @@ class Runner {
     if (optionsModel.resultsFile != null) {
       File file = new File(optionsModel.resultsFile)
 
-      println file.absolutePath
+      log.debug('Writing results to {}', file.absolutePath)
 
       file.write(json.toPrettyString())
     }
@@ -104,7 +106,7 @@ class Runner {
     NodeChecker nodeChecker = new NodeChecker(foundNamespaces)
 
     if (nodeChecker.isRoot(root)) {
-      log.info 'Processing {}', file
+      log.debug 'Processing {}', file
 
       processEachNode(root, expectations, aggregators, nodeChecker)
     }
