@@ -60,8 +60,12 @@ class Runner {
       aggregators.each { it.reset() }
     }
 
+
+    //TODO The runner should run and collect the results. Returning the results to the caller. The caller
+    //is responsible for handling the results (i.e. writing to a file)
+
     log.info 'Found {} infractions.', expectationFindings.size()
-    
+
     def json = new JsonBuilder()
     json {
       version '0.0.1'
