@@ -6,9 +6,16 @@ import org.nuisto.aggregator.Aggregator
 import org.nuisto.aggregator.LoggerOccurrenceAggregator
 import org.nuisto.model.Infraction
 import org.nuisto.model.OptionsModel
+import org.nuisto.model.ResultsModel
 
 @Slf4j(category = 'org.nuisto.msa')
 class Runner {
+  ResultsHandler resultsHandler
+
+  Runner(ResultsHandler resultsHandler) {
+    this.resultsHandler = resultsHandler
+  }
+
   int runWithModel(OptionsModel optionsModel) {
     File path = new File(optionsModel.sourceDirectory)
 
@@ -27,6 +34,8 @@ class Runner {
     log.debug 'Using source directory: {}', path.absolutePath
     log.debug 'Using rules: {}', new File(optionsModel.rules).absolutePath
 
+    ResultsModel resultsModel = new ResultsModel()
+
     RulesLoader loader = new RulesLoader()
     List<Expectation> expectations = loader.load(optionsModel)
     List<Aggregator> aggregators = [
@@ -37,10 +46,6 @@ class Runner {
 
     log.info 'Found {} files', txtFiles.size()
 
-    Map<String, List<Infraction> > expectationFindings = [:]
-    Map<String, Map<String, Integer> > aggregationTotals = [:]
-
-
     txtFiles.each { fileName ->
       processFile(fileName, expectations, aggregators)
 
@@ -49,52 +54,18 @@ class Runner {
       //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
       //Could also use this as a trending chart
       if (expectations.findings.flatten().size() > 0)
-        expectationFindings.put(fileName, expectations.findings.flatten())
+        resultsModel.expectationFindings.put(fileName, expectations.findings.flatten())
 
       expectations.each { it.reset() }
 
       aggregators.each {
-        aggregationTotals.put(fileName, it.totals)
+        resultsModel.aggregationTotals.put(fileName, it.totals)
       }
 
       aggregators.each { it.reset() }
     }
 
-
-    //TODO The runner should run and collect the results. Returning the results to the caller. The caller
-    //is responsible for handling the results (i.e. writing to a file)
-
-    log.info 'Found {} infractions.', expectationFindings.size()
-
-    def json = new JsonBuilder()
-    json {
-      version '0.0.1'
-
-      findings expectationFindings.collect { String fileName, List<Infraction> infractions ->
-        [
-          'file'    : fileName,
-          'messages': infractions,
-          'aggregations': aggregationTotals[fileName].collect { message, value ->
-            [
-              (message): value
-            ]
-          }
-        ]
-      }
-    }
-
-    if (optionsModel.resultsFile != null) {
-      File file = new File(optionsModel.resultsFile)
-
-      log.debug('Writing results to {}', file.absolutePath)
-
-      file.write(json.toPrettyString())
-    }
-    else {
-      def msg = 'Output file was not specified, this is probably useless with it. But looking for suggestions.'
-      log.error(msg)
-      System.err.println msg
-    }
+    resultsHandler.handleResults(optionsModel, resultsModel)
 
     return 0
   }

@@ -61,6 +61,6 @@ class MuleLint {
   }
 
   int runWithModel(OptionsModel model) {
-    return new Runner().runWithModel(model)
+    return new Runner(new ResultsHandler()).runWithModel(model)
   }
 }
