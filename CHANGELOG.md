@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+### Changed
+- The aggregators section in the result json is now an object instead of an
+  array.
+### Deprecated
+### Removed
+### Fixed
+### Security
 
 ## [0.3.0] - 2014-09-16
 ### Added

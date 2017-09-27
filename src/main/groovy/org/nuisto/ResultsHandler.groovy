@@ -21,12 +21,13 @@ class ResultsHandler {
 
       findings resultsModel.expectationFindings.collect { String fileName, List<Infraction> infractions ->
         [
-          'file'    : fileName,
-          'messages': infractions,
-          'aggregations': resultsModel.aggregationTotals[fileName].collect { message, value ->
-            [
-              (message): value
-            ]
+          file    : fileName,
+          messages: infractions,
+
+          aggregations: {
+            resultsModel.aggregationTotals[fileName].each { aggregateName, value ->
+              "$aggregateName" value
+            }
           }
         ]
       }

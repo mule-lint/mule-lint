@@ -3,6 +3,7 @@ package org.nuisto
 import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
 import org.nuisto.aggregator.Aggregator
+import org.nuisto.aggregator.FlowOccurrenceAggregator
 import org.nuisto.aggregator.LoggerOccurrenceAggregator
 import org.nuisto.model.Infraction
 import org.nuisto.model.OptionsModel
@@ -39,7 +40,8 @@ class Runner {
     RulesLoader loader = new RulesLoader()
     List<Expectation> expectations = loader.load(optionsModel)
     List<Aggregator> aggregators = [
-      new LoggerOccurrenceAggregator()
+      new LoggerOccurrenceAggregator(),
+      new FlowOccurrenceAggregator()
     ]
 
     def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, '**/*.xml' /* includes */, 'pom.xml **/*.pdf' /* excludes */)
@@ -61,6 +63,13 @@ class Runner {
       aggregators.each {
         resultsModel.aggregationTotals.put(fileName, it.totals)
       }
+
+      Map<String, Integer> aggTotals = [:]
+      aggregators.each { Aggregator aggregator ->
+        aggTotals += aggregator.totals
+      }
+
+      resultsModel.aggregationTotals.put(fileName, aggTotals)
 
       aggregators.each { it.reset() }
     }
