@@ -17,7 +17,7 @@ class ResultsHandler {
 
     def json = new JsonBuilder()
     json {
-      version '0.0.1'
+      version '0.0.2'
 
       findings resultsModel.expectationFindings.collect { String fileName, List<Infraction> infractions ->
         [
