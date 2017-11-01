@@ -1,11 +1,9 @@
 package org.nuisto
 
-import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
 import org.nuisto.aggregator.Aggregator
 import org.nuisto.aggregator.FlowOccurrenceAggregator
 import org.nuisto.aggregator.LoggerOccurrenceAggregator
-import org.nuisto.model.Infraction
 import org.nuisto.model.OptionsModel
 import org.nuisto.model.ResultsModel
 

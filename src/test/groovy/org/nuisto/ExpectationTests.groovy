@@ -29,7 +29,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger /> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
 
     assert expectation.isElementNameFound()
   }
@@ -42,7 +42,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger category=""/> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
 
     assert expectation.isElementFound() && expectation.isPassing()
   }
@@ -55,7 +55,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger/> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
 
     assert expectation.isElementFound() && !expectation.isPassing()
   }
@@ -68,7 +68,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
   }
 
   @Test
@@ -80,7 +80,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
 
     assert expectation.isElementFound() && !expectation.isPassing()
   }
@@ -93,7 +93,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger category="correct-category"/> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
 
     assert expectation.isElementFound() && expectation.isPassing()
   }
@@ -106,7 +106,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
 
     assert expectation.isElementFound() && !expectation.isPassing()
   }
@@ -126,7 +126,7 @@ class ExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
 
-    expectation.handleNode(root.logger, nodeChecker)
+    expectation.handleNode(root.logger[0], nodeChecker)
 
     assert expectation.isElementFound() && expectation.isPassing()
   }
