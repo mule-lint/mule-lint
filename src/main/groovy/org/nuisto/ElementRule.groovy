@@ -49,6 +49,22 @@ class ElementRule {
     return this
   }
 
+  ElementRule hasPriorSibling(String name) {
+    log.debug 'hasPriorSibling specified ' + name
+
+    builder.hasPriorSibling(name)
+
+    return this
+  }
+
+  ElementRule hasFollowingSibling(String name) {
+    log.debug 'hasFollowingSibling specified ' + name
+
+    builder.hasFollowingSibling(name)
+
+    return this
+  }
+
   ElementRule hasChild(String name) {
     throw new UnsupportedOperationException('Not yet implemented')
   }

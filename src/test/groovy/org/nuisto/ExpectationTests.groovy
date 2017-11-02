@@ -1,13 +1,12 @@
 package org.nuisto
 
-import org.junit.Ignore
 import org.junit.Test
 
 class ExpectationTests {
   NodeChecker nodeChecker
 
   Expectation simpleSetup() {
-    nodeChecker = new NodeChecker(['core': ['wqer']])
+    nodeChecker = new NodeChecker(['core': 'wqer', 'http': 'http://www.mulesoft.org/schema/mule/http'])
 
     Expectation expectation = new Expectation()
 
@@ -127,6 +126,96 @@ class ExpectationTests {
     def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
 
     expectation.handleNode(root.logger[0], nodeChecker)
+
+    assert expectation.isElementFound() && expectation.isPassing()
+  }
+
+  @Test
+  void elementHasPriorSibling() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('logger').hasPriorSibling('until-successful')
+
+    def root = new XmlParser().parseText('''
+<mule>
+  <logger />
+</mule>
+''')
+
+    expectation.handleNode(root.logger[0], nodeChecker)
+
+    assert expectation.isElementFound() && !expectation.isPassing()
+  }
+
+  @Test
+  void elementHasFollowingSibling() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('logger').hasPriorSibling('until-successful')
+
+    def root = new XmlParser().parseText('''
+<mule>
+  <logger />
+</mule>
+''')
+
+    expectation.handleNode(root.logger[0], nodeChecker)
+
+    assert expectation.isElementFound() && !expectation.isPassing()
+  }
+
+  @Test(expected = IllegalArgumentException)
+  void elementHasPriorSiblingThrowsExceptionForSameNames() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('logger').hasPriorSibling('logger')
+  }
+
+  @Test(expected = IllegalArgumentException)
+  void elementHasFollowingSiblingThrowsExceptionForSameNames() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('logger').hasFollowingSibling('logger')
+  }
+
+  @Test
+  void elementHasPriorSiblingPasses() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('http:request').hasPriorSibling('logger')
+
+    def root = new XmlParser().parseText('''
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+  <logger />
+  <http:request />
+</mule>
+''')
+
+    expectation.handleNode(root.children()[1], nodeChecker)
+
+    assert expectation.isElementFound() && expectation.isPassing()
+  }
+
+  @Test
+  void elementHasFollowingSiblingPasses() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('http:request').hasFollowingSibling('logger')
+
+    def root = new XmlParser().parseText('''
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+  <http:request />
+  <logger />
+</mule>
+''')
+
+    expectation.handleNode(root.children()[0], nodeChecker)
 
     assert expectation.isElementFound() && expectation.isPassing()
   }

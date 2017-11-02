@@ -14,6 +14,9 @@ class Expectation {
 
   String parent
 
+  String priorSibling
+  String followingSibling
+
   String elementName
   Map<String, List<String> > attributes
 
@@ -52,12 +55,6 @@ class Expectation {
     return passing
   }
 
-  void handleNode(NodeList nodeList, NodeChecker nodeChecker) {
-    nodeList.each {
-      this.handleNode(it, nodeChecker)
-    }
-  }
-
   void handleNode(Node node, NodeChecker nodeChecker) {
     if (nodeChecker.isMatch(node, elementName)) {
       elementFound = true
@@ -66,6 +63,10 @@ class Expectation {
       validateParent(node, nodeChecker)
 
       validateAttributes(node)
+
+      validatePriorSibling(node, nodeChecker)
+
+      validateFollowingSibling(node, nodeChecker)
     }
   }
 
@@ -95,6 +96,24 @@ class Expectation {
     if (this.parent != null) throw new IllegalArgumentException('Parent already specified')
 
     this.parent = parent
+
+    return this
+  }
+
+  Expectation hasPriorSibling(String sibling) {
+    if (this.priorSibling != null) throw new IllegalArgumentException('Prior Sibling already specified')
+    if (this.elementName == sibling) throw new IllegalArgumentException('Sibling can not be the same as the element')
+
+    this.priorSibling = sibling
+
+    return this
+  }
+
+  Expectation hasFollowingSibling(String sibling) {
+    if (this.followingSibling != null) throw new IllegalArgumentException('Following Sibling already specified')
+    if (this.elementName == sibling) throw new IllegalArgumentException('Sibling can not be the same as the element')
+
+    this.followingSibling = sibling
 
     return this
   }
@@ -145,6 +164,50 @@ class Expectation {
     //The _msaLineNumber is set in the "PeakNamespacesXmlParser" class
     String lineNumber = node.@_msaLineNumber
     lineNumber == null ? -1 : lineNumber.toInteger()
+  }
+
+  void validateFollowingSibling(Node node, NodeChecker nodeChecker) {
+    if (followingSibling == null) return
+
+    def siblings = node.parent().children()
+    def thisNodeIndex = siblings.indexOf(node)
+
+    Node foundFollowingSibling = siblings[thisNodeIndex + 1]
+
+    if (foundFollowingSibling == null || !nodeChecker.isMatch(foundFollowingSibling, followingSibling)) {
+      findings << new Infraction(
+              element: elementName,
+              message: "Element $elementName does not have a sibling of $followingSibling",
+              lineNumber: findLineNumber(node),
+              category: 'InvalidSibling')
+
+      passing = false
+    }
+    else {
+      passing = true
+    }
+  }
+
+  void validatePriorSibling(Node node, NodeChecker nodeChecker) {
+    if (priorSibling == null) return
+
+    def siblings = node.parent().children()
+    def thisNodeIndex = siblings.indexOf(node)
+
+    Node foundPriorSibling = siblings[thisNodeIndex - 1]
+
+    if (foundPriorSibling == null || !nodeChecker.isMatch(foundPriorSibling, priorSibling)) {
+      findings << new Infraction(
+              element: elementName,
+              message: "Element $elementName does not have a sibling of $priorSibling",
+              lineNumber: findLineNumber(node),
+              category: 'InvalidSibling')
+
+      passing = false
+    }
+    else {
+      passing = true
+    }
   }
 
   void validateParent(Node node, NodeChecker nodeChecker) {

@@ -34,6 +34,14 @@ class ExpectationBuilder {
     currentExpectation.hasParent(parent)
   }
 
+  void hasPriorSibling(String sibling) {
+    currentExpectation.hasPriorSibling(sibling)
+  }
+
+  void hasFollowingSibling(String sibling) {
+    currentExpectation.hasFollowingSibling(sibling)
+  }
+
   List<Expectation> getExpectations() {
     return expectations
   }
