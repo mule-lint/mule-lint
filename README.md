@@ -66,7 +66,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Maven
 If you are just wanting to use this with a Maven build, then please refer to
-[mule-lint-maven-plugin project](https://github.com/nuisto/mule-lint) which
+[mule-lint-maven-plugin project](https://github.com/Nuisto/mule-lint-maven-plugin) which
 provides a much easier way of invocoation rather than calling this project
 directly.
 
