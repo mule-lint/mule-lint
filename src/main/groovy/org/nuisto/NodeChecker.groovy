@@ -38,8 +38,9 @@ class NodeChecker {
       return isNameMatch && isNamespaceMatch
     }
     else {
-      log.debug 'Matching {}, results isNameMatch={}', name, node.name() == name
-      return node.name() == name
+      boolean result = node.name() == name
+      log.debug 'Matching {}, results isNameMatch={}', name, result
+      return result
     }
   }
 }
