@@ -4,4 +4,4 @@ What are you wanting changed?
 
 How will this improve your workflow?
 
-What technical details might matter or technical nuiances might happen?
+What technical details might matter or technical nuances might happen?
