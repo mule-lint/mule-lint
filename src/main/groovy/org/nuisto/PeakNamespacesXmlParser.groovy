@@ -7,8 +7,8 @@ import org.xml.sax.ext.Attributes2Impl
 
 @Slf4j(category = 'org.nuisto.msa')
 class PeakNamespacesXmlParser extends XmlParser {
-  public static final String LINE_NUM_ATTR = "_msaLineNumber"
-  public static final String COL_NUM_ATTR = "_msaColNumber"
+  public static final String LINE_NUM_ATTR = '_msaLineNumber'
+  public static final String COL_NUM_ATTR = '_msaColNumber'
 
   Map<String, String> foundNamespaces = null
   String filename
