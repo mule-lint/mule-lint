@@ -26,7 +26,7 @@ class NodeChecker {
       //TODO This logic should already be somewhere. Find it and reuse
       int prefixIndex = name.indexOf(':')
 
-      String prefix = prefixIndex > 0 ? name[0..(prefixIndex-1)] : ""
+      String prefix = prefixIndex > 0 ? name[0..(prefixIndex-1)] : ''
       String postfix = prefixIndex > 0 ? name[(prefixIndex+1)..-1] : name
 
       String namespace = prefix != null ? namespaces[prefix] : null
