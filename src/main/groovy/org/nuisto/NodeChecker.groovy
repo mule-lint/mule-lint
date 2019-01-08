@@ -17,10 +17,8 @@ class NodeChecker {
   }
 
   boolean isMatch(Node node, String name) {
-    log.debug ('Check node {} for {}', node.name(), name)
 
     boolean isClass = node.name() instanceof QName
-
 
     if (isClass) {
       //TODO This logic should already be somewhere. Find it and reuse
@@ -34,12 +32,12 @@ class NodeChecker {
       boolean isNameMatch = node.name().localPart == postfix
       boolean isNamespaceMatch = node.name().namespaceURI == namespace
 
-      log.debug 'Matching {}, results isNameMatch={} isNamespaceMatch={}', name, isNamespaceMatch, isNamespaceMatch
+      log.debug 'lookingAt={} against={} isNameMatch={} isNamespaceMatch={}', node.name(), name, isNamespaceMatch, isNamespaceMatch
       return isNameMatch && isNamespaceMatch
     }
     else {
       boolean result = node.name() == name
-      log.debug 'Matching {}, results isNameMatch={}', name, result
+      log.debug 'lookingAt={} against={} isNameMatch={}', node.name(), name, result
       return result
     }
   }
