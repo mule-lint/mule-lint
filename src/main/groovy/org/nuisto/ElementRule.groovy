@@ -15,11 +15,7 @@ class ElementRule {
     log.info 'Version set to ' + version
 
     if (this.version != null) {
-      def message = 'Can not set version once it has already been set'
-
-      log.error message
-
-      throw new Exception(message)
+      throw new Exception('Can not set version once it has already been set')
     }
 
     return this
@@ -34,7 +30,7 @@ class ElementRule {
   }
 
   ElementRule hasAttribute(String name) {
-    log.debug 'Something should have attribute of ' + name
+    log.debug 'hasAttribute of ' + name
 
     builder.hasAttribute(name)
 
