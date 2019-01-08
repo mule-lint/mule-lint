@@ -70,6 +70,10 @@ If you are just wanting to use this with a Maven build, then please refer to
 provides a much easier way of invocoation rather than calling this project
 directly.
 
+### Example Project
+We have put together a trivial (non-functioning) Mule app that we will keep
+up-to-date to reflect new features of mule-lint. You can find it [on Github](https://github.com/Nuisto/example-mule-lint-project).
+
 ### Prerequisites
 
 This project is build with Gradle 4.1-rc-1, Maven 3.5.0, and Java 1.8.0_121.
