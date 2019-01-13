@@ -1,12 +1,5 @@
 package org.nuisto
 
-enum Casing {
-  Camel,
-  Pascal,
-  Underscored,
-  Dashed
-}
-
 class WordValidator
 
   def knownWords = ['bit', 'teraflop']
