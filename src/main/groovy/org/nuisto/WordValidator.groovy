@@ -1,6 +1,6 @@
 package org.nuisto
 
-class WordValidator
+class WordValidator {
 
   def knownWords = ['bit', 'teraflop']
 
