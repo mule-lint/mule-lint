@@ -24,10 +24,7 @@ class WordValidator {
       wordBoundary = false
       calculatedWord += c
 
-      if (!wordFoundInDictionary(calculatedWord)) {
-        continue
-      }
-      else {
+      if (wordFoundInDictionary(calculatedWord)) {
         println 'Found word: ' + calculatedWord
 
         if (firstWord && !wordIsCapitalized(calculatedWord))
@@ -51,9 +48,9 @@ class WordValidator {
   /**
    * Was trying to find a better wording for this method
    * but having a hard time finding something like:
-   * firstLetterIsCapitializedAndRestOfWordIsLower
+   * firstLetterIsCapitalizedAndRestOfWordIsLower
    */
-  boolean wordIsCapitalized(String word) {
+  static boolean wordIsCapitalized(String word) {
     String firstChar = word[0]
     String rest = word.substring(1)
 
