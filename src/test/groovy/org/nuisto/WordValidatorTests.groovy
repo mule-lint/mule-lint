@@ -5,7 +5,7 @@ import org.junit.Ignore
 
 class WordValidatorTests {
   @Test
-  void knownWordsIsGood() {
+  void knownWordsAreGood() {
     assert true == new WordValidator().isCamelCased('bitTeraflop')
   }
 
