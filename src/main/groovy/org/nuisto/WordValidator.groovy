@@ -25,12 +25,15 @@ class WordValidator {
       calculatedWord += c
 
       if (wordFoundInDictionary(calculatedWord)) {
+        wordBoundary = true
         println 'Found word: ' + calculatedWord
 
-        if (firstWord && !wordIsCapitalized(calculatedWord))
+        if (firstWord && !wordIsCapitalized(calculatedWord)) {
           isGood = true
-        else if (wordIsCapitalized(calculatedWord))
+        }
+        else if (wordIsCapitalized(calculatedWord)) {
           isGood = true
+        }
         else {
           isGood = false
           break
@@ -54,7 +57,7 @@ class WordValidator {
     String firstChar = word[0]
     String rest = word.substring(1)
 
-    return firstChar == word.toUpperCase() && rest.toLowerCase() == rest
+    return firstChar == firstChar.toUpperCase() && rest.toLowerCase() == rest
   }
 
   boolean wordFoundInDictionary(String word) {
