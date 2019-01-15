@@ -10,9 +10,6 @@ import org.nuisto.model.ResultsModel
 class ResultsHandler {
   void handleResults(OptionsModel optionsModel, ResultsModel resultsModel) {
 
-    //TODO The runner should run and collect the results. Returning the results to the caller. The caller
-    //is responsible for handling the results (i.e. writing to a file)
-
     log.info 'Found {} infractions.', resultsModel.expectationFindings.size()
 
     def json = new JsonBuilder()
