@@ -12,7 +12,7 @@ class WordValidator {
     return isCased(word, Casing.Camel)
   }
 
-  def isCased(String word, Casing cased) {
+  def isCased(String word, Casing casing) {
 
     boolean isGood = false
 
@@ -26,7 +26,6 @@ class WordValidator {
 
       if (wordFoundInDictionary(calculatedWord)) {
         wordBoundary = true
-        println 'Found word: ' + calculatedWord
 
         if (firstWord && !wordIsCapitalized(calculatedWord)) {
           isGood = true
