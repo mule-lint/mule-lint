@@ -76,7 +76,8 @@ up-to-date to reflect new features of mule-lint. You can find it [on Github](htt
 
 ### Prerequisites
 
-This project is build with Gradle 4.1-rc-1, Maven 3.5.0, and Java 1.8.0_121.
+Versions up to 0.4.0 were built with Gradle 4.1-rc-1, Maven 3.5.0, and Java 1.8.0_121.
+Starting with v0.5 will Java11 be used.
 
 ```
 $ git clone git@github.com:Nuisto/mule-lint.git
