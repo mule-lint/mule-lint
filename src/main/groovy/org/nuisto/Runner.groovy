@@ -42,7 +42,7 @@ class Runner {
       new FlowOccurrenceAggregator()
     ]
 
-    def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, '**/*.xml' /* includes */, 'pom.xml **/*.pdf' /* excludes */)
+    def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, '**/*.xml' /* includes */, 'pom.xml **/src/test/munit/*.xml **/target/**/*.xml **/log4j*.xml **/*.pdf' /* excludes */)
 
     log.info 'Found {} files', txtFiles.size()
 
