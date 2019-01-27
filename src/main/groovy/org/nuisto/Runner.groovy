@@ -81,35 +81,24 @@ class Runner {
 
     log.debug('Checking {}', file)
 
-    Map<String, String> foundNamespaces = new Hashtable<String, String>()
-    def parser = new PeakNamespacesXmlParser(foundNamespaces)
-    def root = parser.parse(file)
+    MuleXmlParser parser = new MuleXmlParser(file)
 
-    NodeChecker nodeChecker = new NodeChecker(foundNamespaces)
-
-    if (nodeChecker.isRoot(root)) {
+    if (parser.isMuleFile()) {
       log.debug 'Processing {}', file
 
-      processEachNode(root, expectations, aggregators, nodeChecker)
+      parser.forEachMuleNode { node ->
+
+        expectations.each {
+          it.handleNode(node)
+        }
+
+        aggregators.each {
+          it.handleNode(node)
+        }
+      }
     }
     else {
       log.debug 'Skipping file as not a mule file: {}', file
-    }
-  }
-
-  def processEachNode(Node node, List<Expectation> expectations, List<Aggregator> aggregators, NodeChecker nodeChecker) {
-
-    expectations.each {
-      it.handleNode(node, nodeChecker)
-    }
-
-    aggregators.each {
-      it.handleNode(node, nodeChecker)
-    }
-
-    node.children().each { it ->
-      // There are times when the Node could be a text node and in that case, we get a String
-      if (it instanceof Node) processEachNode((Node)it, expectations, aggregators, nodeChecker)
     }
   }
 }

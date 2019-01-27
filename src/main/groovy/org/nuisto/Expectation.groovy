@@ -55,18 +55,18 @@ class Expectation {
     return passing
   }
 
-  void handleNode(Node node, NodeChecker nodeChecker) {
-    if (nodeChecker.isMatch(node, elementName)) {
+  void handleNode(MuleXmlNode node) {
+    if (node.isMatch(elementName)) {
       elementFound = true
       log.debug 'We matched on element {}', elementName
 
-      validateParent(node, nodeChecker)
+      validateParent(node)
 
       validateAttributes(node)
 
-      validatePriorSibling(node, nodeChecker)
+      validatePriorSibling(node)
 
-      validateFollowingSibling(node, nodeChecker)
+      validateFollowingSibling(node)
     }
   }
 
@@ -118,23 +118,23 @@ class Expectation {
     return this
   }
 
-  void validateAttributes(Node node) {
+  void validateAttributes(MuleXmlNode node) {
     if (checkForAttribute) {
       passing = false
       def foundEntry = attributes.find { k, v ->
 
-        if (!node.attributes().containsKey(k)) {
+        if (!node.hasAttribute(k)) {
           //Node does not contain the attribute we are looking to validate
 
           findings << new Infraction(
                   element: elementName,
                   message: "Element $elementName does not contain the attribute $k",
-                  lineNumber: findLineNumber(node),
+                  lineNumber: node.lineNumber,
                   category: 'InvalidAttribute')
           return false
         }
 
-        String foundValue = node.attribute(k)
+        String foundValue = node.getAttribute(k)
 
         if (v == null) {
           //No value to check against, so this is purely just checking if the attribute exists.
@@ -149,7 +149,7 @@ class Expectation {
             findings << new Infraction(
                     element: elementName,
                     message: "Element $elementName has attribute $k but $v is an invalid value",
-                    lineNumber: findLineNumber(node),
+                    lineNumber: node.lineNumber,
                     category: 'InvalidAttribute')
             return false
           }
@@ -160,25 +160,16 @@ class Expectation {
     }
   }
 
-  int findLineNumber(Node node) {
-    //The _msaLineNumber is set in the "PeakNamespacesXmlParser" class
-    String lineNumber = node.@_msaLineNumber
-    lineNumber == null ? -1 : lineNumber.toInteger()
-  }
-
-  void validateFollowingSibling(Node node, NodeChecker nodeChecker) {
+  void validateFollowingSibling(MuleXmlNode node) {
     if (followingSibling == null) return
 
-    def siblings = node.parent().children()
-    def thisNodeIndex = siblings.indexOf(node)
+    MuleXmlNode foundFollowingSibling = node.followingSibling
 
-    Node foundFollowingSibling = siblings[thisNodeIndex + 1]
-
-    if (foundFollowingSibling == null || !nodeChecker.isMatch(foundFollowingSibling, followingSibling)) {
+    if (foundFollowingSibling == null || !foundFollowingSibling.isMatch(followingSibling)) {
       findings << new Infraction(
               element: elementName,
               message: "Element $elementName does not have a sibling of $followingSibling",
-              lineNumber: findLineNumber(node),
+              lineNumber: node.lineNumber,
               category: 'InvalidSibling')
 
       passing = false
@@ -188,19 +179,16 @@ class Expectation {
     }
   }
 
-  void validatePriorSibling(Node node, NodeChecker nodeChecker) {
+  void validatePriorSibling(MuleXmlNode node) {
     if (priorSibling == null) return
 
-    def siblings = node.parent().children()
-    def thisNodeIndex = siblings.indexOf(node)
+    MuleXmlNode foundPriorSibling = node.priorSibling
 
-    Node foundPriorSibling = siblings[thisNodeIndex - 1]
-
-    if (foundPriorSibling == null || !nodeChecker.isMatch(foundPriorSibling, priorSibling)) {
+    if (foundPriorSibling == null || !foundPriorSibling.isMatch(priorSibling)) {
       findings << new Infraction(
               element: elementName,
               message: "Element $elementName does not have a sibling of $priorSibling",
-              lineNumber: findLineNumber(node),
+              lineNumber: node.lineNumber,
               category: 'InvalidSibling')
 
       passing = false
@@ -210,15 +198,17 @@ class Expectation {
     }
   }
 
-  void validateParent(Node node, NodeChecker nodeChecker) {
+  void validateParent(MuleXmlNode node) {
     if (parent != null) {
       passing = false
 
-      if (!nodeChecker.isMatch(node.parent(), parent)) {
+      MuleXmlNode parentNode = node.parent
+
+      if (!parentNode.isMatch(parent)) {
         findings << new Infraction(
                 element: elementName,
                 message: "Element $elementName does not have a parent of $parent",
-                lineNumber: findLineNumber(node),
+                lineNumber: node.lineNumber,
                 category: 'InvalidParent')
       }
       else {
