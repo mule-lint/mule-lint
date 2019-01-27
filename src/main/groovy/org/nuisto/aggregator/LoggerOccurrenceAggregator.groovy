@@ -1,6 +1,6 @@
 package org.nuisto.aggregator
 
-import org.nuisto.NodeChecker
+import org.nuisto.MuleXmlNode
 
 class LoggerOccurrenceAggregator implements Aggregator {
 
@@ -18,8 +18,8 @@ class LoggerOccurrenceAggregator implements Aggregator {
     init()
   }
 
-  void handleNode(Node node, NodeChecker nodeChecker) {
-    if (nodeChecker.isMatch(node, 'logger')) {
+  void handleNode(MuleXmlNode node) {
+    if (node.isMatch('logger')) {
       ++loggerCount
     }
   }

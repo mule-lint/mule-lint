@@ -1,11 +1,11 @@
 package org.nuisto.aggregator
 
-import org.nuisto.NodeChecker
+import org.nuisto.MuleXmlNode
 
 interface Aggregator {
   void reset()
 
-  void handleNode(Node node, NodeChecker nodeChecker)
+  void handleNode(MuleXmlNode node)
 
   Map<String, Integer> getTotals()
 }

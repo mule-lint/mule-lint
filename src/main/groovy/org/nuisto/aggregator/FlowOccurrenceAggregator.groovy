@@ -1,6 +1,6 @@
 package org.nuisto.aggregator
 
-import org.nuisto.NodeChecker
+import org.nuisto.MuleXmlNode
 
 class FlowOccurrenceAggregator implements Aggregator {
   int flowCount
@@ -17,11 +17,11 @@ class FlowOccurrenceAggregator implements Aggregator {
     init()
   }
 
-  void handleNode(Node node, NodeChecker nodeChecker) {
-    if (nodeChecker.isMatch(node, 'flow')) {
+  void handleNode(MuleXmlNode node) {
+    if (node.isMatch('flow')) {
       ++flowCount
     }
-    if (nodeChecker.isMatch(node, 'sub-flow')) {
+    if (node.isMatch('sub-flow')) {
       ++flowCount
     }
   }
