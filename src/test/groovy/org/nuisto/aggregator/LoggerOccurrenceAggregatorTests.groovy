@@ -12,7 +12,7 @@ class LoggerOccurrenceAggregatorTests {
   @Before
   void setup() {
     aggregator = new LoggerOccurrenceAggregator()
-    nodeChecker = new NodeChecker(['core': 'wqer', 'http': 'http://www.mulesoft.org/schema/mule/http'])
+    nodeChecker = new NodeChecker(['http': 'http://www.mulesoft.org/schema/mule/http'])
   }
 
   @Test
