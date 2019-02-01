@@ -6,7 +6,7 @@ class ExpectationTests {
   NodeChecker nodeChecker
 
   Expectation simpleSetup() {
-    nodeChecker = new NodeChecker(['core': 'wqer', 'http': 'http://www.mulesoft.org/schema/mule/http'])
+    nodeChecker = new NodeChecker(['http': 'http://www.mulesoft.org/schema/mule/http'])
 
     Expectation expectation = new Expectation()
 

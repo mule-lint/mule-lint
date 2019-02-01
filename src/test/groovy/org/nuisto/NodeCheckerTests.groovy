@@ -3,7 +3,7 @@ package org.nuisto
 import org.junit.Test
 
 class NodeCheckerTests {
-  NodeChecker nodeChecker = new NodeChecker(['core': 'asdf', 'http': 'http://www.mulesoft.org/schema/mule/http'])
+  NodeChecker nodeChecker = new NodeChecker(['http': 'http://www.mulesoft.org/schema/mule/http'])
   @Test
   void coreElementIsMatched() {
 
