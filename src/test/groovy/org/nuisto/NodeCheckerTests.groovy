@@ -15,11 +15,11 @@ class NodeCheckerTests {
   @Test
   void httpElementIsMatched() {
 
-    def xml = this.class.getResource('src/test/resources/example-mule.xml')
+    def xml = this.class.getResourceAsStream('/example-mule.xml')
 
-    def root = new XmlParser().parseText(xml)
+    def root = new XmlParser().parse(xml)
 
-    assert nodeChecker.isMatch(root.children()[0].children()[0], 'http:request')
+    assert nodeChecker.isMatch(root.children()[0].children()[2].children()[0], 'http:request')
   }
 
   @Test
