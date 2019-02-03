@@ -1,54 +1,65 @@
 package org.nuisto
 
+import org.apache.commons.lang3.StringUtils
+
 class WordValidator {
 
-  def knownWords = ['bit', 'teraflop']
+  List<String> knownWords
 
-  def isPascalCased(String word) {
+  public WordValidator(List<String> wordList) {
+    knownWords = wordList
+  }
+
+  boolean isPascalCased(String word) {
     return isCased(word, Casing.Pascal)
   }
 
-  def isCamelCased(String word) {
+  boolean isCamelCased(String word) {
     return isCased(word, Casing.Camel)
   }
 
+  /**
+   * TODO Might want to frame this differently, instead of a "isCased"
+   * maybe something more like "failed" validation.
+   * There could be false positives, but we don't want false negatives
+   * @param word
+   * @param casing
+   * @return
+   */
   def isCased(String word, Casing casing) {
 
-    boolean isGood = false
-
     boolean firstWord = true
-    boolean wordBoundary = true
-    String calculatedWord = ''
+    //We would rather default to true, rather than a failure
 
-    for (char c in word.chars) {
-      wordBoundary = false
-      calculatedWord += c
-
-      if (wordFoundInDictionary(calculatedWord)) {
-        wordBoundary = true
-
-        if (firstWord && !wordIsCapitalized(calculatedWord)) {
-          isGood = true
-        }
-        else if (wordIsCapitalized(calculatedWord)) {
-          isGood = true
-        }
-        else {
-          isGood = false
-          break
-        }
-
-        calculatedWord = ''
-        wordBoundary = true
-        firstWord = false
+    //Looking for failure cases
+    boolean failure = findWords(word).any { currentWord ->
+      if (!wordFoundInDictionary(currentWord)) {
+        return true
       }
+      else if (firstWord) {
+        if (Casing.Camel) {
+          if (!(currentWord == currentWord.toLowerCase())) {
+            return true
+          }
+        } else if (Casing.Pascal) {
+          if (!wordIsCapitalized(currentWord)) {
+            return true
+          }
+        }
+      }
+
+      firstWord = false
     }
 
-    return wordBoundary && isGood
+    return !failure
+  }
+
+  public List<String> findWords(String word) {
+    StringUtils.splitByCharacterTypeCamelCase(word)
   }
 
   /**
-   * Was trying to find a better wording for this method
+   * Was trying to find better wording for this method
    * but having a hard time finding something like:
    * firstLetterIsCapitalizedAndRestOfWordIsLower
    */

@@ -1,32 +1,54 @@
 package org.nuisto
 
+import org.apache.commons.lang3.StringUtils
+import org.junit.Before
 import org.junit.Test
-import org.junit.Ignore
 
 class WordValidatorTests {
+
+  def bitWords = ['bit', 'teraflop']
+
+  WordValidator validator
+
+  @Before
+  public void setup() {
+    validator = new WordValidator(bitWords)
+  }
+
   @Test
   void knownWordsAreGood() {
-    assert true == new WordValidator().isCamelCased('bitTeraflop')
+    assert true == validator.isCamelCased('bitTeraflop')
   }
 
   @Test
   void correctCaseWithUnknownWordFails() {
-    assert false == new WordValidator().isCamelCased('bitTeraflap')
+    assert false == validator.isCamelCased('bitTeraflap')
   }
 
   @Test
   void knownWordsFailWithWrongCase() {
-    assert false == new WordValidator().isCamelCased('bitteraflop')
+    assert false == validator.isCamelCased('bitteraflop')
   }
 
   @Test
   void anotherBadCaseTest() {
-    assert false == new WordValidator().isCamelCased('bitterAFlop')
+    assert false == validator.isCamelCased('bitterAFlop')
   }
 
   @Test
   void anotherBadCaseTestTakeTwo() {
-    assert false == new WordValidator().isCamelCased('bitTerAFlop')
+    assert false == validator.isCamelCased('bitTerAFlop')
+  }
+
+  @Test
+  void validatesFirstSubset() {
+    def knownWords = ['product', 'products', 'low', 'slow']
+    assert true == new WordValidator(knownWords).isCamelCased('productsSlow')
+    assert true == new WordValidator(knownWords).isCamelCased('productSlow')
+    assert true == new WordValidator(knownWords).isCamelCased('productsSlow')
+
+    assert false == new WordValidator(knownWords).isCamelCased('productlow')
+    assert false == new WordValidator(knownWords).isCamelCased('productslow')
   }
 }
 
