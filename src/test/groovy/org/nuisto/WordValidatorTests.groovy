@@ -50,6 +50,12 @@ class WordValidatorTests {
     assert false == new WordValidator(knownWords).isCamelCased('productlow')
     assert false == new WordValidator(knownWords).isCamelCased('productslow')
   }
+
+  @Test
+  void isCamelCasedFailsWithDashesOrUnderscores() {
+    def knownWords = ['product', 'products', 'low', 'slow']
+
+    assert false == new WordValidator(knownWords).isCamelCased('product-low')
+    assert false == new WordValidator(knownWords).isCamelCased('product_slow')
+  }
 }
-
-
