@@ -55,7 +55,6 @@ class RulesLoader {
     SecureASTCustomizer secure = restrictEnvironment()
 
     def importCustomizer = new ImportCustomizer()
-    //importCustomizer.addStaticStars Direction.class.name
     importCustomizer.addStaticStars 'java.lang.Math'
     importCustomizer.addStaticStars NodeChecker.class.name
 
