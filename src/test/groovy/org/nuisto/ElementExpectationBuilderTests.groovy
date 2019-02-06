@@ -2,7 +2,7 @@ package org.nuisto
 
 import org.junit.Test
 
-class ExpectationBuilderTests {
+class ElementExpectationBuilderTests {
 
   @Test
   void expectationsAreNotNull() {

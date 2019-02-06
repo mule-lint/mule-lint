@@ -36,7 +36,7 @@ class Runner {
     ResultsModel resultsModel = new ResultsModel()
 
     RulesLoader loader = new RulesLoader()
-    List<Expectation> expectations = loader.load(optionsModel)
+    List<ElementExpectation> expectations = loader.load(optionsModel)
     List<Aggregator> aggregators = [
       new LoggerOccurrenceAggregator(),
       new FlowOccurrenceAggregator()
@@ -77,7 +77,7 @@ class Runner {
     return 0
   }
 
-  def processFile(String file, List<Expectation> expectations, List<Aggregator> aggregators) {
+  def processFile(String file, List<ElementExpectation> expectations, List<Aggregator> aggregators) {
 
     log.debug('Checking {}', file)
 
@@ -87,6 +87,7 @@ class Runner {
       log.debug 'Processing {}', file
 
       parser.forEachMuleNode { node ->
+      parser.forEachMuleNode { MuleXmlNode node ->
 
         expectations.each {
           it.handleNode(node)

@@ -4,14 +4,14 @@ import groovy.util.logging.Slf4j
 
 @Slf4j(category = 'org.nuisto.msa')
 class ExpectationBuilder {
-  Expectation currentExpectation
-  List<Expectation> expectations = new ArrayList<Expectation>()
+  ElementExpectation currentExpectation
+  List<ElementExpectation> expectations = new ArrayList<ElementExpectation>()
 
   ExpectationBuilder() {
   }
 
   void element(String name) {
-    Expectation expectation = new Expectation(elementName: name)
+    ElementExpectation expectation = new ElementExpectation(elementName: name)
 
     currentExpectation = expectation
 
@@ -42,7 +42,7 @@ class ExpectationBuilder {
     currentExpectation.hasFollowingSibling(sibling)
   }
 
-  List<Expectation> getExpectations() {
+  List<ElementExpectation> getExpectations() {
     return expectations
   }
 }

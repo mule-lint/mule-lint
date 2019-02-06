@@ -2,13 +2,13 @@ package org.nuisto
 
 import org.junit.Test
 
-class ExpectationTests {
+class ElementExpectationTests {
   NodeChecker nodeChecker
 
-  Expectation simpleSetup() {
+  ElementExpectation simpleSetup() {
     nodeChecker = new NodeChecker(['http': 'http://www.mulesoft.org/schema/mule/http'])
 
-    Expectation expectation = new Expectation()
+    ElementExpectation expectation = new ElementExpectation()
 
     return expectation
   }
