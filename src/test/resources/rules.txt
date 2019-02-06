@@ -1,5 +1,7 @@
 version '0.0.1'
 
+flows are camel cased
+
 element 'logger' hasAttribute 'category'
 element 'logger' hasAttribute 'category', 'com.example'
 element 'logger' hasAttribute 'category', ['com.example', 'com.example.integration']

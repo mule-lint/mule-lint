@@ -65,9 +65,11 @@ class RulesLoader {
 
     ExpectationBuilder builder = new ExpectationBuilder()
     ElementRule elementRule = new ElementRule(builder)
+    FlowRule flowRule = new FlowRule(builder)
 
     def binding = new Binding([
-      elementRule: elementRule
+      elementRule: elementRule,
+      flowRule: flowRule
     ])
 
     def shell = new GroovyShell(this.class.classLoader, binding, config)

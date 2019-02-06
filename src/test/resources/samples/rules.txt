@@ -2,3 +2,6 @@ version '0.0.1'
 
 element 'logger' hasAttribute 'category'
 
+flows are camelCased
+
+flows are PascalCased

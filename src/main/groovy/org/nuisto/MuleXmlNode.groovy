@@ -13,6 +13,14 @@ class MuleXmlNode {
 
   }
 
+  /**
+   * This is meant to check for a flow or sub-flow node
+   * @return
+   */
+  public boolean isFlowesque() {
+    isMatch('flow') || isMatch('sub-flow')
+  }
+
   public boolean isMatch(String name) {
     nodeChecker.isMatch(node, name)
   }
