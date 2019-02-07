@@ -43,7 +43,6 @@ dependencies {
   // https://mvnrepository.com/artifact/commons-cli/commons-cli
   compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
 
-
   // https://mvnrepository.com/artifact/org.apache.ant/ant
   compile group: 'org.apache.ant', name: 'ant', version: '1.10.1'
 
@@ -52,6 +51,10 @@ dependencies {
 
   // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
   compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
+  // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+  compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+
 
   //compile group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.28'
 }
