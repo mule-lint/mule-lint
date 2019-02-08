@@ -30,7 +30,7 @@ class MuleXmlParser {
   public void forEachMuleNode(Closure closure) {
     root.children().each { it ->
       // There are times when the Node could be a text node and in that case, we get a String
-      if (it instanceof Node) processEachNode(it, nodeChecker, closure)
+      processEachNode(it, nodeChecker, closure)
     }
   }
 
@@ -38,7 +38,22 @@ class MuleXmlParser {
     closure(new MuleXmlNode(node, nodeChecker))
 
     node.children().each { it ->
-      if (it instanceof Node) processEachNode((Node) it, nodeChecker, closure)
+      processEachNode(it, nodeChecker, closure)
     }
+  }
+
+  /**
+   * At the time of writing, it was understood you could get either a
+   * Node or String object from "root.children()". Instead of having
+   * "if (node instanceof Node)" in places, that having the method
+   * overridden would give us that information. So if we have a String 'node'
+   * then there isn't anything to do.
+   *
+   * @param node
+   * @param nodeChecker
+   * @param closure
+   */
+  public void processEachNode(String node, NodeChecker nodeChecker, Closure closure) {
+    //Ignore
   }
 }
