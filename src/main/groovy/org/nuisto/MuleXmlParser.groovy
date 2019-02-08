@@ -30,7 +30,15 @@ class MuleXmlParser {
   public void forEachMuleNode(Closure closure) {
     root.children().each { it ->
       // There are times when the Node could be a text node and in that case, we get a String
-      if (it instanceof Node) closure(new MuleXmlNode(it, nodeChecker))
+      if (it instanceof Node) processEachNode(it, nodeChecker, closure)
+    }
+  }
+
+  public void processEachNode(Node node, NodeChecker nodeChecker, Closure closure) {
+    closure(new MuleXmlNode(node, nodeChecker))
+
+    node.children().each { it ->
+      if (it instanceof Node) processEachNode((Node) it, nodeChecker, closure)
     }
   }
 }
