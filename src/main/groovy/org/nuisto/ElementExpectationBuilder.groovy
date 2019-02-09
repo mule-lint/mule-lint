@@ -1,6 +1,7 @@
 package org.nuisto
 
 class ElementExpectationBuilder extends ExpectationBuilder {
+  ElementExpectation currentExpectation
 
   ElementExpectationBuilder(String name) {
     ElementExpectation expectation = new ElementExpectation(elementName: name)
