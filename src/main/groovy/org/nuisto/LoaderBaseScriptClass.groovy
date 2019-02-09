@@ -15,7 +15,7 @@ abstract class LoaderBaseScriptClass extends Script {
     return this.binding.elementRule
   }
 
-  FlowRule flows(String ignore) {
+  FlowExpectation flows(String ignore) {
     //Ignored parameter is the value of the 'are' member
 
     return this.binding.flowRule

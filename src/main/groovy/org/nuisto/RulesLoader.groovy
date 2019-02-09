@@ -65,7 +65,7 @@ class RulesLoader {
 
     ExpectationBuilder builder = new ExpectationBuilder()
     ElementRule elementRule = new ElementRule(builder)
-    FlowRule flowRule = new FlowRule(builder)
+    FlowExpectation flowRule = new FlowExpectation(builder)
 
     def binding = new Binding([
       elementRule: elementRule,
