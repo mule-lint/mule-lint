@@ -20,7 +20,7 @@ class ElementExpectation {
   String elementName
   Map<String, List<String> > attributes
 
-  List<Infraction> findings
+  List<Infraction> infractions
 
   ElementExpectation() {
     elementName = null
@@ -30,7 +30,7 @@ class ElementExpectation {
   }
 
   void init() {
-    findings = []
+    infractions = []
     elementFound = false
     passing = true
   }
@@ -126,7 +126,7 @@ class ElementExpectation {
         if (!node.hasAttribute(k)) {
           //Node does not contain the attribute we are looking to validate
 
-          findings << new Infraction(
+          infractions << new Infraction(
                   element: elementName,
                   message: "Element $elementName does not contain the attribute $k",
                   lineNumber: node.lineNumber,
@@ -146,7 +146,7 @@ class ElementExpectation {
             return true
           }
           else {
-            findings << new Infraction(
+            infractions << new Infraction(
                     element: elementName,
                     message: "Element $elementName has attribute $k but $v is an invalid value",
                     lineNumber: node.lineNumber,
@@ -166,7 +166,7 @@ class ElementExpectation {
     MuleXmlNode foundFollowingSibling = node.followingSibling
 
     if (foundFollowingSibling == null || !foundFollowingSibling.isMatch(followingSibling)) {
-      findings << new Infraction(
+      infractions << new Infraction(
               element: elementName,
               message: "Element $elementName does not have a sibling of $followingSibling",
               lineNumber: node.lineNumber,
@@ -185,7 +185,7 @@ class ElementExpectation {
     MuleXmlNode foundPriorSibling = node.priorSibling
 
     if (foundPriorSibling == null || !foundPriorSibling.isMatch(priorSibling)) {
-      findings << new Infraction(
+      infractions << new Infraction(
               element: elementName,
               message: "Element $elementName does not have a sibling of $priorSibling",
               lineNumber: node.lineNumber,
@@ -205,7 +205,7 @@ class ElementExpectation {
       MuleXmlNode parentNode = node.parent
 
       if (!parentNode.isMatch(parent)) {
-        findings << new Infraction(
+        infractions << new Infraction(
                 element: elementName,
                 message: "Element $elementName does not have a parent of $parent",
                 lineNumber: node.lineNumber,

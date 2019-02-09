@@ -36,7 +36,7 @@ class Runner {
     ResultsModel resultsModel = new ResultsModel()
 
     RulesLoader loader = new RulesLoader()
-    List<ElementExpectation> expectations = loader.load(optionsModel)
+    List<ElementExpectation> elementExpectations = loader.load(optionsModel)
     List<Aggregator> aggregators = [
       new LoggerOccurrenceAggregator(),
       new FlowOccurrenceAggregator()
@@ -47,16 +47,16 @@ class Runner {
     log.info 'Found {} files', txtFiles.size()
 
     txtFiles.each { fileName ->
-      processFile(fileName, expectations, aggregators)
+      processFile(fileName, elementExpectations, aggregators)
 
       //TODO There might be times where the user wants to explicitly see "0" infractions for a file.
       //A user might like to see this so they know for sure the file was looked at.
       //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
       //Could also use this as a trending chart
-      if (expectations.findings.flatten().size() > 0)
-        resultsModel.expectationFindings.put(fileName, expectations.findings.flatten())
+      if (elementExpectations.infractions.flatten().size() > 0)
+        resultsModel.expectationFindings.put(fileName, elementExpectations.infractions.flatten())
 
-      expectations.each { it.reset() }
+      elementExpectations.each { it.reset() }
 
       aggregators.each {
         resultsModel.aggregationTotals.put(fileName, it.totals)
