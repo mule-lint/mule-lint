@@ -28,17 +28,18 @@ class MuleXmlParser {
   }
 
   public void forEachMuleNode(Closure closure) {
-    root.children().each { it ->
-      // There are times when the Node could be a text node and in that case, we get a String
-      processEachNode(it, nodeChecker, closure)
-    }
+    //"root.children()" gives us the "mule" node
+    //We don't perform any checks on that node
+
+    // There are times when the Node could be a text node and in that case, we get a String
+    walkThroughEachNode(root, nodeChecker, closure)
   }
 
-  public void processEachNode(Node node, NodeChecker nodeChecker, Closure closure) {
+  public void walkThroughEachNode(Node node, NodeChecker nodeChecker, Closure closure) {
     closure(new MuleXmlNode(node, nodeChecker))
 
     node.children().each { it ->
-      processEachNode(it, nodeChecker, closure)
+      walkThroughEachNode(it, nodeChecker, closure)
     }
   }
 
