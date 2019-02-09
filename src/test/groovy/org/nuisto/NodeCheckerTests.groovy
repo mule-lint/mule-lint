@@ -1,6 +1,6 @@
 package org.nuisto
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class NodeCheckerTests {
   NodeChecker nodeChecker = new NodeChecker(['http': 'http://www.mulesoft.org/schema/mule/http'])

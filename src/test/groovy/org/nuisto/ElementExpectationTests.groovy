@@ -1,6 +1,7 @@
 package org.nuisto
 
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class ElementExpectationTests {
   NodeChecker nodeChecker
@@ -59,7 +60,7 @@ class ElementExpectationTests {
     assert expectation.isElementFound() && !expectation.isPassing()
   }
 
-  @Test(expected = IllegalArgumentException)
+  @Test
   void failureIsRaisedWhenTheSameAttributeIsGivenMoreThanOnce() {
     def expectation = simpleSetup()
 
@@ -67,7 +68,9 @@ class ElementExpectationTests {
 
     def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
 
-    expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
+    Assertions.assertThrows(IllegalArgumentException.class, {
+      expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
+    })
   }
 
   @Test
@@ -110,11 +113,13 @@ class ElementExpectationTests {
     assert expectation.isElementFound() && !expectation.isPassing()
   }
 
-  @Test(expected = IllegalArgumentException)
+  @Test
   void elementHasParentFailsWhenCalledTwice() {
     def expectation = simpleSetup()
 
-    expectation.forElement('logger').hasParent('first').hasParent('second')
+    Assertions.assertThrows(IllegalArgumentException.class, {
+      expectation.forElement('logger').hasParent('first').hasParent('second')
+    })
   }
 
   @Test
@@ -164,18 +169,22 @@ class ElementExpectationTests {
     assert expectation.isElementFound() && !expectation.isPassing()
   }
 
-  @Test(expected = IllegalArgumentException)
+  @Test
   void elementHasPriorSiblingThrowsExceptionForSameNames() {
     def expectation = simpleSetup()
 
-    expectation.forElement('logger').hasPriorSibling('logger')
+    Assertions.assertThrows(IllegalArgumentException.class, {
+      expectation.forElement('logger').hasPriorSibling('logger')
+    })
   }
 
-  @Test(expected = IllegalArgumentException)
+  @Test
   void elementHasFollowingSiblingThrowsExceptionForSameNames() {
     def expectation = simpleSetup()
 
-    expectation.forElement('logger').hasFollowingSibling('logger')
+    Assertions.assertThrows(IllegalArgumentException.class, {
+      expectation.forElement('logger').hasFollowingSibling('logger')
+    })
   }
 
   @Test

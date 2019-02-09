@@ -1,7 +1,7 @@
 package org.nuisto.aggregator
 
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.nuisto.MuleXmlNode
 import org.nuisto.NodeChecker
 
@@ -9,7 +9,7 @@ class FlowOccurrenceAggregatorTests {
   FlowOccurrenceAggregator aggregator
   NodeChecker nodeChecker
 
-  @Before
+  @BeforeEach
   void setup() {
     aggregator = new FlowOccurrenceAggregator()
     nodeChecker = new NodeChecker(['http': 'http://www.mulesoft.org/schema/mule/http'])

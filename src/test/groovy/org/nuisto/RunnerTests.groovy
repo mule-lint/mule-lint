@@ -1,19 +1,19 @@
 package org.nuisto
 
-import org.junit.Before
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 import org.nuisto.model.OptionsModel
 
 class RunnerTests {
   Runner runner
 
-  @Before
+  @BeforeEach
   public void setup() {
     runner = new Runner(new DummyResultsHandler())
   }
 
-  @Ignore
+  @Disabled
   @Test
   void infractionsAreTalliedUpCorrectlyAndNotDuplicated() {
     OptionsModel model = new OptionsModel( sourceDirectory: 'src/test/resources/samples', rules: 'src/test/resources/samples/rules.txt')

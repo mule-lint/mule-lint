@@ -1,8 +1,8 @@
 package org.nuisto
 
 import org.apache.commons.lang3.StringUtils
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class WordValidatorTests {
 
@@ -10,7 +10,7 @@ class WordValidatorTests {
 
   WordValidator validator
 
-  @Before
+  @BeforeEach
   public void setup() {
     validator = new WordValidator(bitWords)
   }
