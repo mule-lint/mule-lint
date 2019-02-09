@@ -7,7 +7,7 @@ import org.nuisto.model.Infraction
  * The "has" operations set things up differently than the "having" operations
  */
 @Slf4j(category = 'org.nuisto.msa')
-class ElementExpectation {
+class ElementExpectation extends Expectation {
   boolean elementFound
   boolean passing
   boolean checkForAttribute
@@ -19,8 +19,6 @@ class ElementExpectation {
 
   String elementName
   Map<String, List<String> > attributes
-
-  List<Infraction> infractions
 
   ElementExpectation() {
     elementName = null
