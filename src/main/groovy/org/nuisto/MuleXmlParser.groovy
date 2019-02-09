@@ -54,7 +54,7 @@ class MuleXmlParser {
    * @param nodeChecker
    * @param closure
    */
-  public void processEachNode(String node, NodeChecker nodeChecker, Closure closure) {
+  public void walkThroughEachNode(String node, NodeChecker nodeChecker, Closure closure) {
     //Ignore
   }
 }
