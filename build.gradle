@@ -37,9 +37,10 @@ artifacts {
 }
 
 dependencies {
+  //NOTE I forget that we are tied to Mule (basically) on what groovy we can use
   // https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all
-  compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.6'
-  //compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.7'
+  // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.6'
+  compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.7'
 
   // https://mvnrepository.com/artifact/commons-cli/commons-cli
   compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
@@ -82,7 +83,7 @@ uploadArchives {
       pom.project {
         name 'mule-lint'
         packaging 'jar'
-        // optionally artifactId can be defined here 
+        // optionally artifactId can be defined here
         description 'An application to check for consistency in a mule application.'
         url 'https://github.com/nuisto/mule-lint'
 
