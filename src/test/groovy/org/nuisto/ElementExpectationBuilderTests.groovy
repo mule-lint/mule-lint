@@ -8,57 +8,35 @@ class ElementExpectationBuilderTests {
   void expectationsAreNotNull() {
     String elementName = 'logger'
 
-    ExpectationBuilder builder = new ExpectationBuilder()
+    ExpectationBuilder builder = new ElementExpectationBuilder(elementName)
 
-    builder.element(elementName)
+    List<Expectation> expectations = []
 
-    assert builder.expectations != null
+    assert builder.addBuiltExpectationTo(expectations) != null
   }
 
   @Test
   void nameIsNotBlank() {
     String elementName = 'logger'
 
-    ExpectationBuilder builder = new ExpectationBuilder()
-
-    builder.element(elementName)
+    ExpectationBuilder builder = new ElementExpectationBuilder(elementName)
 
     builder.hasAttribute('testing')
 
-    assert builder.expectations != null
-  }
+    List<Expectation> expectations = []
 
-  @Test
-  void withTwoElementCalls_ThenShouldHaveTwoExpectations() {
-    ExpectationBuilder builder = new ExpectationBuilder()
-
-    builder.element('one')
-    builder.element('two')
-
-    assert 2 == builder.expectations.size()
-  }
-
-  @Test
-  void allExpectationsAreSuccessful() {
-    ExpectationBuilder builder = new ExpectationBuilder()
-
-    builder.element('one')
-    builder.element('two')
-
-    builder.expectations.each {
-      assert it.isPassing()
-    }
+    assert builder.addBuiltExpectationTo(expectations) != null
   }
 
   @Test
   void worksWithHasParent() {
-    ExpectationBuilder builder = new ExpectationBuilder()
+    ExpectationBuilder builder = new ElementExpectationBuilder('one')
 
-    builder.element('one')
     builder.hasParent('asdf')
 
-    builder.expectations.each {
-      assert it.isPassing()
-    }
+    List<Expectation> expectations = []
+
+    builder.addBuiltExpectationTo(expectations)
+    assert expectations.size() == 1
   }
 }

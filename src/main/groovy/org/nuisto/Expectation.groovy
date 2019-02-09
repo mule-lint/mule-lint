@@ -2,7 +2,7 @@ package org.nuisto
 
 import org.nuisto.model.Infraction
 
-public class Expectation {
+abstract class Expectation {
 
   List<Infraction> infractions
 

@@ -63,19 +63,16 @@ class RulesLoader {
     //config.addCompilationCustomizers(importCustomizer, secure)
     config.scriptBaseClass = LoaderBaseScriptClass.class.name
 
-    ExpectationBuilder builder = new ExpectationBuilder()
-    ElementRule elementRule = new ElementRule(builder)
-    FlowExpectation flowRule = new FlowExpectation(builder)
+    List<Expectation> expectations = []
 
     def binding = new Binding([
-      elementRule: elementRule,
-      flowRule: flowRule
+            expectations: expectations
     ])
 
     def shell = new GroovyShell(this.class.classLoader, binding, config)
 
     shell.evaluate(new File(model.rules))
 
-    return builder.expectations
+    return expectations
   }
 }

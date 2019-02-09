@@ -86,7 +86,6 @@ class Runner {
     if (parser.isMuleFile()) {
       log.debug 'Processing {}', file
 
-      parser.forEachMuleNode { node ->
       parser.forEachMuleNode { MuleXmlNode node ->
 
         expectations.each {
