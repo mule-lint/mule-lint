@@ -9,7 +9,6 @@ import org.nuisto.model.Infraction
 @Slf4j(category = 'org.nuisto.msa')
 class ElementExpectation extends Expectation {
   boolean elementFound
-  boolean passing
   boolean checkForAttribute
 
   String parent
@@ -30,27 +29,15 @@ class ElementExpectation extends Expectation {
   void init() {
     infractions = []
     elementFound = false
-    passing = true
+    isPassing = true
   }
 
-  /**
-   * We have to have some notion of "resetting" based upon a new file.
-   *
-   * An expectation is based on a file, when we have a new file, then the expectation should be reset.
-   *
-   * Might turn this into more like event based "onNewFile", but I'm not sure about that.
-   */
   void reset() {
-    log.debug 'Resetting expectation per new file.'
     init()
   }
 
   boolean isElementNameFound() {
     return elementFound
-  }
-
-  boolean isPassing() {
-    return passing
   }
 
   void handleNode(MuleXmlNode node) {
@@ -118,7 +105,7 @@ class ElementExpectation extends Expectation {
 
   void validateAttributes(MuleXmlNode node) {
     if (checkForAttribute) {
-      passing = false
+      isPassing = false
       def foundEntry = attributes.find { k, v ->
 
         if (!node.hasAttribute(k)) {
@@ -154,7 +141,7 @@ class ElementExpectation extends Expectation {
         }
       }
 
-      passing = foundEntry != null
+      isPassing = foundEntry != null
     }
   }
 
@@ -170,10 +157,10 @@ class ElementExpectation extends Expectation {
               lineNumber: node.lineNumber,
               category: 'InvalidSibling')
 
-      passing = false
+      isPassing = false
     }
     else {
-      passing = true
+      isPassing = true
     }
   }
 
@@ -189,16 +176,16 @@ class ElementExpectation extends Expectation {
               lineNumber: node.lineNumber,
               category: 'InvalidSibling')
 
-      passing = false
+      isPassing = false
     }
     else {
-      passing = true
+      isPassing = true
     }
   }
 
   void validateParent(MuleXmlNode node) {
     if (parent != null) {
-      passing = false
+      isPassing = false
 
       MuleXmlNode parentNode = node.parent
 
@@ -210,7 +197,7 @@ class ElementExpectation extends Expectation {
                 category: 'InvalidParent')
       }
       else {
-        passing = true
+        isPassing = true
       }
     }
   }
