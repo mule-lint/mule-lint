@@ -1,39 +1,56 @@
 package org.nuisto
 
+import org.nuisto.model.OptionsModel
+
+import javax.swing.text.html.Option
+
 class ElementExpectationBuilder extends ExpectationBuilder {
-  ElementExpectation currentExpectation
+  ElementExpectation expectation
+  OptionsModel optionsModel
 
-  ElementExpectationBuilder(String name) {
-    ElementExpectation expectation = new ElementExpectation(elementName: name)
 
-    currentExpectation = expectation
+  ElementExpectationBuilder(String name, OptionsModel optionsModel) {
+    this.expectation = new ElementExpectation(elementName: name)
+    this.optionsModel = optionsModel
   }
 
   public void addBuiltExpectationTo(List<Expectation> expectationList) {
-    expectationList.add(currentExpectation)
+    expectationList.add(expectation)
   }
 
-  void hasAttribute(String attribute) {
-    currentExpectation.hasAttribute(attribute)
+  ElementExpectationBuilder hasAttribute(String attribute) {
+    expectation.hasAttribute(attribute)
+
+    return this
   }
 
-  void hasAttribute(String attribute, String value) {
-    currentExpectation.hasAttribute(attribute, value)
+  ElementExpectationBuilder hasAttribute(String attribute, String value) {
+    expectation.hasAttribute(attribute, value)
+
+    return this
   }
 
-  void hasAttribute(String attribute, List<String> values) {
-    currentExpectation.hasAttribute(attribute, values)
+  ElementExpectationBuilder hasAttribute(String attribute, List<String> values) {
+    expectation.hasAttribute(attribute, values)
+
+    return this
   }
 
-  void hasParent(String parent) {
-    currentExpectation.hasParent(parent)
+  ElementExpectationBuilder hasParent(String parent) {
+    expectation.hasParent(parent)
+
+    return this
   }
 
-  void hasPriorSibling(String sibling) {
-    currentExpectation.hasPriorSibling(sibling)
+  ElementExpectationBuilder hasPriorSibling(String sibling) {
+    expectation.hasPriorSibling(sibling)
+
+    return this
   }
 
-  void hasFollowingSibling(String sibling) {
-    currentExpectation.hasFollowingSibling(sibling)
+  ElementExpectationBuilder hasFollowingSibling(String sibling) {
+    expectation.hasFollowingSibling(sibling)
+
+    return this
   }
 }
