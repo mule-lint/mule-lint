@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 ### Changed
+- 
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.5.0] - 2019.02.10
+### Added
+- Camel casing checks on flow and sub-flow elements.
+- Command line parameter added to specify a dictionary of words to check against for camel casing.
+- Now when a word is used that isn't a part of the DSL, you will get a message
+  "Foo is not a known rule word for mule-lint"
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.4.0]
+### Added
+### Changed
 - The aggregators section in the result json is now an object instead of an
   array.
 ### Deprecated
