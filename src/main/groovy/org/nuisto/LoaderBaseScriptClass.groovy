@@ -32,13 +32,13 @@ abstract class LoaderBaseScriptClass extends Script {
     //Ignored parameter is the value of the 'are' member
 
     builder.addBuiltExpectationTo(this.binding.expectations)
-    builder = new FlowExpectationBuilder()
+    builder = new FlowExpectationBuilder(this.binding.optionsModel)
     return builder
   }
 
   ElementExpectationBuilder element(String name) {
     builder.addBuiltExpectationTo(this.binding.expectations)
-    builder = new ElementExpectationBuilder(name)
+    builder = new ElementExpectationBuilder(name, this.binding.optionsModel)
     return builder
   }
 }

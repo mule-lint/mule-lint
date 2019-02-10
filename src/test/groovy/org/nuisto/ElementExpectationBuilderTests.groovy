@@ -8,29 +8,31 @@ class ElementExpectationBuilderTests {
   void expectationsAreNotNull() {
     String elementName = 'logger'
 
-    ExpectationBuilder builder = new ElementExpectationBuilder(elementName)
+    ExpectationBuilder builder = new ElementExpectationBuilder(elementName, null)
 
     List<Expectation> expectations = []
 
-    assert builder.addBuiltExpectationTo(expectations) != null
+    builder.addBuiltExpectationTo(expectations)
+    assert expectations.size() == 1
   }
 
   @Test
   void nameIsNotBlank() {
     String elementName = 'logger'
 
-    ExpectationBuilder builder = new ElementExpectationBuilder(elementName)
+    ExpectationBuilder builder = new ElementExpectationBuilder(elementName, null)
 
     builder.hasAttribute('testing')
 
     List<Expectation> expectations = []
 
-    assert builder.addBuiltExpectationTo(expectations) != null
+    builder.addBuiltExpectationTo(expectations)
+    assert expectations.size() == 1
   }
 
   @Test
   void worksWithHasParent() {
-    ExpectationBuilder builder = new ElementExpectationBuilder('one')
+    ExpectationBuilder builder = new ElementExpectationBuilder('one', null)
 
     builder.hasParent('asdf')
 

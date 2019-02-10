@@ -44,7 +44,7 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && expectation.isPassing()
+    assert expectation.isElementFound() && expectation.isIsPassing()
   }
 
   @Test
@@ -57,19 +57,15 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && !expectation.isPassing()
+    assert expectation.isElementFound() && !expectation.isIsPassing()
   }
 
   @Test
   void failureIsRaisedWhenTheSameAttributeIsGivenMoreThanOnce() {
     def expectation = simpleSetup()
 
-    expectation.forElement('logger').hasAttribute('category').hasAttribute('category')
-
-    def root = new XmlParser().parseText('<mule> <logger category="odd-category"/> </mule>')
-
     Assertions.assertThrows(IllegalArgumentException.class, {
-      expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
+      expectation.forElement('logger').hasAttribute('category').hasAttribute('category')
     })
   }
 
@@ -84,7 +80,7 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && !expectation.isPassing()
+    assert expectation.isElementFound() && !expectation.isIsPassing()
   }
 
   @Test
@@ -97,7 +93,7 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && expectation.isPassing()
+    assert expectation.isElementFound() && expectation.isIsPassing()
   }
 
   @Test
@@ -110,7 +106,7 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && !expectation.isPassing()
+    assert expectation.isElementFound() && !expectation.isIsPassing()
   }
 
   @Test
@@ -132,7 +128,7 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && expectation.isPassing()
+    assert expectation.isElementFound() && expectation.isIsPassing()
   }
 
   @Test
@@ -149,7 +145,7 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && !expectation.isPassing()
+    assert expectation.isElementFound() && !expectation.isIsPassing()
   }
 
   @Test
@@ -166,7 +162,7 @@ class ElementExpectationTests {
 
     expectation.handleNode(new MuleXmlNode(root.logger[0], nodeChecker))
 
-    assert expectation.isElementFound() && !expectation.isPassing()
+    assert expectation.isElementFound() && !expectation.isIsPassing()
   }
 
   @Test
@@ -205,7 +201,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 
     expectation.handleNode(new MuleXmlNode(root.children()[1], nodeChecker))
 
-    assert expectation.isElementFound() && expectation.isPassing()
+    assert expectation.isElementFound() && expectation.isIsPassing()
   }
 
   @Test
@@ -226,6 +222,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 
     expectation.handleNode(new MuleXmlNode(root.children()[0], nodeChecker))
 
-    assert expectation.isElementFound() && expectation.isPassing()
+    assert expectation.isElementFound() && expectation.isIsPassing()
   }
 }

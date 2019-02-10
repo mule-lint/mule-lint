@@ -66,7 +66,8 @@ class RulesLoader {
     List<Expectation> expectations = []
 
     def binding = new Binding([
-            expectations: expectations
+            expectations: expectations,
+            optionsModel: model
     ])
 
     def shell = new GroovyShell(this.class.classLoader, binding, config)

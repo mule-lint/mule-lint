@@ -10,13 +10,16 @@ class MuleLint {
   }
 
   int run(String [] args) {
-    def cli = new CliBuilder(usage: 'mule-lint.groovy -[hdr] -s <sourceDirectory> -r <rules>')
+    //TODO Need to look into updated the CliBuilder used https://dzone.com/articles/groovy-25-clibuilder-renewal
+
+    def cli = new CliBuilder(usage: 'mule-lint.groovy [-h] -s <sourceDirectory> -r <rules> -d <dictionaryFile>')
     // Create the list of options.
     cli.with {
-      h longOpt: 'help', 'Show usage information'
-      r longOpt: 'rules',     args: 1, argName: 'path', 'Required. The path to a set of rules.'
-      s longOpt: 'sources',   args: 1, argName: 'sources', 'The directory name of where the source files are located, default: src/main'
-      o longOpt: 'output',    args: 1, argName: 'path', 'The file name to write json results to.'
+      d longOpt: 'dictionary', args: 1, argName: 'file',    'A dictionary file of known words'
+      h longOpt: 'help',                                    'Show usage information'
+      r longOpt: 'rules',      args: 1, argName: 'path',    'Required. The path to a set of rules.'
+      s longOpt: 'sources',    args: 1, argName: 'sources', 'The directory name of where the source files are located, default: src/main'
+      o longOpt: 'output',     args: 1, argName: 'path',    'The file name to write json results to.'
     }
 
     def options = cli.parse(args)
@@ -47,6 +50,10 @@ class MuleLint {
       optionsModel.sourceDirectory = 'src/main'
     }
 
+    if (options.d) {
+      optionsModel.dictionary = options.d
+    }
+
     if (options.o) {
       optionsModel.resultsFile = options.o
     }
@@ -54,8 +61,8 @@ class MuleLint {
     runWithModel(optionsModel)
   }
 
-  int invoke(String rules, String sourceDirectory, Map<String, String> namespaces) {
-    OptionsModel optionsModel = new OptionsModel(rules: rules, sourceDirectory: sourceDirectory, namespaces: namespaces)
+  int invoke(String dictionary, String rules, String sourceDirectory, Map<String, String> namespaces) {
+    OptionsModel optionsModel = new OptionsModel(dictionary: dictionary, rules: rules, sourceDirectory: sourceDirectory, namespaces: namespaces)
 
     return runWithModel(optionsModel)
   }

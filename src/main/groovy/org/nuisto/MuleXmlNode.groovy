@@ -13,6 +13,10 @@ class MuleXmlNode {
 
   }
 
+  public String getName() {
+    node.name()
+  }
+
   /**
    * This is meant to check for a flow or sub-flow node
    * @return

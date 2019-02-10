@@ -53,9 +53,11 @@ class Runner {
       //A user might like to see this so they know for sure the file was looked at.
       //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
       //Could also use this as a trending chart
+      //Don't want users inferring that null or missing value is '0'
       if (elementExpectations.infractions.flatten().size() > 0)
         resultsModel.expectationFindings.put(fileName, elementExpectations.infractions.flatten())
 
+      log.debug 'Resetting expectations per new file.'
       elementExpectations.each { it.reset() }
 
       aggregators.each {
