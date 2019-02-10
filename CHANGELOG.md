@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 ### Security
 
-## [0.5.0] - 2019.02.10
+## [0.5.0] - 2019-02-10
 ### Added
 - Camel casing checks on flow and sub-flow elements.
 - Command line parameter added to specify a dictionary of words to check against for camel casing.
@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 ### Security
 
-## [0.4.0]
+## [0.4.0] - 2014-11-02
 ### Added
 ### Changed
 - The aggregators section in the result json is now an object instead of an
