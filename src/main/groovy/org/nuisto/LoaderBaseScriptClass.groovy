@@ -22,6 +22,14 @@ abstract class LoaderBaseScriptClass extends Script {
 
   ExpectationBuilder builder = new NullExpectationBuilder()
 
+  def methodMissing(String methodName, args) {
+    throw new Exception("${methodName} is not a known rule word for mule-lint")
+  }
+
+  def propertyMissing(String name) {
+    throw new Exception("${name} is not a known rule word for mule-lint")
+  }
+
   /**
    * TODO See the comment in RulesLoader, this should be removed from here
    */
