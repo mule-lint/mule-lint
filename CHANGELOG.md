@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 ### Security
 
-## [0.4.0] - 2014-11-02
+## [0.4.0] - 2017-11-02
 ### Added
 ### Changed
 - The aggregators section in the result json is now an object instead of an
@@ -32,7 +32,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 ### Security
 
-## [0.3.0] - 2014-09-16
+## [0.3.0] - 2017-09-16
 ### Added
 - Added checks for having a parent element.
 - Line numbers now show on output file
