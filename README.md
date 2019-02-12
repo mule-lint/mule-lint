@@ -1,5 +1,7 @@
 # Mule Lint Project
 
+http://docs.groovy-lang.org/latest/html/documentation/core-domain-specific-languages.html
+
 We believe building some types of software are not trivial and when there are
 many applications, it is a good thing to make sure you have some consistency
 around certain pieces of software. Primarily that logging follows a very strict
@@ -7,7 +9,7 @@ convention for your organization or project. So having some analysis across all
 your systems would be a good thing. That is how this started.
 
 We need a way to check on what log categories we have, and how well our
-structured (or lack of following the structured format) was occuring across our
+structured (or lack of following the structured format) was occurring across our
 entire code base.
 
 I would like different information about Mule code.
@@ -51,6 +53,8 @@ This is what we are working towards for a `rules.groovy` example:
 ```
 version '0.0.1'
 
+flow are camel cased
+
 element 'logger' hasAttribute 'category'
 
 element 'logger' hasParent 'until-successful'
@@ -71,7 +75,7 @@ provides a much easier way of invocation rather than calling this project
 directly.
 
 ### Example Project
-We have put together a trivial (non-functioning) Mule app that we will keep
+We have put together a trivial Mule app that we will keep
 up-to-date to reflect new features of mule-lint. You can find it [on Github](https://github.com/Nuisto/example-mule-lint-project).
 
 ### Prerequisites
@@ -87,7 +91,8 @@ $ gradle build
 
 ## Running the tests
 
-All test are ran using Gradle. There are no category of tests (i.e. unit tests or integration tests), everything is packaged together under `src/test/groovy`
+All tests are ran using Gradle. There are no category of tests (i.e. unit tests or integration tests), everything is packaged together under `src/test/groovy`.
+Starting with version 0.5.0 we use JUnit5 (Jupiter tests)
 
 ```
 $ gradle build
@@ -97,7 +102,7 @@ $ gradle build
 ## Built With
 
 * [Gradle](https://gradle.org/) - Build system
-* [Groovy](http://groovy-lang.org/) - Written in
+* [Groovy](http://groovy-lang.org/) - Written in Groovy using the version that Mule depends upon as well
 
 ## Contributing
 
