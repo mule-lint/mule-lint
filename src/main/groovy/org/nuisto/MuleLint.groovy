@@ -24,20 +24,20 @@ class MuleLint {
 
     def options = cli.parse(args)
     if (!options) {
-      return
+      return ErrorCodes.OptionsNotProvided
     }
 
     // Show usage text when -h or --help option is used.
     if (options.h) {
       cli.usage()
-      return
+      return ErrorCodes.Success
     }
 
     def optionsModel = new OptionsModel()
 
     if (!options.r) {
       log.error 'Rules must be provided'
-      System.exit(ErrorCodes.RulesNotProvided)
+      return ErrorCodes.RulesNotProvided
     }
     else {
       optionsModel.rules = options.r

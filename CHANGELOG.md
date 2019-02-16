@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 ### Changed
-- 
+- No longer terminate the JVM when rules are not provided, instead return an error code
 ### Deprecated
 ### Removed
 ### Fixed
