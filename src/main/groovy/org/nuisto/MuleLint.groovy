@@ -17,11 +17,12 @@ class MuleLint {
     def cli = new CliBuilder(usage: 'mule-lint.groovy [-h] -s <sourceDirectory> -r <rules> -d <dictionaryFile>')
     // Create the list of options.
     cli.with {
-      d longOpt: 'dictionary', args: 1, argName: 'file',    'A dictionary file of known words'
-      h longOpt: 'help',                                    'Show usage information'
-      r longOpt: 'rules',      args: 1, argName: 'path',    'Required. The path to a set of rules.'
-      s longOpt: 'sources',    args: 1, argName: 'sources', 'The directory name of where the source files are located, default: src/main'
-      o longOpt: 'output',     args: 1, argName: 'path',    'The file name to write json results to.'
+      d(longOpt: 'dictionary', args: 1, argName: 'file',     'A dictionary file of known words')
+      h(longOpt: 'help',                                     'Show usage information')
+      r(longOpt: 'rules',      args: 1, argName: 'path',     'Required. The path to a set of rules.')
+      s(longOpt: 'sources',    args: 1, argName: 'sources',  'The directory name of where the source files are located, default: src/main')
+      o(longOpt: 'output',     args: 1, argName: 'path',     'The file name to write json results to.')
+      _(longOpt: 'exclude',    args: 1, argName: 'pattern',  'Patterns to exclude (i.e. **/*.doc) uses FileNameFinder')
     }
 
     def options = cli.parse(args)
@@ -58,6 +59,10 @@ class MuleLint {
 
     if (options.o) {
       optionsModel.resultsFile = options.o
+    }
+
+    if (options.excludes) {
+      optionsModel.excludePatterns = options.excludes
     }
 
     runWithModel(optionsModel)

@@ -20,7 +20,7 @@ class MuleLintTest {
     OptionsModel optionsModel = muleLint.modelUsed
 
     assert result == ErrorCodes.Success
-    assert optionsModel.rules == rulesPath
+    assert rulesPath == optionsModel.rules
   }
 
   @Test
@@ -39,7 +39,7 @@ class MuleLintTest {
     OptionsModel optionsModel = muleLint.modelUsed
 
     assert result == ErrorCodes.Success
-    assert optionsModel.dictionary == dictionaryPath
+    assert dictionaryPath == optionsModel.dictionary
   }
 
   @Test
@@ -50,7 +50,7 @@ class MuleLintTest {
     OptionsModel optionsModel = muleLint.modelUsed
 
     assert result == ErrorCodes.Success
-    assert optionsModel.sourceDirectory == sourcesPath
+    assert sourcesPath == optionsModel.sourceDirectory
   }
 
   @Test
@@ -61,6 +61,15 @@ class MuleLintTest {
     OptionsModel optionsModel = muleLint.modelUsed
 
     assert result == ErrorCodes.Success
-    assert optionsModel.resultsFile == outputPath
+    assert outputPath == optionsModel.resultsFile
+  }
+
+  @Test
+  void runParsesExcludeOptionCorrectly() {
+    int result = muleLint.run(['--rules', 'rules-path.txt', '--exclude', 'asdf', '--exclude', 'qwer'] as String[])
+    OptionsModel optionsModel = muleLint.modelUsed
+
+    assert result == ErrorCodes.Success
+    assert 2 == optionsModel.excludePatterns.size()
   }
 }
