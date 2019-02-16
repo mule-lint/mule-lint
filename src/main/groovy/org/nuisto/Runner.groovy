@@ -60,18 +60,21 @@ class Runner {
       log.debug 'Resetting expectations per new file.'
       elementExpectations.each { it.reset() }
 
-      aggregators.each {
-        resultsModel.aggregationTotals.put(fileName, it.totals)
-      }
-
+      //TODO Does a runner care about the various 'expectations' we will have?
+      //Seems like it would just talk to some holder of the data and tell it the operations
+      //The holder would then iterate through each collection
+      //But what if we end up having a parameter on which expectations to run or exclude?
+      //Then the runner would care about that .... maybe (might be another delegation)
       Map<String, Integer> aggTotals = [:]
       aggregators.each { Aggregator aggregator ->
+        resultsModel.aggregationTotals.put(fileName, aggregator.totals)
+
         aggTotals += aggregator.totals
+
+        aggregator.reset()
       }
 
       resultsModel.aggregationTotals.put(fileName, aggTotals)
-
-      aggregators.each { it.reset() }
     }
 
     resultsHandler.handleResults(optionsModel, resultsModel)
