@@ -6,7 +6,9 @@ import org.nuisto.model.OptionsModel
 @Slf4j(category = 'org.nuisto.msa')
 class MuleLint {
   static void main(String [] args) {
-    new MuleLint().run(args)
+    int result = new MuleLint().run(args)
+
+    System.exit(result)
   }
 
   int run(String [] args) {
