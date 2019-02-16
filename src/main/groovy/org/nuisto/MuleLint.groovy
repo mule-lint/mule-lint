@@ -68,8 +68,14 @@ class MuleLint {
     runWithModel(optionsModel)
   }
 
-  int invoke(String dictionary, String rules, String sourceDirectory, Map<String, String> namespaces) {
-    OptionsModel optionsModel = new OptionsModel(dictionary: dictionary, rules: rules, sourceDirectory: sourceDirectory, namespaces: namespaces)
+  int invoke(String dictionary, String rules, String sourceDirectory, String [] excludePatterns, Map<String, String> namespaces) {
+    OptionsModel optionsModel = new OptionsModel(
+            dictionary: dictionary,
+            rules: rules,
+            sourceDirectory: sourceDirectory,
+            excludePatterns: excludePatterns,
+            namespaces: namespaces
+    )
 
     return runWithModel(optionsModel)
   }

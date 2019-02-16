@@ -42,8 +42,11 @@ class Runner {
       new FlowOccurrenceAggregator()
     ]
 
-    def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, '**/*.xml' /* includes */, 'pom.xml **/src/test/munit/*.xml **/target/**/*.xml **/log4j*.xml **/*.pdf' /* excludes */)
+    String includePattern = '**/*.xml'
+    String [] excludedPatterns = optionsModel.excludePatterns + 'pom.xml' + '**/src/test/munit/*.xml' + '**/target/**/*.xml' + '**/log4j*.xml'
+    def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, includePattern, excludedPatterns.join(' '))
 
+    //TODO Should we output some kind of "findings" when we run with the maven output? Like a junit run does?
     log.info 'Found {} files', txtFiles.size()
 
     txtFiles.each { fileName ->
