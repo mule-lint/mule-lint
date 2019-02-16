@@ -20,6 +20,7 @@ class WordValidatorTests {
     assert true == validator.isCamelCased('bitTeraflop')
   }
 
+  //TODO Not sure this is what I want
   @Test
   void correctCaseWithUnknownWordFails() {
     assert false == validator.isCamelCased('bitTeraflap')
@@ -31,12 +32,8 @@ class WordValidatorTests {
   }
 
   @Test
-  void anotherBadCaseTest() {
+  void knownWordsWithBadCaseFails() {
     assert false == validator.isCamelCased('bitterAFlop')
-  }
-
-  @Test
-  void anotherBadCaseTestTakeTwo() {
     assert false == validator.isCamelCased('bitTerAFlop')
   }
 
