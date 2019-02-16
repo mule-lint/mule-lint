@@ -87,4 +87,8 @@ class MuleXmlNode {
     String lineNumber = node.@_msaLineNumber
     lineNumber == null ? -1 : lineNumber.toInteger()
   }
+
+  String toString() {
+    return "lineNumber: ${lineNumber}, name: ${name}, flowesque: ${isFlowesque()}"
+  }
 }
