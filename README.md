@@ -1,7 +1,5 @@
 # Mule Lint Project
 
-http://docs.groovy-lang.org/latest/html/documentation/core-domain-specific-languages.html
-
 We believe building some types of software are not trivial and when there are
 many applications, it is a good thing to make sure you have some consistency
 around certain pieces of software. Primarily that logging follows a very strict
@@ -80,8 +78,12 @@ up-to-date to reflect new features of mule-lint. You can find it [on Github](htt
 
 ### Prerequisites
 
-Versions up to 0.4.0 were built with Gradle 4.1-rc-1, Maven 3.5.0, and Java 1.8.0_121.
-Starting with v0.5 will Java11 be used.
+Java8 is required, there are [known issues](https://github.com/mule-lint/mule-lint/issues/15) with anything greater than Java8.
+
+Versions up to 0.4.0 were built with Gradle 4.1-rc-1 (the repo includes its own
+`./gradlew`).
+
+Versions 0.5.0 and above  were built with Gradle 5.
 
 ```
 $ git clone git@github.com:Nuisto/mule-lint.git
@@ -101,12 +103,27 @@ $ gradle build
 
 ## Built With
 
-* [Gradle](https://gradle.org/) - Build system
-* [Groovy](http://groovy-lang.org/) - Written in Groovy using the version that Mule depends upon as well
+* [Java](https://java.sun.com/) - Java8 is required, there are [known issues](https://github.com/mule-lint/mule-lint/issues/15) with anything
+  greater than Java8.
+* [Gradle](https://gradle.org/) - Build system, please use the wrapper within
+  the repo `./gradlew`
+* [Groovy](http://groovy-lang.org/) - Written in Groovy using the version that Mule depends upon as well. Currently v2.4.4
+
+The following is what MuleSoft recommends for the different versions of Mule.
+```
+4.1.4 JDK 1.8.0 (Recommended JDK 1.8.0_171/72)
+4.1.0 JDK 1.8.0 (Recommended JDK 1.8.0_151/52)
+3.9.2 Oracle JDK 1.8.0 (Recommended JDK 1.8.0_191/192), IBM JDK 1.8, OpenJDK 8
+3.9.1 Oracle JDK 1.8.0 (Recommended JDK 1.8.0_151/52), IBM JDK 1.8, OpenJDK 8
+3.9.0 JDK 1.8.0 (Recommended JDK 1.8.0_144)
+```
+
 
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/nuisto/mule-lint/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+If you are interested in the DSL used then give the docs a read, they are a [great starting point](http://docs.groovy-lang.org/latest/html/documentation/core-domain-specific-languages.html).
 
 ## Versioning
 
