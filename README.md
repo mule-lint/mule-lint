@@ -83,12 +83,12 @@ Java8 is required, there are [known issues](https://github.com/mule-lint/mule-li
 Versions up to 0.4.0 were built with Gradle 4.1-rc-1 (the repo includes its own
 `./gradlew`).
 
-Versions 0.5.0 and above  were built with Gradle 5.
+Versions 0.5.0 and above were built with Gradle 5.
 
 ```
-$ git clone git@github.com:Nuisto/mule-lint.git
+$ git clone git@github.com:mule-lint/mule-lint.git
 $ cd mule-lint
-$ gradle build
+$ ./gradlew build
 ```
 
 ## Running the tests
@@ -97,7 +97,7 @@ All tests are ran using Gradle. There are no category of tests (i.e. unit tests 
 Starting with version 0.5.0 we use JUnit5 (Jupiter tests)
 
 ```
-$ gradle build
+$ ./gradlew build
 ```
 
 
