@@ -37,11 +37,11 @@ class WordValidator {
         return true
       }
       else if (firstWord) {
-        if (Casing.Camel) {
+        if (Casing.Camel == casing) {
           if (!(currentWord == currentWord.toLowerCase())) {
             return true
           }
-        } else if (Casing.Pascal) {
+        } else if (Casing.Pascal == casing) {
           if (!wordIsCapitalized(currentWord)) {
             return true
           }

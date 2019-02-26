@@ -1,6 +1,5 @@
 package org.nuisto
 
-import org.apache.commons.lang3.StringUtils
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -54,5 +53,12 @@ class WordValidatorTests {
 
     assert false == new WordValidator(knownWords).isCamelCased('product-low')
     assert false == new WordValidator(knownWords).isCamelCased('product_slow')
+  }
+
+  @Test
+  void isPascalCasedFailsWithDashesOrUnderscores() {
+    def knownWords = ['product', 'products', 'low', 'slow']
+
+    assert true == new WordValidator(knownWords).isPascalCased('ProductLow')
   }
 }
