@@ -23,9 +23,27 @@ class FlowExpectationBuilder extends ExpectationBuilder {
     expectationList.add(expectation)
   }
 
+  FlowExpectationBuilder dash(String ignore) {
+    //The "ignore" parameter is "cased"
+    expectation.setDashCased()
+    return this
+  }
+
+  FlowExpectationBuilder hypen(String ignore) {
+    //The "ignore" parameter is "cased"
+    expectation.setDashCased()
+    return this
+  }
+
   FlowExpectationBuilder camel(String ignore) {
     //The "ignore" parameter is "cased"
-    expectation.camelCased = true
+    expectation.setCamelCased()
+    return this
+  }
+
+  FlowExpectationBuilder pascal(String ignore) {
+    //The "ignore" parameter is "cased"
+    expectation.setPascalCased()
     return this
   }
 }

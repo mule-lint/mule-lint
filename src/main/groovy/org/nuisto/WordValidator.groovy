@@ -10,6 +10,24 @@ class WordValidator {
     knownWords = wordList
   }
 
+  boolean isDashCased(String phrase) {
+    def foundWords = phrase.split('-')
+    //We would rather default to true, rather than a failure
+
+    //Looking for failure cases
+    boolean failure = foundWords.any { currentWord ->
+      if (currentWord != currentWord.toLowerCase()) {
+        true
+      }
+
+      if (!wordFoundInDictionary(currentWord)) {
+        return true
+      }
+    }
+
+    return !failure
+  }
+
   boolean isPascalCased(String word) {
     return isCased(word, Casing.Pascal)
   }
@@ -39,6 +57,10 @@ class WordValidator {
       else if (firstWord) {
         if (Casing.Camel == casing) {
           if (!(currentWord == currentWord.toLowerCase())) {
+            return true
+          }
+        } else if (Casing.Pascal == casing) {
+          if (!wordIsCapitalized(currentWord)) {
             return true
           }
         } else if (Casing.Pascal == casing) {

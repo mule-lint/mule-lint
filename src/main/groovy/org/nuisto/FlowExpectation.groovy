@@ -8,8 +8,9 @@ import org.nuisto.model.Infraction
  */
 @Slf4j(category = 'org.nuisto.msa')
 class FlowExpectation extends Expectation {
+  Casing casing
   boolean isCaseSpecified
-  boolean isCamelCased
+
   WordValidator wordValidator
 
   FlowExpectation(WordValidator wordValidator) {
@@ -32,9 +33,19 @@ class FlowExpectation extends Expectation {
     return (!isCaseSpecified) || (isCaseSpecified && isPassing)
   }
 
-  void setCamelCased(boolean value) {
+  void setCamelCased() {
     isCaseSpecified = true
-    isCamelCased = value
+    casing = Casing.Camel
+  }
+
+  void setPascalCased() {
+    isCaseSpecified = true
+    casing = Casing.Pascal
+  }
+
+  void setDashCased() {
+    isCaseSpecified = true
+    casing = Casing.Dashed
   }
 
   void handleNode(MuleXmlNode node) {
@@ -42,13 +53,31 @@ class FlowExpectation extends Expectation {
       def flowName = node.getAttribute('name')
       log.debug 'Is flow camel cased? {}', flowName
 
-      if (!wordValidator.isCamelCased(flowName)) {
+      if (casing == Casing.Pascal && !wordValidator.isPascalCased(flowName)) {
+        isPassing = false
+        infractions << new Infraction(
+                element: node.name,
+                message: "Flow $flowName is not PascalCased",
+                lineNumber: node.lineNumber,
+                category: 'Casing')
+      }
+      else if (casing == Casing.Camel && !wordValidator.isCamelCased(flowName)) {
         isPassing = false
         infractions << new Infraction(
                 element: node.name,
                 message: "Flow $flowName is not camelCased",
                 lineNumber: node.lineNumber,
                 category: 'Casing')
+
+      }
+      else if (casing == Casing.Dashed && !wordValidator.isDashCased(flowName)) {
+        isPassing = false
+        infractions << new Infraction(
+                element: node.name,
+                message: "Flow $flowName is not dash-cased",
+                lineNumber: node.lineNumber,
+                category: 'Casing')
+
       }
       else {
         isPassing = true

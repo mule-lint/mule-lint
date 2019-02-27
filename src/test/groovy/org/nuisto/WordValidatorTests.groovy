@@ -61,4 +61,11 @@ class WordValidatorTests {
 
     assert true == new WordValidator(knownWords).isPascalCased('ProductLow')
   }
+
+  @Test
+  void isDashCasedSucceeds() {
+    def knownWords = ['product', 'products', 'low', 'slow']
+
+    assert true == new WordValidator(knownWords).isDashCased('product-low')
+  }
 }
