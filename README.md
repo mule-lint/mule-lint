@@ -142,5 +142,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Hat tip to [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) as she provided the starting point of this README and other project related files.
-
-[![Analytics](https://beacon-cgorshing.appspot.com/UA-24556575-4/mule-lint/mule-lint/README.md?pixel)](https://github.com/mule-lint/mule-lint/README.md)
