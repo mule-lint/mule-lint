@@ -23,7 +23,7 @@ class FlowExpectationTests {
 
   @Test
   public void isPassingIsTrueByDefaultEvenWhenCaseIsSpecified_RatherHaveFalsePositivesThanFalseNegatives() {
-    expectation.camelCased = true
+    expectation.setCamelCased()
     expectation.isPassing()
   }
 
@@ -41,7 +41,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 </mule>
 ''')
 
-    expectation.camelCased = true
+    expectation.setCamelCased()
 
     expectation.handleNode(new MuleXmlNode(root.children()[0], nodeChecker))
 
@@ -62,7 +62,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 </mule>
 ''')
 
-    expectation.camelCased = true
+    expectation.setCamelCased()
 
     expectation.handleNode(new MuleXmlNode(root.children()[0], nodeChecker))
 

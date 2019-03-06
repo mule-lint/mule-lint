@@ -51,7 +51,7 @@ class RulesLoader {
     return secure
   }
 
-  List<ElementExpectation> load(OptionsModel model) {
+  List<Expectation> load(OptionsModel model) {
     SecureASTCustomizer secure = restrictEnvironment()
 
     def importCustomizer = new ImportCustomizer()

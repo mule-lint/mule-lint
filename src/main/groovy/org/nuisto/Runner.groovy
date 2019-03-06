@@ -36,7 +36,7 @@ class Runner {
     ResultsModel resultsModel = new ResultsModel()
 
     RulesLoader loader = new RulesLoader()
-    List<ElementExpectation> elementExpectations = loader.load(optionsModel)
+    List<Expectation> expectations = loader.load(optionsModel)
     List<Aggregator> aggregators = [
       new LoggerOccurrenceAggregator(),
       new FlowOccurrenceAggregator()
@@ -50,18 +50,18 @@ class Runner {
     log.info 'Found {} files', txtFiles.size()
 
     txtFiles.each { fileName ->
-      processFile(fileName, elementExpectations, aggregators)
+      processFile(fileName, expectations, aggregators)
 
       //TODO There might be times where the user wants to explicitly see "0" infractions for a file.
       //A user might like to see this so they know for sure the file was looked at.
       //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
       //Could also use this as a trending chart
       //Don't want users inferring that null or missing value is '0'
-      if (elementExpectations.infractions.flatten().size() > 0)
-        resultsModel.expectationFindings.put(fileName, elementExpectations.infractions.flatten())
+      if (expectations.infractions.flatten().size() > 0)
+        resultsModel.expectationFindings.put(fileName, expectations.infractions.flatten())
 
       log.debug 'Resetting expectations per new file.'
-      elementExpectations.each { it.reset() }
+      expectations.each { it.reset() }
 
       //TODO Does a runner care about the various 'expectations' we will have?
       //Seems like it would just talk to some holder of the data and tell it the operations
@@ -85,7 +85,7 @@ class Runner {
     return 0
   }
 
-  def processFile(String file, List<ElementExpectation> expectations, List<Aggregator> aggregators) {
+  def processFile(String file, List<Expectation> expectations, List<Aggregator> aggregators) {
 
     log.debug('Checking {}', file)
 
