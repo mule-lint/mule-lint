@@ -52,6 +52,10 @@ class RulesLoader {
   }
 
   List<Expectation> load(OptionsModel model) {
+    Reader reader = new File(model.rules).newReader()
+
+    findVersionNumber(reader)
+
     SecureASTCustomizer secure = restrictEnvironment()
 
     def importCustomizer = new ImportCustomizer()
@@ -72,8 +76,26 @@ class RulesLoader {
 
     def shell = new GroovyShell(this.class.classLoader, binding, config)
 
-    shell.evaluate(new File(model.rules))
+    shell.evaluate(reader)
 
     return expectations
+  }
+
+  String findVersionNumber(Reader reader) {
+
+    def config = new CompilerConfiguration()
+    config.scriptBaseClass = VersionBaseScriptClass.class.name
+
+    def binding = new Binding([
+            version: null
+    ])
+
+    def shell = new GroovyShell(this.class.classLoader, binding, config)
+
+    String versionLine = reader.readLine()
+
+    shell.evaluate(versionLine)
+
+    return binding.getProperty('version')
   }
 }
