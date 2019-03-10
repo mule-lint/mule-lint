@@ -30,12 +30,6 @@ abstract class LoaderBaseScriptClass extends Script {
     throw new Exception("${name} is not a known rule word for mule-lint")
   }
 
-  /**
-   * TODO See the comment in RulesLoader, this should be removed from here
-   */
-  void version(String version) {
-  }
-
   FlowExpectationBuilder flows(String ignore) {
     //Ignored parameter is the value of the 'are' member
 
