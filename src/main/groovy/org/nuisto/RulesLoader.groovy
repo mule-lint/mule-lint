@@ -54,7 +54,10 @@ class RulesLoader {
   List<Expectation> load(OptionsModel model) {
     Reader reader = new File(model.rules).newReader()
 
-    findVersionNumber(reader)
+    String version = findVersionNumber(reader)
+
+    if (version == null) throw new Exception('Version not found on first line of rules file')
+    if (version != '0.0.1') throw new Exception('Unknown version number of: ' + version)
 
     SecureASTCustomizer secure = restrictEnvironment()
 
