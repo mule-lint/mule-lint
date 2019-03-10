@@ -1,20 +1,15 @@
-package org.nuisto
+package org.nuisto.results
 
 import groovy.json.JsonBuilder
-import groovy.util.logging.Slf4j
 import org.nuisto.model.Infraction
 import org.nuisto.model.OptionsModel
 import org.nuisto.model.ResultsModel
 
-@Slf4j(category = 'org.nuisto.msa')
-class ResultsHandler {
+class JsonResultsHandler extends ResultsHandler {
   void handleResults(OptionsModel optionsModel, ResultsModel resultsModel) {
 
-    if (optionsModel.resultsFile == null) {
-      def msg = 'Output file was not specified, this is probably useless with it. But looking for suggestions.'
-      log.error(msg)
-      throw new Exception(msg)
-    }
+    //Let the super class take care of the common validation
+    super.handleResults(optionsModel, resultsModel)
 
     log.info 'Found {} infractions.', resultsModel.expectationFindings.size()
 
@@ -43,13 +38,5 @@ class ResultsHandler {
     }
 
     json.toPrettyString()
-  }
-
-  private void writeToFile(OptionsModel optionsModel, String json) {
-    File file = new File(optionsModel.resultsFile)
-
-    log.debug('Writing results to {}', file.absolutePath)
-
-    file.write(json)
   }
 }

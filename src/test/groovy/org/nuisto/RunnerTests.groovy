@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.nuisto.model.OptionsModel
+import org.nuisto.results.DummyResultsHandler
 
 class RunnerTests {
   Runner runner

@@ -6,6 +6,7 @@ import org.nuisto.aggregator.FlowOccurrenceAggregator
 import org.nuisto.aggregator.LoggerOccurrenceAggregator
 import org.nuisto.model.OptionsModel
 import org.nuisto.model.ResultsModel
+import org.nuisto.results.ResultsHandler
 
 @Slf4j(category = 'org.nuisto.msa')
 class Runner {

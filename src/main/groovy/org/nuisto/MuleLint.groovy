@@ -2,6 +2,7 @@ package org.nuisto
 
 import groovy.util.logging.Slf4j
 import org.nuisto.model.OptionsModel
+import org.nuisto.results.JsonResultsHandler
 
 @Slf4j(category = 'org.nuisto.msa')
 class MuleLint {
@@ -82,6 +83,6 @@ class MuleLint {
   }
 
   int runWithModel(OptionsModel model) {
-    return new Runner(new ResultsHandler()).runWithModel(model)
+    return new Runner(new JsonResultsHandler()).runWithModel(model)
   }
 }

@@ -1,12 +1,13 @@
-package org.nuisto
+package org.nuisto.results
 
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.nuisto.model.OptionsModel
 import org.nuisto.model.ResultsModel
+import org.nuisto.results.ResultsHandler
 
-class ResultsHandlerTests {
+class JsonResultsHandlerTests {
   String filepath = 'results-handler-tests-output.txt'
 
   @BeforeEach
