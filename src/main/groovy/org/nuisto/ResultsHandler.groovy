@@ -10,37 +10,46 @@ import org.nuisto.model.ResultsModel
 class ResultsHandler {
   void handleResults(OptionsModel optionsModel, ResultsModel resultsModel) {
 
+    if (optionsModel.resultsFile == null) {
+      def msg = 'Output file was not specified, this is probably useless with it. But looking for suggestions.'
+      log.error(msg)
+      throw new Exception(msg)
+    }
+
     log.info 'Found {} infractions.', resultsModel.expectationFindings.size()
 
+    String json = generateJson(resultsModel)
+
+    writeToFile(optionsModel, json)
+  }
+
+  private String generateJson(resultsModel) {
     def json = new JsonBuilder()
     json {
       version '0.0.2'
 
       findings resultsModel.expectationFindings.collect { String fileName, List<Infraction> infractions ->
         [
-          file    : fileName,
-          messages: infractions,
+                file        : fileName,
+                messages    : infractions,
 
-          aggregations: {
-            resultsModel.aggregationTotals[fileName].each { aggregateName, value ->
-              "$aggregateName" value
-            }
-          }
+                aggregations: {
+                  resultsModel.aggregationTotals[fileName].each { aggregateName, value ->
+                    "$aggregateName" value
+                  }
+                }
         ]
       }
     }
 
-    if (optionsModel.resultsFile != null) {
-      File file = new File(optionsModel.resultsFile)
+    json.toPrettyString()
+  }
 
-      log.debug('Writing results to {}', file.absolutePath)
+  private void writeToFile(OptionsModel optionsModel, String json) {
+    File file = new File(optionsModel.resultsFile)
 
-      file.write(json.toPrettyString())
-    }
-    else {
-      def msg = 'Output file was not specified, this is probably useless with it. But looking for suggestions.'
-      log.error(msg)
-      System.err.println msg
-    }
+    log.debug('Writing results to {}', file.absolutePath)
+
+    file.write(json)
   }
 }
