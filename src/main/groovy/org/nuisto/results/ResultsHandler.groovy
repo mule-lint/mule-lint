@@ -1,8 +1,6 @@
 package org.nuisto.results
 
-import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
-import org.nuisto.model.Infraction
 import org.nuisto.model.OptionsModel
 import org.nuisto.model.ResultsModel
 

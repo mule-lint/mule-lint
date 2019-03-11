@@ -11,20 +11,30 @@ class JsonResultsHandlerTests {
   String filepath = 'results-handler-tests-output.txt'
 
   @BeforeEach
-  public void setup() {
+  void setup() {
   }
 
   @AfterEach
-  public void cleanup() {
+  void cleanup() {
     new File(filepath).delete()
   }
 
   @Test
-  public void foo() {
+  void generateJsonReturnsBasicResults() {
 
-    OptionsModel optionsModel = new OptionsModel()
     ResultsModel resultsModel = new ResultsModel()
 
-    new ResultsHandler().handleResults(optionsModel, resultsModel)
+    String results = new JsonResultsHandler().generateJson(resultsModel)
+
+    //TODO This has to be an exact match and of course not really needed.
+    //We need to have a common parse of the response and assert on the object graph
+    String expected = '''{
+    "version": "0.0.2",
+    "findings": [
+        
+    ]
+}'''
+
+    assert expected == results
   }
 }
