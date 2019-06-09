@@ -8,7 +8,7 @@ abstract class Expectation {
 
   List<Infraction> infractions
 
-  public void init() {
+  void init() {
 
   }
 
