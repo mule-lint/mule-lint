@@ -11,21 +11,11 @@ class WordValidator {
   }
 
   boolean isDashCased(String phrase) {
-    def foundWords = phrase.split('-')
-    //We would rather default to true, rather than a failure
-
-    //Looking for failure cases
-    boolean failure = foundWords.any { currentWord ->
-      if (currentWord != currentWord.toLowerCase()) {
-        true
-      }
-
-      if (!wordFoundInDictionary(currentWord)) {
-        return true
-      }
+    if (phrase == phrase.toLowerCase() && phrase.contains('-')) {
+     return true
     }
 
-    return !failure
+    return false
   }
 
   boolean isPascalCased(String word) {

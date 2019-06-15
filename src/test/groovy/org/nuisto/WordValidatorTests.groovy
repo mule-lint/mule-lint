@@ -70,6 +70,23 @@ class WordValidatorTests {
   }
 
   @Test
+  void isDashCasedSucceedsForWordsUnknown() {
+    def knownWords = ['product', 'products', 'low', 'slow']
+
+    assert true == new WordValidator(knownWords).isDashCased('system-api')
+  }
+
+  @Test
+  void isDashCasedFailsForUppercasedWords() {
+    assert false == new WordValidator([]).isDashCased('System-api')
+  }
+
+  @Test
+  void isDashCasedFailsForMissingDash() {
+    assert false == new WordValidator(['system', 'api']).isDashCased('systemapi')
+  }
+
+  @Test
   void isDashCasedFails() {
     def knownWords = ['product', 'products', 'low', 'slow']
 
