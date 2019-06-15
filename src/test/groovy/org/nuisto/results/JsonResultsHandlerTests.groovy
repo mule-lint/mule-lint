@@ -8,7 +8,6 @@ import org.nuisto.model.ResultsModel
 import org.skyscreamer.jsonassert.JSONAssert
 
 class JsonResultsHandlerTests {
-  String filepath = 'results-handler-tests-output.txt'
 
   @BeforeEach
   void setup() {
@@ -16,7 +15,6 @@ class JsonResultsHandlerTests {
 
   @AfterEach
   void cleanup() {
-    new File(filepath).delete()
   }
 
   @Test
@@ -26,8 +24,6 @@ class JsonResultsHandlerTests {
 
     String results = new JsonResultsHandler().generateJson(resultsModel)
 
-    //TODO This has to be an exact match and of course not really needed.
-    //We need to have a common parse of the response and assert on the object graph
     String expected = '''{
     "version": "0.0.2",
     "findings": [
