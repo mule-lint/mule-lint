@@ -3,11 +3,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- Exclude pattern of files to ignore/exclude
+- Pascal and Dash cased checking of flow names
+- Raise exception thrown when `version` is not the first line or unknown
+- Added failBuild option
 ### Changed
-- 
+- Updated Gradle version
+- Use the same `groovy-all` dependency that Mule uses
 ### Deprecated
 ### Removed
 ### Fixed
+- Corrected bug where Pascal and Camel cased where not compared correctly
 ### Security
 
 ## [0.5.0] - 2019-02-10

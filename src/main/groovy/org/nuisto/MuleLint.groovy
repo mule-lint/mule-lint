@@ -24,6 +24,7 @@ class MuleLint {
       s(longOpt: 'sources',    args: 1, argName: 'sources',  'The directory name of where the source files are located, default: src/main')
       o(longOpt: 'output',     args: 1, argName: 'path',     'The file name to write json results to.')
       _(longOpt: 'exclude',    args: 1, argName: 'pattern',  'Patterns to exclude (i.e. **/*.doc) uses FileNameFinder')
+      _(longOpt: 'fail-build',                                'Whether to fail the build, just the existing of this key causes a failure, no need to set it to anything.')
     }
 
     def options = cli.parse(args)
@@ -66,11 +67,23 @@ class MuleLint {
       optionsModel.excludePatterns = options.excludes
     }
 
-    runWithModel(optionsModel)
+    if (options.hasOption('fail-build')) {
+      optionsModel.failBuild = true
+    }
+
+    try {
+      runWithModel(optionsModel)
+
+      return ErrorCodes.Success
+    }
+    catch (Exception ex) {
+      return ErrorCodes.GenericFailure
+    }
   }
 
-  int invoke(String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
+  void invoke(boolean failBuild, String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
     OptionsModel optionsModel = new OptionsModel(
+            failBuild: failBuild,
             dictionary: dictionary,
             rules: rules,
             resultsFile: outputFile,
@@ -79,10 +92,10 @@ class MuleLint {
             namespaces: namespaces
     )
 
-    return runWithModel(optionsModel)
+    runWithModel(optionsModel)
   }
 
-  int runWithModel(OptionsModel model) {
-    return new Runner(new JsonResultsHandler()).runWithModel(model)
+  void runWithModel(OptionsModel model) {
+    new Runner(new JsonResultsHandler()).runWithModel(model)
   }
 }

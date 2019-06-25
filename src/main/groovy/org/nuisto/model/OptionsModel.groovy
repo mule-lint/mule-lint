@@ -1,6 +1,7 @@
 package org.nuisto.model
 
 class OptionsModel {
+  boolean failBuild
   String rules
   String sourceDirectory
   String resultsFile

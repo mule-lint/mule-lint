@@ -16,7 +16,7 @@ class Runner {
     this.resultsHandler = resultsHandler
   }
 
-  int runWithModel(OptionsModel optionsModel) {
+  void runWithModel(OptionsModel optionsModel) {
     File path = new File(optionsModel.sourceDirectory)
 
     if (!path.exists()) {
@@ -50,6 +50,8 @@ class Runner {
     //TODO Should we output some kind of "findings" when we run with the maven output? Like a junit run does?
     log.info 'Found {} files', txtFiles.size()
 
+    boolean failBuild = false
+
     txtFiles.each { fileName ->
       processFile(fileName, expectations, aggregators)
 
@@ -58,8 +60,10 @@ class Runner {
       //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
       //Could also use this as a trending chart
       //Don't want users inferring that null or missing value is '0'
-      if (expectations.infractions.flatten().size() > 0)
+      if (expectations.infractions.flatten().size() > 0) {
+        failBuild = true
         resultsModel.expectationFindings.put(fileName, expectations.infractions.flatten())
+      }
 
       log.debug 'Resetting expectations per new file.'
       expectations.each { it.reset() }
@@ -83,7 +87,9 @@ class Runner {
 
     resultsHandler.handleResults(optionsModel, resultsModel)
 
-    return 0
+    if (optionsModel.failBuild && failBuild) {
+      throw new IllegalStateException("Infractions found.")
+    }
   }
 
   def processFile(String file, List<Expectation> expectations, List<Aggregator> aggregators) {
