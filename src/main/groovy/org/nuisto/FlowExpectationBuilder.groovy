@@ -15,10 +15,6 @@ class FlowExpectationBuilder extends ExpectationBuilder {
     expectation = new FlowExpectation(new WordValidator(knownWords))
   }
 
-  public Expectation build() {
-
-  }
-
   public void addBuiltExpectationTo(List<Expectation> expectationList) {
     expectationList.add(expectation)
   }
