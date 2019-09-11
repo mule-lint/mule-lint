@@ -1,6 +1,7 @@
 # Gradle
 # ------
 .gradle
+gradle.properties
 /build
 /buildSrc/build
 /subprojects/*/build
