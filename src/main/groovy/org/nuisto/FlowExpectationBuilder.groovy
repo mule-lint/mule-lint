@@ -6,7 +6,7 @@ class FlowExpectationBuilder extends ExpectationBuilder {
   FlowExpectation expectation
   OptionsModel optionsModel
 
-  FlowExpectationBuilder(OptionsModel optionsModel) {
+  private FlowExpectationBuilder(OptionsModel optionsModel) {
     this.optionsModel = optionsModel
 
     List<String> knownWords = new File(optionsModel.dictionary).readLines()
@@ -15,8 +15,14 @@ class FlowExpectationBuilder extends ExpectationBuilder {
     expectation = new FlowExpectation(new WordValidator(knownWords))
   }
 
-  public void addBuiltExpectationTo(List<Expectation> expectationList) {
-    expectationList.add(expectation)
+  static FlowExpectationBuilder create(OptionsModel optionsModel) {
+    FlowExpectationBuilder builder = new FlowExpectationBuilder(optionsModel)
+
+    return builder
+  }
+
+  Expectation build() {
+    return expectation
   }
 
   FlowExpectationBuilder dash(String ignore) {

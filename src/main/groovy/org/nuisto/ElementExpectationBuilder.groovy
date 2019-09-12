@@ -14,8 +14,14 @@ class ElementExpectationBuilder extends ExpectationBuilder {
     this.optionsModel = optionsModel
   }
 
-  public void addBuiltExpectationTo(List<Expectation> expectationList) {
-    expectationList.add(expectation)
+  static ElementExpectationBuilder create(String name, OptionsModel optionsModel) {
+    ElementExpectationBuilder builder = new ElementExpectationBuilder(name, optionsModel)
+
+    return builder
+  }
+
+  public Expectation build() {
+    return expectation
   }
 
   ElementExpectationBuilder hasAttribute(String attribute) {

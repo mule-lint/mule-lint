@@ -14,7 +14,7 @@ class FlowExpectationBuilderTest {
   @BeforeEach
   void setUp() {
     def model = new OptionsModel(dictionary: 'src/test/resources/dictionary.txt')
-    builder = new FlowExpectationBuilder(model)
+    builder = FlowExpectationBuilder.create(model)
   }
 
   @AfterEach

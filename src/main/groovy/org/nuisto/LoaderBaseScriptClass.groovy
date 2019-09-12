@@ -33,14 +33,18 @@ abstract class LoaderBaseScriptClass extends Script {
   FlowExpectationBuilder flows(String ignore) {
     //Ignored parameter is the value of the 'are' member
 
-    builder.addBuiltExpectationTo(this.binding.expectations)
-    builder = new FlowExpectationBuilder(this.binding.optionsModel)
+    FlowExpectationBuilder builder = FlowExpectationBuilder.create(this.binding.optionsModel)
+    addToBinding(this.binding.builders, builder)
     return builder
   }
 
   ElementExpectationBuilder element(String name) {
-    builder.addBuiltExpectationTo(this.binding.expectations)
-    builder = new ElementExpectationBuilder(name, this.binding.optionsModel)
+    ElementExpectationBuilder builder = ElementExpectationBuilder.create(name, this.binding.optionsModel)
+    addToBinding(this.binding.builders, builder)
     return builder
+  }
+
+  void addToBinding(List<ExpectationBuilder> list, ExpectationBuilder builder) {
+    list.add(builder)
   }
 }

@@ -1,6 +1,7 @@
 package org.nuisto
 
 import org.junit.jupiter.api.Test
+import org.nuisto.model.OptionsModel
 
 class ElementExpectationBuilderTests {
 
@@ -10,24 +11,18 @@ class ElementExpectationBuilderTests {
 
     ExpectationBuilder builder = new ElementExpectationBuilder(elementName, null)
 
-    List<Expectation> expectations = []
-
-    builder.addBuiltExpectationTo(expectations)
-    assert expectations.size() == 1
+    Expectation expectation = builder.build()
   }
 
   @Test
   void nameIsNotBlank() {
     String elementName = 'logger'
 
-    ExpectationBuilder builder = new ElementExpectationBuilder(elementName, null)
+    ElementExpectationBuilder builder = ElementExpectationBuilder.create(elementName, null)
 
     builder.hasAttribute('testing')
 
-    List<Expectation> expectations = []
-
-    builder.addBuiltExpectationTo(expectations)
-    assert expectations.size() == 1
+    Expectation expectation = builder.build()
   }
 
   @Test
@@ -36,9 +31,6 @@ class ElementExpectationBuilderTests {
 
     builder.hasParent('asdf')
 
-    List<Expectation> expectations = []
-
-    builder.addBuiltExpectationTo(expectations)
-    assert expectations.size() == 1
+    Expectation expectation = builder.build()
   }
 }

@@ -70,16 +70,20 @@ class RulesLoader {
     //config.addCompilationCustomizers(importCustomizer, secure)
     config.scriptBaseClass = LoaderBaseScriptClass.class.name
 
-    List<Expectation> expectations = []
+    List<ExpectationBuilder> builders = []
 
     def binding = new Binding([
-            expectations: expectations,
-            optionsModel: model
+            optionsModel: model,
+            builders: builders
     ])
 
     def shell = new GroovyShell(this.class.classLoader, binding, config)
 
     shell.evaluate(reader)
+
+    List<Expectation> expectations = builders.collect { builder ->
+      builder.build()
+    }
 
     return expectations
   }
