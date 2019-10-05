@@ -40,48 +40,17 @@ class MuleLint {
 
     def optionsModel = new OptionsModel()
 
-    if (!options.r) {
-      log.error 'Rules must be provided'
-      return ErrorCodes.RulesNotProvided
-    }
-    else {
-      optionsModel.rules = options.r
-    }
+    optionsModel.rules = options.r ? options.r : null
+    optionsModel.sourceDirectory = options.s ? options.s : null
+    optionsModel.dictionary = options.d ? options.d : null
+    optionsModel.resultsFile = options.o ? options.o : null
+    optionsModel.excludePatterns = options.excludes ? options.excludes : null
+    optionsModel.failBuild = options.hasOption('fail-build')
 
-    if (options.s) {
-      optionsModel.sourceDirectory = options.s
-    }
-    else {
-      optionsModel.sourceDirectory = 'src/main'
-    }
-
-    if (options.d) {
-      optionsModel.dictionary = options.d
-    }
-
-    if (options.o) {
-      optionsModel.resultsFile = options.o
-    }
-
-    if (options.excludes) {
-      optionsModel.excludePatterns = options.excludes
-    }
-
-    if (options.hasOption('fail-build')) {
-      optionsModel.failBuild = true
-    }
-
-    try {
-      runWithModel(optionsModel)
-
-      return ErrorCodes.Success
-    }
-    catch (Exception ex) {
-      return ErrorCodes.GenericFailure
-    }
+    return runWithModel(optionsModel)
   }
 
-  void invoke(boolean failBuild, String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
+  int invoke(boolean failBuild, String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
     OptionsModel optionsModel = new OptionsModel(
             failBuild: failBuild,
             dictionary: dictionary,
@@ -92,10 +61,32 @@ class MuleLint {
             namespaces: namespaces
     )
 
-    runWithModel(optionsModel)
+    return runWithModel(optionsModel)
   }
 
-  void runWithModel(OptionsModel model) {
-    new Runner(new JsonResultsHandler()).runWithModel(model)
+  int runWithModel(OptionsModel optionsModel) {
+
+    if (!optionsModel.rules) {
+      log.error 'Rules must be provided'
+      return ErrorCodes.RulesNotProvided
+    }
+
+    if (!optionsModel.sourceDirectory) {
+      optionsModel.sourceDirectory = 'src/main'
+    }
+
+    if (!optionsModel.dictionary) {
+      log.error 'A dictionary file must be provided'
+      return ErrorCodes.DictionaryFileNotProvide
+    }
+
+    try {
+      new Runner(new JsonResultsHandler()).runWithModel(optionsModel)
+
+      return ErrorCodes.Success
+    }
+    catch (Exception ex) {
+      return ErrorCodes.GenericFailure
+    }
   }
 }
