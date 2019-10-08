@@ -47,7 +47,12 @@ class MuleLint {
     optionsModel.excludePatterns = options.excludes ? options.excludes : null
     optionsModel.failBuild = options.hasOption('fail-build')
 
-    return runWithModel(optionsModel)
+    try {
+      return runWithModel(optionsModel)
+    }
+    catch (Exception ex) {
+      return ErrorCodes.GenericFailure
+    }
   }
 
   int invoke(boolean failBuild, String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
@@ -80,13 +85,8 @@ class MuleLint {
       return ErrorCodes.DictionaryFileNotProvide
     }
 
-    try {
-      new Runner(new JsonResultsHandler()).runWithModel(optionsModel)
+    new Runner(new JsonResultsHandler()).runWithModel(optionsModel)
 
-      return ErrorCodes.Success
-    }
-    catch (Exception ex) {
-      return ErrorCodes.GenericFailure
-    }
+    return ErrorCodes.Success
   }
 }
