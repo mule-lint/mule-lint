@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+### Changed
+- Better handling of missing dictionary file
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.5.1] - 2019-09-12
+### Added
 - Exclude pattern of files to ignore/exclude
 - Pascal and Dash cased checking of flow names
 - Raise exception thrown when `version` is not the first line or unknown
@@ -10,11 +19,9 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Updated Gradle version
 - Use the same `groovy-all` dependency that Mule uses
-### Deprecated
-### Removed
 ### Fixed
 - Corrected bug where Pascal and Camel cased where not compared correctly
-### Security
+- Corrected bug where the last rule/line wasn't read in correctly and was ignored
 
 ## [0.5.0] - 2019-02-10
 ### Added
@@ -22,21 +29,11 @@ All notable changes to this project will be documented in this file.
 - Command line parameter added to specify a dictionary of words to check against for camel casing.
 - Now when a word is used that isn't a part of the DSL, you will get a message
   "Foo is not a known rule word for mule-lint"
-### Changed
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [0.4.0] - 2017-11-02
-### Added
 ### Changed
 - The aggregators section in the result json is now an object instead of an
   array.
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [0.3.0] - 2017-09-16
 ### Added
