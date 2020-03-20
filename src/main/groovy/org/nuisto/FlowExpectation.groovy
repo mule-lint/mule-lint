@@ -3,9 +3,6 @@ package org.nuisto
 import groovy.util.logging.Slf4j
 import org.nuisto.model.Infraction
 
-/**
- *
- */
 @Slf4j(category = 'org.nuisto.msa')
 class FlowExpectation extends Expectation {
   Casing casing
