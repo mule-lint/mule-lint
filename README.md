@@ -68,13 +68,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Maven
 If you are just wanting to use this with a Maven build, then please refer to
-[mule-lint-maven-plugin project](https://github.com/Nuisto/mule-lint-maven-plugin) which
+[mule-lint-maven-plugin project](https://github.com/mule-lint/mule-lint-maven-plugin) which
 provides a much easier way of invocation rather than calling this project
 directly.
 
 ### Example Project
 We have put together a trivial Mule app that we will keep
-up-to-date to reflect new features of mule-lint. You can find it [on Github](https://github.com/Nuisto/example-mule-lint-project).
+up-to-date to reflect new features of mule-lint. You can find it [on Github](https://github.com/mule-lint/example-mule-lint-project).
 
 ### Prerequisites
 
@@ -121,19 +121,19 @@ The following is what MuleSoft recommends for the different versions of Mule.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/nuisto/mule-lint/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/mule-lint/mule-lint/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 If you are interested in the DSL used then give the docs a read, they are a [great starting point](http://docs.groovy-lang.org/latest/html/documentation/core-domain-specific-languages.html).
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/nuisto/mule-lint/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/mule-lint/mule-lint/tags). 
 
 ## Authors
 
 * **Chad Gorshing** - *Initial work* - [cgorshing](https://gens.io/profile/cgorshing)
 
-See also the list of [contributors](https://github.com/nuisto/mule-lint/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/mule-lint/mule-lint/contributors) who participated in this project.
 
 ## License
 
