@@ -96,9 +96,9 @@ uploadArchives {
         url 'https://github.com/mule-lint/mule-lint'
 
         scm {
-          connection 'scm:git:https://github.com/nuisto/mule-lint.git'
-          developerConnection 'scm:git:https://github.com/nuisto/mule-lint.git'
-          url 'https://github.com/nuisto/mule-lint'
+          connection 'scm:git:https://github.com/mule-lint/mule-lint.git'
+          developerConnection 'scm:git:https://github.com/mule-lint/mule-lint.git'
+          url 'https://github.com/mule-lint/mule-lint'
         }
 
         licenses {
