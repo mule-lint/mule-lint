@@ -42,6 +42,18 @@ are:
 * Do we have any logger that does not reference (context specific)
   `transactionId`?
 
+## Summary
+
+  - [Initial Rule Format](#initial-rule-format)
+  - [Getting Started](#getting-started)
+  - [Running the tests](#running-the-tests)
+  - [Built With](#built-with)
+  - [Contributing](#contributing)
+  - [Versioning](#versioning)
+  - [Authors](#authors)
+  - [License](#license)
+  - [Acknowledgments](#acknowledgments)
+
 ## Initial Rule Format
 There are quite a few things we want to do, but to get out a [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product)
 we are trying to find something that is easier for us to deliver, then to improve upon later.
