@@ -20,7 +20,7 @@ class JsonResultsHandler extends ResultsHandler {
     writeToFile(optionsModel, json)
   }
 
-  private String generateJson(ResultsModel resultsModel) {
+  String generateJson(ResultsModel resultsModel) {
     def json = new JsonBuilder()
     json {
       version '0.0.2'
