@@ -23,9 +23,9 @@ threshold you define.
 
 Such as find regex within loggers message attribute (or category attribute)
 
-Or does does attribute X have values within this acceptable list?
+Or does attribute X have values within this acceptable list?
 
-We also come across where certain elements needed to configured a certain way,
+We also come across where certain elements needed to be configured a certain way,
 and often devs, by mistake or otherwise, would change these attributes. So this
 is intended to provide that safety net, that what we end up deploying out
 satisfies a certain criteria.
@@ -102,6 +102,12 @@ $ git clone git@github.com:mule-lint/mule-lint.git
 $ cd mule-lint
 $ ./gradlew build
 ```
+
+## Configuration
+
+Configuration options are documented on the [wiki](https://github.com/mule-lint/mule-lint/wiki)
+
+When using mule-lint by way of Maven, the options used with the [mule-lint Maven Plugin project](https://github.com/mule-lint/mule-lint-maven-plugin) follow the same name. The Maven Plugin just passes them straight through to this project.
 
 ## Running the tests
 
