@@ -10,35 +10,30 @@ class MuleLintTest {
   @BeforeEach
   public void setup() {
     muleLint = new SpyMuleLint()
-
   }
 
   @Test
   void runNeedsRules() {
     def rulesPath = 'rules-path.txt'
-    int result = muleLint.run(['--rules', rulesPath] as String[])
+    muleLint.run(['--rules', rulesPath] as String[])
     OptionsModel optionsModel = muleLint.modelUsed
 
-    assert result == ErrorCodes.Success
     assert rulesPath == optionsModel.rules
   }
 
   @Test
   void runNeedsRulesAndIfNotProvidedThenReturnsError() {
-    int result = muleLint.run(['--nothing'] as String[])
+    muleLint.run(['--nothing'] as String[])
     OptionsModel optionsModel = muleLint.modelUsed
-
-    assert result == ErrorCodes.RulesNotProvided
   }
 
   @Test
   void runParsesDictionaryCorrectly() {
     def dictionaryPath = 'filename.txt'
 
-    int result = muleLint.run(['--rules', 'rules-path.txt', '--dictionary', dictionaryPath] as String[])
+    muleLint.run(['--rules', 'rules-path.txt', '--dictionary', dictionaryPath] as String[])
     OptionsModel optionsModel = muleLint.modelUsed
 
-    assert result == ErrorCodes.Success
     assert dictionaryPath == optionsModel.dictionary
   }
 
@@ -46,10 +41,9 @@ class MuleLintTest {
   void runParsesSourcesCorrectly() {
     def sourcesPath = 'filename.txt'
 
-    int result = muleLint.run(['--rules', 'rules-path.txt', '--sources', sourcesPath] as String[])
+    muleLint.run(['--rules', 'rules-path.txt', '--sources', sourcesPath] as String[])
     OptionsModel optionsModel = muleLint.modelUsed
 
-    assert result == ErrorCodes.Success
     assert sourcesPath == optionsModel.sourceDirectory
   }
 
@@ -57,19 +51,17 @@ class MuleLintTest {
   void runParsesOutputResultsPathCorrectly() {
     def outputPath = 'filename.txt'
 
-    int result = muleLint.run(['--rules', 'rules-path.txt', '--output', outputPath] as String[])
+    muleLint.run(['--rules', 'rules-path.txt', '--output', outputPath] as String[])
     OptionsModel optionsModel = muleLint.modelUsed
 
-    assert result == ErrorCodes.Success
     assert outputPath == optionsModel.resultsFile
   }
 
   @Test
   void runParsesExcludeOptionCorrectly() {
-    int result = muleLint.run(['--rules', 'rules-path.txt', '--exclude', 'asdf', '--exclude', 'qwer'] as String[])
+    muleLint.run(['--rules', 'rules-path.txt', '--exclude', 'asdf', '--exclude', 'qwer'] as String[])
     OptionsModel optionsModel = muleLint.modelUsed
 
-    assert result == ErrorCodes.Success
     assert 2 == optionsModel.excludePatterns.size()
   }
 }

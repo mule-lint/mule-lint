@@ -1,18 +1,31 @@
 package org.nuisto
 
 import groovy.util.logging.Slf4j
+import org.nuisto.exceptions.DictionaryNotProvidedException
+import org.nuisto.exceptions.OptionsNotProvidedException
+import org.nuisto.exceptions.RulesNotProvidedException
 import org.nuisto.model.OptionsModel
 import org.nuisto.results.JsonResultsHandler
 
 @Slf4j(category = 'org.nuisto.msa')
 class MuleLint {
   static void main(String [] args) {
-    int result = new MuleLint().run(args)
+    int result = ErrorCodes.Success
+
+    try {
+      new MuleLint().run(args)
+    }
+    catch (OptionsNotProvidedException e) {
+      result = ErrorCodes.OptionsNotProvided
+    }
+    catch (Exception e) {
+      result = ErrorCodes.GenericFailure
+    }
 
     System.exit(result)
   }
 
-  int run(String [] args) {
+  void run(String [] args) {
     //TODO Need to look into updated the CliBuilder used https://dzone.com/articles/groovy-25-clibuilder-renewal
 
     def cli = new CliBuilder(usage: 'mule-lint.groovy [-h] -s <sourceDirectory> -r <rules> -d <dictionaryFile>')
@@ -29,13 +42,13 @@ class MuleLint {
 
     def options = cli.parse(args)
     if (!options) {
-      return ErrorCodes.OptionsNotProvided
+      throw new OptionsNotProvidedException()
     }
 
     // Show usage text when -h or --help option is used.
     if (options.h) {
       cli.usage()
-      return ErrorCodes.Success
+      return
     }
 
     def optionsModel = new OptionsModel()
@@ -47,15 +60,10 @@ class MuleLint {
     optionsModel.excludePatterns = options.excludes ? options.excludes : null
     optionsModel.failBuild = options.hasOption('fail-build')
 
-    try {
-      return runWithModel(optionsModel)
-    }
-    catch (Exception ex) {
-      return ErrorCodes.GenericFailure
-    }
+    runWithModel(optionsModel)
   }
 
-  int invoke(boolean failBuild, String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
+  void invoke(boolean failBuild, String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
     OptionsModel optionsModel = new OptionsModel(
             failBuild: failBuild,
             dictionary: dictionary,
@@ -66,14 +74,13 @@ class MuleLint {
             namespaces: namespaces
     )
 
-    return runWithModel(optionsModel)
+    runWithModel(optionsModel)
   }
 
-  int runWithModel(OptionsModel optionsModel) {
+  void runWithModel(OptionsModel optionsModel) {
 
     if (!optionsModel.rules) {
-      log.error 'Rules must be provided'
-      return ErrorCodes.RulesNotProvided
+      throw new RulesNotProvidedException()
     }
 
     if (!optionsModel.sourceDirectory) {
@@ -81,12 +88,9 @@ class MuleLint {
     }
 
     if (!optionsModel.dictionary) {
-      log.error 'A dictionary file must be provided'
-      return ErrorCodes.DictionaryFileNotProvide
+      throw new DictionaryNotProvidedException()
     }
 
     new Runner(new JsonResultsHandler()).runWithModel(optionsModel)
-
-    return ErrorCodes.Success
   }
 }
