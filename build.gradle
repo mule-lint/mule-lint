@@ -14,8 +14,15 @@ tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
 
-signing {
-  sign configurations.archives
+if (gradle.startParameter.taskNames.contains("uploadArchives")) {
+  signing {
+    required true
+    sign configurations.archives
+  }
+} else {
+  task signArchives {
+    // disable the signArchives task when just needing to do normal builds (running locally)
+  }
 }
 
 repositories {
