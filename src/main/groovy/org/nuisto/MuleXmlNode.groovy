@@ -44,35 +44,30 @@ class MuleXmlNode {
   }
 
   public MuleXmlNode getPriorSibling() {
-    def siblings = node.parent().children()
-    def thisNodeIndex = siblings.indexOf(node)
-
-    Node foundPriorSibling = null
-
-    try {
-      foundPriorSibling = siblings[thisNodeIndex - 1]
-    }
-    catch (Exception) {
-      //Ignore
-    }
-
-    return new MuleXmlNode(foundPriorSibling, nodeChecker)
+    getSiblingWithOffset(-1)
   }
 
   public MuleXmlNode getFollowingSibling() {
+    getSiblingWithOffset(1)
+  }
+
+  private MuleXmlNode getSiblingWithOffset(int index) {
     def siblings = node.parent().children()
     def thisNodeIndex = siblings.indexOf(node)
 
-    Node foundFollowingSibling = null
-
     try {
-      foundFollowingSibling = siblings[thisNodeIndex + 1]
+      // Use .get() instead of [] to force an exception instead of a null value
+      // TODO Should I use the Null Object Pattern here?
+      // If we use the Null Object Pattern - I think it would solely be restricted to within this class
+      Node foundSibling = siblings.get(thisNodeIndex + index)
+
+      return new MuleXmlNode(foundSibling, nodeChecker)
     }
     catch (Exception) {
       //Ignore
     }
 
-    return new MuleXmlNode(foundFollowingSibling, nodeChecker)
+    return null
   }
 
 
