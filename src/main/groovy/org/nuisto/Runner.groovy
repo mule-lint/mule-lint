@@ -20,15 +20,13 @@ class Runner {
     File path = new File(optionsModel.sourceDirectory)
 
     if (!path.exists()) {
-      log.error 'Provided directory, {}, does not exist.', path.absolutePath
-      System.exit(ErrorCodes.ProvidedDirectoryDoesNotExist)
+      throw new IllegalArgumentException("Provided directory, ${path.absolutePath}, does not exist.")
     }
 
     File rulesPath = new File(optionsModel.rules)
 
     if (!rulesPath.exists()) {
-      log.error 'Provided rules, {}, does not exist.', rulesPath.absolutePath
-      System.exit(ErrorCodes.ProvidedDirectoryDoesNotExist)
+      throw new IllegalArgumentException("Provided rules, ${rulesPath.absolutePath}, does not exist.")
     }
 
     log.debug 'Using source directory: {}', path.absolutePath

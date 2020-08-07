@@ -15,16 +15,30 @@ class MuleLint {
     try {
       new MuleLint().run(args)
     }
+    catch (RulesNotProvidedException e) {
+      log.error("Missing rules argument")
+      result = ErrorCodes.RulesNotProvided
+    }
     catch (OptionsNotProvidedException e) {
+      log.error("Missing required options argument")
       result = ErrorCodes.OptionsNotProvided
     }
+    catch (DictionaryNotProvidedException e) {
+      log.error("Missing dictionary argument")
+      result = ErrorCodes.DictionaryFileNotProvide
+    }
     catch (Exception e) {
+      log.error(e.message)
       result = ErrorCodes.GenericFailure
     }
 
     System.exit(result)
   }
 
+  /**
+   * This is called by the main method, so let's the cli options and we can do System.exit's here
+   * @param args
+   */
   void run(String [] args) {
     //TODO Need to look into updated the CliBuilder used https://dzone.com/articles/groovy-25-clibuilder-renewal
 
@@ -63,6 +77,16 @@ class MuleLint {
     runWithModel(optionsModel)
   }
 
+  /**
+   * This is "invoked" by the maven-plugin
+   * @param failBuild
+   * @param dictionary
+   * @param rules
+   * @param sourceDirectory
+   * @param outputFile
+   * @param excludePatterns
+   * @param namespaces
+   */
   void invoke(boolean failBuild, String dictionary, String rules, String sourceDirectory, String outputFile, String [] excludePatterns, Map<String, String> namespaces) {
     OptionsModel optionsModel = new OptionsModel(
             failBuild: failBuild,
@@ -77,6 +101,12 @@ class MuleLint {
     runWithModel(optionsModel)
   }
 
+  /**
+   * This method is shared between the cli and the maven plugin, so throw exceptions here and let each one handle
+   * it appropriately.
+   *
+   * @param optionsModel
+   */
   void runWithModel(OptionsModel optionsModel) {
 
     if (!optionsModel.rules) {
