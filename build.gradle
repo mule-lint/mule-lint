@@ -82,6 +82,9 @@ test {
   useJUnitPlatform()
 }
 
+def ossrhUsername = hasProperty('ossrhUsername') ? ossrhUsername : ''
+def ossrhPassword = hasProperty('ossrhPassword') ? ossrhPassword : ''
+
 uploadArchives {
   repositories {
     mavenDeployer {
