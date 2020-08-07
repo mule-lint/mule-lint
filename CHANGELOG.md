@@ -5,9 +5,11 @@ All notable changes to this project will be documented in this file.
 ### Added
 ### Changed
 - Better handling of missing dictionary file
+- Improved the error handling of running the cli as well as the maven-plugin. There were some inconsistencies between the two.  
 ### Deprecated
 ### Removed
 ### Fixed
+- Some scenarios existed where the sibling checks would not handle a NPE
 ### Security
 
 ## [0.5.1] - 2019-09-12
