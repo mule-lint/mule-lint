@@ -6,6 +6,8 @@ import org.codehaus.groovy.control.customizers.ImportCustomizer
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.nuisto.model.OptionsModel
 
+import java.util.regex.Matcher
+
 import static org.codehaus.groovy.syntax.Types.*
 
 /*
@@ -56,8 +58,7 @@ class RulesLoader {
 
     String version = findVersionNumber(reader)
 
-    if (version == null) throw new Exception('Version not found on first line of rules file')
-    if (version != '0.0.1') throw new Exception('Unknown version number of: ' + version)
+    if (version != '0.0.1') throw new IllegalArgumentException("Missing required version number line, instead was: \"${version}\"")
 
     SecureASTCustomizer secure = restrictEnvironment()
 
@@ -88,21 +89,19 @@ class RulesLoader {
     return expectations
   }
 
+  /**
+   *
+   * @param reader
+   * @return The version as a string or when invalid, then return the full line (for better error handling further up the call stack)
+   */
   String findVersionNumber(Reader reader) {
 
-    def config = new CompilerConfiguration()
-    config.scriptBaseClass = VersionBaseScriptClass.class.name
-
-    def binding = new Binding([
-            version: null
-    ])
-
-    def shell = new GroovyShell(this.class.classLoader, binding, config)
-
     String versionLine = reader.readLine()
+    def matcher = versionLine =~ /version '(\d.\d.\d)'/
 
-    shell.evaluate(versionLine)
-
-    return binding.getProperty('version')
+    if (matcher.matches())
+      return matcher[0][1]
+    else
+      return versionLine
   }
 }

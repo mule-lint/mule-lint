@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 ### Changed
 - Better handling of missing dictionary file
-- Improved the error handling of running the cli as well as the maven-plugin. There were some inconsistencies between the two.  
+- Improved the error handling of running the cli as well as the maven-plugin. There were some inconsistencies between the two.
+- Improved messaging when the required `version` line is missing or otherwise invalid  
 ### Deprecated
 ### Removed
 ### Fixed
