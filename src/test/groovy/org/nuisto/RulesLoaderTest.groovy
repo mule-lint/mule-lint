@@ -16,19 +16,16 @@ class RulesLoaderTest {
 
   @Test
   void findVersionNumber() {
-    Reader reader = new File('src/test/resources/rules.txt').newReader()
-
-    def version = new RulesLoader().findVersionNumber(reader)
+    def version = new RulesLoader().findVersionNumber("version '0.0.1'")
 
     assert version == '0.0.1'
   }
 
   @Test
   void findVersionNumberReturnsFirstLineWhenInvalid() {
-    Reader reader = new File('src/test/resources/rules-missing-version.txt').newReader()
+    String badVersionLine = 'flows are camel cased'
+    def version = new RulesLoader().findVersionNumber(badVersionLine)
 
-    def version = new RulesLoader().findVersionNumber(reader)
-
-    assert version == 'flows are camel cased'
+    assert version == badVersionLine
   }
 }

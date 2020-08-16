@@ -56,11 +56,9 @@ class RulesLoader {
   List<Expectation> load(OptionsModel model) {
     Reader reader = new File(model.rules).newReader()
 
-    String version = findVersionNumber(reader)
+    String version = findVersionNumber(reader.readLine())
 
     if (version != '0.0.1') throw new IllegalArgumentException("Missing required version number line, instead was: \"${version}\"")
-
-    SecureASTCustomizer secure = restrictEnvironment()
 
     def importCustomizer = new ImportCustomizer()
     importCustomizer.addStaticStars 'java.lang.Math'
@@ -68,7 +66,6 @@ class RulesLoader {
 
     def config = new CompilerConfiguration()
     config.addCompilationCustomizers importCustomizer
-    //config.addCompilationCustomizers(importCustomizer, secure)
     config.scriptBaseClass = LoaderBaseScriptClass.class.name
 
     List<ExpectationBuilder> builders = []
@@ -94,9 +91,7 @@ class RulesLoader {
    * @param reader
    * @return The version as a string or when invalid, then return the full line (for better error handling further up the call stack)
    */
-  String findVersionNumber(Reader reader) {
-
-    String versionLine = reader.readLine()
+  String findVersionNumber(String versionLine) {
     def matcher = versionLine =~ /version '(\d.\d.\d)'/
 
     if (matcher.matches())
