@@ -1,6 +1,8 @@
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'signing'
+plugins {
+  id 'groovy'
+  id 'maven-publish'
+  id 'signing'
+}
 
 group = 'org.nuisto'
 archivesBaseName = 'mule-lint'
@@ -10,72 +12,102 @@ description = """"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) || tasks.withType(Javadoc){
+  options.encoding = 'UTF-8'
 }
 
-if (gradle.startParameter.taskNames.contains("uploadArchives")) {
+java {
+  withJavadocJar()
+  withSourcesJar()
+}
+
+// TODO Still shows the older way https://central.sonatype.org/pages/gradle.html
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      pom {
+        name = 'mule-lint'
+        packaging = 'jar'
+        description = 'An application to check for consistency in a mule application.'
+        url = 'https://github.com/mule-lint/mule-lint'
+        licenses {
+          license {
+            name = 'MIT License'
+            url = 'http://www.opensource.org/licenses/mit-license.php'
+          }
+        }
+        developers {
+          developer {
+            id = 'cgorshing'
+            name = 'Chad Gorshing'
+            email = 'gorshing@gmail.com'
+          }
+        }
+        scm {
+          connection = 'scm:git:https://github.com/mule-lint/mule-lint.git'
+          developerConnection = 'scm:git:https://github.com/mule-lint/mule-lint.git'
+          url = 'https://github.com/mule-lint/mule-lint'
+        }
+      }
+    }
+  }
+
+  repositories {
+    maven {
+      def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+      def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+      url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+      credentials {
+        username = ossrhUsername
+        password = ossrhPassword
+      }
+    }
+  }
+}
+
+if (gradle.startParameter.taskNames.contains("publish")) {
   signing {
-    required true
-    sign configurations.archives
+    sign publishing.publications.mavenJava
   }
-} else {
-  task signArchives {
-    // disable the signArchives task when just needing to do normal builds (running locally)
-  }
-}
-
-repositories {
-  maven { url 'https://repo.maven.apache.org/maven2' }
-}
-
-task javadocJar(type: Jar) {
-  classifier = 'javadoc'
-  from javadoc
-}
-
-task sourcesJar(type: Jar) {
-  classifier = 'sources'
-  from sourceSets.main.allSource
-}
-
-artifacts {
-  archives javadocJar, sourcesJar
 }
 
 dependencies {
   //NOTE I forget that we are tied to Mule (basically) on what groovy we can use
   // https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all
   // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.6'
-  compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.4.4'
+  implementation group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.4.4'
 
   // https://mvnrepository.com/artifact/commons-cli/commons-cli
-  compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+  implementation group: 'commons-cli', name: 'commons-cli', version: '1.4'
 
   // https://mvnrepository.com/artifact/org.apache.ant/ant
-  compile group: 'org.apache.ant', name: 'ant', version: '1.10.1'
+  implementation group: 'org.apache.ant', name: 'ant', version: '1.10.1'
 
   // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-  compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+  implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
   // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+  implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
   // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-  compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+  implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
 
   //compile group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.28'
 
   // https://mvnrepository.com/artifact/org.mockito/mockito-core
-  testCompile group: 'org.mockito', name: 'mockito-core', version: '2.24.0'
+  testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.24.0'
 
   // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-  testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.2'
+  testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.2'
   //testCompile group: 'junit', name: 'junit', version:'4.10'
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
 
   // https://mvnrepository.com/artifact/org.skyscreamer/jsonassert
-  testCompile group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
+  testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
 }
 
 test {
@@ -85,47 +117,6 @@ test {
 def ossrhUsername = hasProperty('ossrhUsername') ? ossrhUsername : ''
 def ossrhPassword = hasProperty('ossrhPassword') ? ossrhPassword : ''
 
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-      snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-
-      repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-
-      pom.project {
-        name 'mule-lint'
-        packaging 'jar'
-        // optionally artifactId can be defined here
-        description 'An application to check for consistency in a mule application.'
-        url 'https://github.com/mule-lint/mule-lint'
-
-        scm {
-          connection 'scm:git:https://github.com/mule-lint/mule-lint.git'
-          developerConnection 'scm:git:https://github.com/mule-lint/mule-lint.git'
-          url 'https://github.com/mule-lint/mule-lint'
-        }
-
-        licenses {
-          license {
-            name 'MIT License'
-            url 'http://www.opensource.org/licenses/mit-license.php'
-          }
-        }
-
-        developers {
-          developer {
-            id 'cgorshing'
-            name 'Chad Gorshing'
-            email 'gorshing@gmail.com'
-          }
-        }
-      }
-    }
-  }
+repositories {
+  maven { url 'https://repo.maven.apache.org/maven2' }
 }
