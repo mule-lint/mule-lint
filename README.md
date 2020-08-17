@@ -79,7 +79,7 @@ element 'http:request' hasChild 'http:header' withAttribute 'headerName' havingV
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Maven
-If you are just wanting to use this with a Maven build, then please refer to
+If you need to use this with a Maven build, then please refer to
 [mule-lint-maven-plugin project](https://github.com/mule-lint/mule-lint-maven-plugin) which
 provides a much easier way of invocation rather than calling this project
 directly.
@@ -95,7 +95,9 @@ Java8 is required, there are [known issues](https://github.com/mule-lint/mule-li
 Versions up to 0.4.0 were built with Gradle 4.1-rc-1 (the repo includes its own
 `./gradlew`).
 
-Versions 0.5.0 and above were built with Gradle 5.
+Versions 0.5.0 and 0.5.1 were built with Gradle 5.
+
+Version 0.5.2 and above were built with Gradle 6.6.
 
 ```
 $ git clone git@github.com:mule-lint/mule-lint.git
@@ -109,13 +111,19 @@ Configuration options are documented on the [wiki](https://github.com/mule-lint/
 
 When using mule-lint by way of Maven, the options used with the [mule-lint Maven Plugin project](https://github.com/mule-lint/mule-lint-maven-plugin) follow the same name. The Maven Plugin just passes them straight through to this project.
 
-## Running the tests
+## Building, Running the tests, Installing Locally
 
 All tests are ran using Gradle. There are no category of tests (i.e. unit tests or integration tests), everything is packaged together under `src/test/groovy`.
 Starting with version 0.5.0 we use JUnit5 (Jupiter tests)
 
 ```
 $ ./gradlew build
+```
+
+To install the artifacts into your own local ~/.m2 local repo
+
+```
+$ ./gradlew publishToMavenLocal
 ```
 
 
