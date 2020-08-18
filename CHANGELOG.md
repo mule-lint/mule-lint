@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
 ## [0.5.2] - 2020-08-18
 ### Changed
 - Upgraded gradle to 6.6, resolved deprecated features preparing for 7.0 release
