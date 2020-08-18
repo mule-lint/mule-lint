@@ -1,18 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-### Added
+## [0.5.2] - 2020-08-18
 ### Changed
 - Upgraded gradle to 6.6, resolved deprecated features preparing for 7.0 release
 - Better handling of missing dictionary file
 - Improved the error handling of running the cli as well as the maven-plugin. There were some inconsistencies between the two.
 - Improved messaging when the required `version` line is missing or otherwise invalid  
-### Deprecated
-### Removed
 ### Fixed
 - Some scenarios existed where the sibling checks would not handle a NPE
-### Security
 
 ## [0.5.1] - 2019-09-12
 ### Added
