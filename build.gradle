@@ -2,6 +2,8 @@ plugins {
   id 'groovy'
   id 'maven-publish'
   id 'signing'
+
+  id 'application'
 }
 
 group = 'org.nuisto'
@@ -17,10 +19,17 @@ tasks.withType(JavaCompile) || tasks.withType(Javadoc){
   options.encoding = 'UTF-8'
 }
 
+application {
+  mainClass = 'org.nuisto.MuleLint'
+}
+
 java {
   withJavadocJar()
   withSourcesJar()
 }
+
+def ossrhUsername = hasProperty('ossrhUsername') ? ossrhUsername : ''
+def ossrhPassword = hasProperty('ossrhPassword') ? ossrhPassword : ''
 
 // TODO Still shows the older way https://central.sonatype.org/pages/gradle.html
 publishing {
@@ -114,8 +123,6 @@ test {
   useJUnitPlatform()
 }
 
-def ossrhUsername = hasProperty('ossrhUsername') ? ossrhUsername : ''
-def ossrhPassword = hasProperty('ossrhPassword') ? ossrhPassword : ''
 
 repositories {
   maven { url 'https://repo.maven.apache.org/maven2' }
