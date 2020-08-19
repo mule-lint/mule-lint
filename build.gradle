@@ -6,7 +6,7 @@ plugins {
 
 group = 'org.nuisto'
 archivesBaseName = 'mule-lint'
-version = '0.5.3-SNAPSHOT'
+version = '0.5.3'
 
 description = """"""
 
