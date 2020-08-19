@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
 ## [0.5.3] - 2020-08-19
 ### Fixed
 - See #32 - fixed the broken 0.5.2 release
