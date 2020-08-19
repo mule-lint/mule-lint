@@ -1,1 +1,1 @@
-gradle clean build && gradle uploadArchives
+./gradlew clean build --exclude-task shadowJar && ./gradle uploadArchives --exclude-task shadowJar
