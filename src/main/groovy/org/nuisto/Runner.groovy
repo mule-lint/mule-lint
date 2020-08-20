@@ -42,7 +42,17 @@ class Runner {
     ]
 
     String includePattern = '**/*.xml'
-    String [] excludedPatterns = optionsModel.excludePatterns + 'pom.xml' + '**/src/test/munit/*.xml' + '**/target/**/*.xml' + '**/log4j*.xml'
+
+    def defaultExcludePatterns = [
+      'pom.xml',
+      '**/src/test/munit/*.xml',
+      '**/target/**/*.xml',
+      '**/log4j*.xml'
+    ]
+    // TODO Work on this a bit more
+    defaultExcludePatterns.addAll(optionsModel.excludePatterns)
+    String [] excludedPatterns = defaultExcludePatterns as String []
+
     def txtFiles = new FileNameFinder().getFileNames(path.absolutePath, includePattern, excludedPatterns.join(' '))
 
     //TODO Should we output some kind of "findings" when we run with the maven output? Like a junit run does?

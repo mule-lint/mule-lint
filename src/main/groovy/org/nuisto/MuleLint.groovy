@@ -71,7 +71,7 @@ class MuleLint {
     optionsModel.sourceDirectory = options.s ? options.s : null
     optionsModel.dictionary = options.d ? options.d : null
     optionsModel.resultsFile = options.o ? options.o : null
-    optionsModel.excludePatterns = options.excludes ? options.excludes : null
+    optionsModel.excludePatterns = options.excludes ? options.excludes : []
     optionsModel.failBuild = options.hasOption('fail-build')
 
     runWithModel(optionsModel)
