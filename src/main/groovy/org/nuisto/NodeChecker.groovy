@@ -41,4 +41,20 @@ class NodeChecker {
       return result
     }
   }
+
+  boolean isAttributeMatch(QName node, String name) {
+    //TODO This logic should already be somewhere. Find it and reuse
+    int prefixIndex = name.indexOf(':')
+
+    String prefix = prefixIndex > 0 ? name[0..(prefixIndex-1)] : ''
+    String postfix = prefixIndex > 0 ? name[(prefixIndex+1)..-1] : name
+
+    String namespace = prefix != null ? namespaces[prefix] : null
+
+    boolean isNameMatch = node.localPart == postfix
+    boolean isNamespaceMatch = node.namespaceURI == namespace
+
+    log.debug 'lookingAt={} against={} isNameMatch={} isNamespaceMatch={}', node, name, isNamespaceMatch, isNamespaceMatch
+    return isNameMatch && isNamespaceMatch
+  }
 }

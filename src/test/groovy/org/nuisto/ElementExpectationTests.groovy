@@ -7,7 +7,11 @@ class ElementExpectationTests {
   NodeChecker nodeChecker
 
   ElementExpectation simpleSetup() {
-    nodeChecker = new NodeChecker(['http': 'http://www.mulesoft.org/schema/mule/http'])
+    nodeChecker = new NodeChecker(
+      [
+        'http': 'http://www.mulesoft.org/schema/mule/http',
+        'doc': 'http://www.mulesoft.org/schema/mule/documentation'
+      ])
 
     ElementExpectation expectation = new ElementExpectation()
 
@@ -222,6 +226,29 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 
     expectation.handleNode(new MuleXmlNode(root.children()[0], nodeChecker))
 
+    assert expectation.isElementFound() && expectation.isIsPassing()
+  }
+
+  @Test
+  void elementHasAttributeWorksWithNamespaces() {
+    def expectation = simpleSetup()
+
+    expectation.forElement('http:request').hasAttribute('doc:name')
+
+    def root = new XmlParser().parseText('''
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+  <http:request doc:name="qwer" />
+  <logger />
+</mule>
+''')
+
+    expectation.handleNode(new MuleXmlNode(root.children()[0], nodeChecker))
+
+//    assert expectation.hasAttribute('doc:name') && expectation.isIsPassing()
     assert expectation.isElementFound() && expectation.isIsPassing()
   }
 }

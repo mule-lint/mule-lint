@@ -30,14 +30,16 @@ class MuleXmlNode {
   }
 
   public boolean hasAttribute(String key) {
-    node.attributes().containsKey(key)
+    node.attributes().any {
+      nodeChecker.isAttributeMatch(it.key, key)
+    }
   }
 
   public String getAttribute(String key) {
     node.attribute(key)
   }
 
-  public List<MuleXmlNode>  getSiblings() {
+  public List<MuleXmlNode> getSiblings() {
     return node.parent().children().collect {
       new MuleXmlNode(it, nodeChecker)
     }
