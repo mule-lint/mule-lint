@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Deprecated
 ### Removed
 ### Fixed
+- Attributes with namespaces were not resolving correctly (ie doc:name). See #33
 ### Security
 
 ## [0.5.3] - 2020-08-19
