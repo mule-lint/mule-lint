@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 ### Removed
 ### Fixed
 - Attributes with namespaces were not resolving correctly (ie doc:name). See #33
+- Corrected issue where hasAttribute would only match on namespaced attributes
+- Corrected log message, it was showing the attribute it should be, not actual
 ### Security
 
 ## [0.5.3] - 2020-08-19
