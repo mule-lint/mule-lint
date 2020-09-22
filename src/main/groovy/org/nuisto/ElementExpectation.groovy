@@ -133,7 +133,7 @@ class ElementExpectation extends Expectation {
           else {
             infractions << new Infraction(
                     element: elementName,
-                    message: "Element $elementName has attribute $k but $v is an invalid value",
+                    message: "Element $elementName has attribute $k but $foundValue is an invalid value",
                     lineNumber: node.lineNumber,
                     category: 'InvalidAttribute')
             return false
