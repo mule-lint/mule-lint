@@ -42,6 +42,10 @@ class NodeChecker {
     }
   }
 
+  boolean isAttributeMatch(String attribute, String name) {
+    return attribute == name
+  }
+
   boolean isAttributeMatch(QName node, String name) {
     //TODO This logic should already be somewhere. Find it and reuse
     int prefixIndex = name.indexOf(':')
