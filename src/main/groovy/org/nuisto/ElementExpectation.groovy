@@ -150,7 +150,7 @@ class ElementExpectation extends Expectation {
 
     MuleXmlNode foundFollowingSibling = node.followingSibling
 
-    if (foundFollowingSibling == null || !foundFollowingSibling.isMatch(followingSibling)) {
+    if (!nodeMatches(followingSibling, foundFollowingSibling)) {
       infractions << new Infraction(
               element: elementName,
               message: "Element $elementName does not have a sibling of $followingSibling",
@@ -162,6 +162,10 @@ class ElementExpectation extends Expectation {
     else {
       isPassing = true
     }
+  }
+
+  static boolean nodeMatches(String name, MuleXmlNode second) {
+    return name != null && second.isMatch(name)
   }
 
   void validatePriorSibling(MuleXmlNode node) {
