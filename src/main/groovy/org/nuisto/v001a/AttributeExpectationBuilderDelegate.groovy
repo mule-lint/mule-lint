@@ -15,6 +15,7 @@ class AttributeExpectationBuilderDelegate {
   AttributeExpectation expectation
   String name
   String [] values
+  String valueMatching
   Case attributeValueCase
 
   // TODO I'm not so sure we need the options model
@@ -28,6 +29,8 @@ class AttributeExpectationBuilderDelegate {
       attributeValues: values
     )
 
+    if (valueMatching) expectation.valueMatchingPattern = valueMatching
+
     return expectation
   }
 
@@ -37,6 +40,10 @@ class AttributeExpectationBuilderDelegate {
 
   void value(String [] values) {
     this.values = values
+  }
+
+  void valueMatching(String str) {
+    valueMatching = str
   }
 
   void lower(String type) {
