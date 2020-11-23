@@ -5,8 +5,7 @@ import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.ImportCustomizer
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.nuisto.model.OptionsModel
-
-import java.util.regex.Matcher
+import org.nuisto.v001a.LoaderBaseScriptClass
 
 import static org.codehaus.groovy.syntax.Types.*
 
@@ -58,15 +57,23 @@ class RulesLoader {
 
     String version = findVersionNumber(reader.readLine())
 
-    if (version != '0.0.1') throw new IllegalArgumentException("Missing required version number line, instead was: \"${version}\"")
+    // TODO The Rule version does not make sense when the library version is already specified
+    if (version != '0.0.1' && version != '0.0.1a') throw new IllegalArgumentException("Missing required version number line, instead was: \"${version}\"")
 
     def importCustomizer = new ImportCustomizer()
     importCustomizer.addStaticStars 'java.lang.Math'
     importCustomizer.addStaticStars NodeChecker.class.name
+    importCustomizer.addStaticStars 'org.nuisto.ElementExpectationBuilder'
 
     def config = new CompilerConfiguration()
     config.addCompilationCustomizers importCustomizer
-    config.scriptBaseClass = LoaderBaseScriptClass.class.name
+
+    if (version == '0.0.1')
+      config.scriptBaseClass = LoaderBaseScriptClass.class.name
+    else if (version == '0.0.1a')
+      config.scriptBaseClass = org.nuisto.v001a.LoaderBaseScriptClass.class.name
+//    SecureASTCustomizer secure = restrictEnvironment()
+//    config.addCompilationCustomizers(importCustomizer, secure)
 
     List<ExpectationBuilder> builders = []
 
