@@ -13,6 +13,12 @@ class AttributeExpectation extends Expectation {
     init()
   }
 
+  void init() {
+    super.init()
+
+    infractions = []
+  }
+
   void handleNode(MuleXmlNode node) {
     String elementName = node.name
 
