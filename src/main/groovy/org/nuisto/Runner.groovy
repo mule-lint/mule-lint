@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import org.nuisto.aggregator.Aggregator
 import org.nuisto.aggregator.FlowOccurrenceAggregator
 import org.nuisto.aggregator.LoggerOccurrenceAggregator
+import org.nuisto.model.Infraction
 import org.nuisto.model.OptionsModel
 import org.nuisto.model.ResultsModel
 import org.nuisto.results.ResultsHandler
@@ -68,10 +69,19 @@ class Runner {
       //It might also be able to be brought in as a calculation (if ratio of 0 no infractions to found is > than X, then fail build)
       //Could also use this as a trending chart
       //Don't want users inferring that null or missing value is '0'
-      if (expectations.infractions.flatten().size() > 0) {
+      List<Infraction> foundInfractions = expectations.infractions.flatten()
+
+      if (foundInfractions.size() > 0) {
         failBuild = true
-        resultsModel.expectationFindings.put(fileName, expectations.infractions.flatten())
+        resultsModel.expectationFindings.put(fileName, foundInfractions)
       }
+      /*
+      TODO When no infractions are found, the "results handler" won't output
+      any aggregate totals.
+      else {
+        resultsModel.expectationFindings.put(fileName, [])
+      }
+      */
 
       log.debug 'Resetting expectations per new file.'
       expectations.each { it.reset() }
