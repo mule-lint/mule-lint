@@ -98,7 +98,7 @@ class RulesLoader {
    * @return The version as a string or when invalid, then return the full line (for better error handling further up the call stack)
    */
   String findVersionNumber(String versionLine) {
-    def matcher = versionLine =~ /version '(\d.\d.\d)'/
+    def matcher = versionLine =~ /version '(.+)'/
 
     if (matcher.matches())
       return matcher[0][1]
