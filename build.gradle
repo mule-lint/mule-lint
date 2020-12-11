@@ -12,7 +12,7 @@ mainClassName = 'org.nuisto.MuleLint'
 
 group = 'org.nuisto'
 archivesBaseName = 'mule-lint'
-version = '0.5.4-SNAPSHOT'
+version = '0.6.0-alpha-1'
 
 description = """"""
 
