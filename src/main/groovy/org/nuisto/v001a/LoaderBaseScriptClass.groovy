@@ -1,10 +1,7 @@
 package org.nuisto.v001a
 
 import groovy.util.logging.Slf4j
-import org.nuisto.ElementExpectationBuilder
 import org.nuisto.ExpectationBuilder
-import org.nuisto.FlowExpectationBuilder
-import org.nuisto.NullExpectationBuilder
 
 /**
  * Needs to follow more closely to the builder pattern
