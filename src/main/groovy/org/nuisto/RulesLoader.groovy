@@ -5,7 +5,6 @@ import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.ImportCustomizer
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.nuisto.model.OptionsModel
-import org.nuisto.v001a.LoaderBaseScriptClass
 
 import static org.codehaus.groovy.syntax.Types.*
 
